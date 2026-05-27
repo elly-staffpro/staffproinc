@@ -264,6 +264,9 @@ SHARED_STYLES = """
       line-height: 1.8;
       margin-top: var(--sp-3);
     }
+    .news-intro .eyebrow {
+      font-size: var(--text-base);
+    }
     .news-closing {
       max-width: 780px;
       margin-inline: auto;
