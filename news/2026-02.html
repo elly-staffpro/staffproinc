@@ -111,6 +111,80 @@
       padding-top: var(--sp-5);
       border-top: 1px solid var(--color-border);
     }
+    /* ── Two-column layout ── */
+    .news-page-layout {
+      display: grid;
+      grid-template-columns: 190px 1fr;
+      gap: var(--sp-12);
+      align-items: start;
+    }
+    .news-sidebar {
+      position: sticky;
+      top: 88px;
+    }
+    .sidebar-label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--sp-4);
+    }
+    .sidebar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: var(--sp-3) var(--sp-4);
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      margin-bottom: var(--sp-2);
+      border: 1.5px solid var(--color-border);
+      background: var(--white);
+      transition: border-color var(--trans), box-shadow var(--trans);
+    }
+    .sidebar-item:hover {
+      border-color: var(--blue-200);
+      box-shadow: 0 2px 12px rgba(37,64,200,.07);
+    }
+    .sidebar-item--current {
+      border-color: var(--color-primary);
+      background: rgba(37,64,200,.04);
+      cursor: default;
+    }
+    .sidebar-month {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+    .sidebar-item--current .sidebar-month {
+      font-size: var(--text-base);
+      color: var(--color-primary);
+    }
+    .sidebar-count {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+    .news-page-layout .news-grid,
+    .news-page-layout .news-intro,
+    .news-page-layout .news-closing,
+    .news-page-layout .news-meta,
+    .news-page-layout .news-disclaimer {
+      max-width: none;
+      margin-inline: 0;
+    }
+    @media (max-width: 860px) {
+      .news-page-layout { grid-template-columns: 1fr; }
+      .news-sidebar {
+        position: static;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-3);
+        padding-bottom: var(--sp-6);
+        border-bottom: 1.5px solid var(--color-border);
+        margin-bottom: var(--sp-6);
+      }
+      .sidebar-item { flex: 1; min-width: 130px; margin-bottom: 0; }
+    }
     /* Expand / collapse */
     .news-expand-toggle {
       display: flex;
@@ -217,6 +291,30 @@
 
 <section class="section">
   <div class="container">
+    <div class="news-page-layout">
+      <aside class="news-sidebar fade-in">
+        <div class="sidebar-label">Issues</div>
+        <a href="../news.html" class="sidebar-item">
+          <div class="sidebar-month">May 2026</div>
+          <div class="sidebar-count">5 stories</div>
+        </a>
+        <a href="2026-04.html" class="sidebar-item">
+          <div class="sidebar-month">April 2026</div>
+          <div class="sidebar-count">5 stories</div>
+        </a>
+        <a href="2026-03.html" class="sidebar-item">
+          <div class="sidebar-month">March 2026</div>
+          <div class="sidebar-count">2 stories</div>
+        </a>
+        <div class="sidebar-item sidebar-item--current">
+          <div class="sidebar-month">February 2026</div>
+        </div>
+        <a href="2026-01.html" class="sidebar-item">
+          <div class="sidebar-month">January 2026</div>
+          <div class="sidebar-count">5 stories</div>
+        </a>
+      </aside>
+      <div class="news-main">
 
     <div class="news-intro fade-in">
       <span class="eyebrow">February 2026</span>
@@ -412,6 +510,8 @@
     <p class="news-meta">Published February 2026 &middot; StaffPro Inc.</p>
     <p class="news-disclaimer">This bulletin is provided for general informational purposes only and does not constitute legal advice. Employment laws vary by jurisdiction and are subject to change — consult qualified legal counsel before taking action based on any content in this publication.</p>
 
+      </div><!-- /news-main -->
+    </div><!-- /news-page-layout -->
   </div>
 </section>
 
