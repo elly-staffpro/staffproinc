@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR &amp; Compliance News — January 2026 | StaffPro Inc.</title>
+  <meta name="description" content="January 2026 HR &amp; compliance update from StaffPro Inc. — year-start payroll checklist, SECURE 2.0, ACA reporting, NY Secure Choice, and the federal regulatory outlook." />
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .news-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--sp-6);
+      max-width: 780px;
+      margin-inline: auto;
+    }
+    .news-card {
+      background: var(--white);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-6) var(--sp-7);
+      overflow: hidden;
+      transition: box-shadow var(--trans), border-color var(--trans);
+    }
+    .news-card:hover {
+      border-color: var(--blue-200);
+      box-shadow: 0 4px 24px rgba(37,64,200,.07);
+    }
+    .news-cat {
+      display: inline-block;
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: var(--sp-3);
+    }
+    .news-headline {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--sp-3);
+      line-height: 1.35;
+    }
+    .news-summary {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      margin-bottom: var(--sp-4);
+    }
+    .news-takeaway {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-2);
+      background: var(--blue-50);
+      border: 1px solid var(--blue-100);
+      border-radius: var(--radius);
+      padding: var(--sp-3) var(--sp-4);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+    }
+    .news-intro {
+      max-width: 780px;
+      margin-inline: auto;
+      margin-bottom: var(--sp-10);
+    }
+    .news-intro p {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+      margin-top: var(--sp-3);
+    }
+    .news-closing {
+      max-width: 780px;
+      margin-inline: auto;
+      margin-top: var(--sp-12);
+      padding: var(--sp-8) var(--sp-10);
+      background: var(--blue-50);
+      border: 1.5px solid var(--blue-100);
+      border-radius: var(--radius-xl);
+      text-align: center;
+    }
+    .news-closing p {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      margin-bottom: var(--sp-5);
+    }
+    .news-meta {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      text-align: center;
+      margin-top: var(--sp-8);
+      max-width: 780px;
+      margin-inline: auto;
+    }
+    .news-disclaimer {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      text-align: center;
+      max-width: 780px;
+      margin-inline: auto;
+      margin-top: var(--sp-6);
+      padding-top: var(--sp-5);
+      border-top: 1px solid var(--color-border);
+    }
+    /* Expand / collapse */
+    .news-expand-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-2);
+      width: 100%;
+      margin-top: var(--sp-4);
+      padding: var(--sp-4) 0 var(--sp-1);
+      border: none;
+      border-top: 1px solid var(--color-border);
+      background: none;
+      cursor: pointer;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-primary);
+      text-align: center;
+      user-select: none;
+    }
+    .news-expand-toggle:hover { opacity: .75; }
+    .expand-icon {
+      flex-shrink: 0;
+      transition: transform .2s ease;
+    }
+    .news-card.expanded .expand-icon { transform: rotate(180deg); }
+    .news-detail {
+      margin-top: var(--sp-5);
+      padding-top: var(--sp-5);
+      border-top: 1px dashed var(--color-border);
+    }
+    .news-detail h4 {
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-top: var(--sp-5);
+      margin-bottom: var(--sp-2);
+    }
+    .news-detail h4:first-child { margin-top: 0; }
+    .news-detail p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      margin-bottom: var(--sp-3);
+    }
+    .news-detail ul, .news-detail ol {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      margin-bottom: var(--sp-3);
+      padding-left: var(--sp-5);
+    }
+    .news-detail li { margin-bottom: var(--sp-1); }
+    .news-detail strong { color: var(--color-text); font-weight: 600; }
+    .news-detail a { color: var(--color-primary); }
+  </style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <img src="../assets/images/logo.png" alt="StaffPro Inc." class="nav-logo-img"
+           onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <span class="nav-logo-fallback" aria-hidden="true"><span class="lf-staff">staff</span><span class="lf-pro">pro</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="../services.html"  class="nav-link">Services</a>
+      <a href="../about.html"     class="nav-link">About Us</a>
+      <a href="../resources.html" class="nav-link">Resources</a>
+      <a href="../news.html"      class="nav-link active">News</a>
+      <a href="../contact.html"   class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="https://staffpro.payplus360.com/login/" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">Employee Login</a>
+      <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Client Login</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="../services.html"  class="nav-mobile-link">Services</a>
+  <a href="../about.html"     class="nav-mobile-link">About Us</a>
+  <a href="../resources.html" class="nav-mobile-link">Resources</a>
+  <a href="../news.html"      class="nav-mobile-link">News</a>
+  <a href="../contact.html"   class="nav-mobile-link">Contact</a>
+  <div class="nav-mobile-divider"></div>
+  <a href="https://staffpro.payplus360.com/login/" class="nav-mobile-link" target="_blank" rel="noopener noreferrer">Employee Login ↗</a>
+  <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary nav-mobile-cta" target="_blank" rel="noopener noreferrer">Client Login</a>
+</div>
+
+
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <span class="eyebrow eyebrow-light">Monthly Bulletin</span>
+    <h1 class="page-hero-title">HR &amp; Compliance News</h1>
+    <p class="page-hero-text">
+      A monthly roundup of what's changing in HR, employment law, payroll, and compliance — curated for business owners.
+    </p>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container">
+
+    <div class="news-intro fade-in">
+      <span class="eyebrow">January 2026</span>
+      <p>The new year brings a wave of effective dates across payroll, benefits, and employment law. January is the month to confirm your systems are updated, your plan documents are current, and your team knows what changed. Here's what employers need to address coming out of the gate in 2026.</p>
+    </div>
+
+    <div class="news-grid">
+
+      <!-- Card 1 -->
+      <article class="news-card fade-in">
+        <div class="news-cat" style="color:#059669;background:rgba(5,150,105,.08);">Payroll &amp; Tax</div>
+        <h3 class="news-headline">2026 Year-Start Payroll Checklist: New Tables, Higher SS Wage Base, Minimum Wage Increases</h3>
+        <p class="news-summary">January 1 triggered simultaneous changes across payroll: updated federal withholding tables, a higher Social Security taxable wage base, and minimum wage increases in more than 18 states including New York. For NY employers, the 2026 minimum wage is $17.00/hr in NYC, Long Island, and Westchester, and $16.00/hr for the rest of the state — with corresponding new exempt salary thresholds. Payroll systems need to be confirmed, not assumed.</p>
+        <div class="news-takeaway">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;color:var(--color-primary);"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span><strong>Takeaway:</strong> Run a payroll audit on your first January run — confirm withholding tables, the Social Security wage base, and minimum wage rates are all updated. Errors caught in week one are far easier to fix than mid-year corrections.</span>
+        </div>
+        <button class="news-expand-toggle" aria-expanded="false">
+          <span class="expand-label">Read more</span>
+          <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="news-detail" hidden>
+          <h4>Federal Withholding Tables</h4>
+          <p>The IRS publishes updated income tax withholding tables in Publication 15-T each January. Tables change to reflect inflation adjustments to brackets and the standard deduction. Confirm with your payroll provider that the 2026 tables are loaded — don't assume an automatic update happened. If employees submitted new W-4s based on 2025 legislation changes (particularly provisions of the One Big Beautiful Bill Act), make sure those are entered before the first payroll run.</p>
+
+          <h4>Social Security Wage Base</h4>
+          <p>The Social Security Administration adjusted the taxable wage base to $176,100 for 2026. Employees pay 6.2% Social Security tax on wages up to that ceiling; employers match it. High earners who previously hit the cap earlier in the year will now reach it later — meaning higher combined Social Security tax liability through more of the year. Update payroll forecasting to account for this, particularly for year-end bonus planning.</p>
+
+          <h4>New York Minimum Wage — 2026 Rates</h4>
+          <ul>
+            <li><strong>NYC, Long Island, Westchester:</strong> $17.00/hr minimum wage; $1,275.00/week exempt salary threshold (~$66,300/year)</li>
+            <li><strong>Rest of New York State:</strong> $16.00/hr minimum wage; $1,199.10/week exempt salary threshold (~$62,350/year)</li>
+          </ul>
+          <p>Salaried exempt employees whose weekly pay falls below the applicable threshold lose their exempt status and become entitled to overtime for all hours over 40. Review your exempt headcount now — particularly employees who were borderline last year. Starting in 2026, New York added a 15% surcharge on unpaid wage judgments, which significantly increases the financial exposure for wage-and-hour errors.</p>
+
+          <h4>Multi-State Employers</h4>
+          <p>More than 18 states enacted minimum wage increases effective January 1. Each state has its own rate, effective date, and scheduled future increases. For multi-state employers, a jurisdiction-by-jurisdiction review is essential — a system that's current in New York may still be behind in another state. Build a rate matrix and review it at the start of each quarter, since some states have mid-year increases as well.</p>
+
+          <h4>NY Paid Family Leave</h4>
+          <p>New York's PFL employee contribution rate for 2026 is 0.388% of gross wages, up to the 2026 statewide average weekly wage cap of $1,757.19/week, for a maximum annual employee contribution of $354.53. The maximum weekly PFL benefit is $1,177.32 (67% of the statewide AWW). Confirm your payroll system is withholding at the 2026 rate — last year's rate was different, and incorrect withholding creates reconciliation issues and employee complaints at year-end.</p>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="news-card fade-in">
+        <div class="news-cat" style="color:#7C3AED;background:rgba(124,58,237,.08);">Employee Benefits</div>
+        <h3 class="news-headline">SECURE 2.0 Provisions Now in Effect: Roth Catch-Up Rule, Emergency Savings, and Auto-Enrollment</h3>
+        <p class="news-summary">Several SECURE 2.0 Act provisions took effect January 1, 2026. The most immediately impactful for most plan sponsors: employees whose prior-year FICA wages exceeded $150,000 must now make catch-up contributions as Roth rather than pre-tax. If your plan doesn't currently support Roth contributions, those employees effectively cannot make catch-up contributions until you amend the plan — a compliance gap that starts Day 1 of the new year.</p>
+        <div class="news-takeaway">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;color:var(--color-primary);"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span><strong>Takeaway:</strong> Contact your plan administrator or TPA immediately to confirm your plan is compliant with the 2026 SECURE 2.0 provisions — especially the Roth catch-up rule. A plan amendment may be needed before your first payroll run of the year.</span>
+        </div>
+        <button class="news-expand-toggle" aria-expanded="false">
+          <span class="expand-label">Read more</span>
+          <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="news-detail" hidden>
+          <h4>The Roth Catch-Up Rule</h4>
+          <p>Under SECURE 2.0 Section 603, employees age 50 or older whose FICA wages in the prior calendar year exceeded $150,000 must make any catch-up contributions to a 401(k) on a Roth (after-tax) basis starting in 2026. If the plan doesn't have a Roth feature, those employees can't make catch-up contributions at all. This affects the highest earners in your workforce — but you need to know whether your plan is ready, not discover the gap when a participant tries to contribute.</p>
+          <p>The IRS issued Notice 2024-2 providing guidance and transition relief, but that relief period ended December 31, 2025. Plans needed to be amended and operationally compliant by January 1, 2026.</p>
+
+          <h4>Emergency Savings Accounts</h4>
+          <p>Plan sponsors can now offer Pension-Linked Emergency Savings Accounts (PLESAs) as an optional feature alongside their 401(k) plans. These accounts allow non-highly-compensated employees to save up to $2,500 in a short-term emergency fund linked to their retirement account. Contributions are Roth and can be withdrawn penalty-free. Offering a PLESA is optional — there's no mandate — but it may help with employee financial wellness and retention.</p>
+
+          <h4>Automatic Enrollment for New Plans</h4>
+          <p>New 401(k) and 403(b) plans established after December 29, 2022 are required to include automatic enrollment starting in plan years beginning on or after January 1, 2025. If you started a new plan in 2023 or 2024 without automatic enrollment, you should have been working on this — confirm with your TPA that your plan is compliant or has applied for available relief.</p>
+
+          <h4>Student Loan Match</h4>
+          <p>Employers may now treat qualified student loan payments made by employees as elective deferrals for purposes of matching contributions. This means you can provide a 401(k) employer match to employees who are paying off student loans rather than contributing to the plan — helping those employees build retirement savings while managing debt. This feature is optional and requires a plan amendment to implement.</p>
+
+          <h4>Key 2026 Contribution Limits</h4>
+          <ul>
+            <li><strong>401(k) / 403(b) employee deferral limit:</strong> $23,500</li>
+            <li><strong>Catch-up contribution (age 50–59, 64+):</strong> $7,500 (must be Roth if wages exceeded $150,000)</li>
+            <li><strong>Super catch-up (age 60–63 only, new under SECURE 2.0):</strong> $11,250</li>
+            <li><strong>Annual additions limit (combined employer + employee):</strong> $70,000</li>
+            <li><strong>IRA contribution limit:</strong> $7,000 ($8,000 if age 50+)</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="news-card fade-in">
+        <div class="news-cat" style="color:#0891B2;background:rgba(8,145,178,.08);">HR Compliance</div>
+        <h3 class="news-headline">ACA Reporting Season Opens: 1095-C Deadlines and What to Watch in 2026</h3>
+        <p class="news-summary">ACA reporting season is underway. Applicable Large Employers — those with 50 or more full-time equivalent employees — must furnish Form 1095-C to each full-time employee by March 3, 2026, and file Forms 1094-C and 1095-C with the IRS by March 31, 2026 for electronic filers. Smaller employers sponsoring self-insured plans have similar obligations via Form 1095-B. Penalty amounts for 2025 reporting increased again, and the IRS is not pulling back on ACA enforcement.</p>
+        <div class="news-takeaway">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;color:var(--color-primary);"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span><strong>Takeaway:</strong> Pull your 1095-C data now — confirm employee headcount, offer of coverage codes, and safe harbor determinations. Data issues found in January are easy to fix; corrections filed after the March deadline are not.</span>
+        </div>
+        <button class="news-expand-toggle" aria-expanded="false">
+          <span class="expand-label">Read more</span>
+          <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="news-detail" hidden>
+          <h4>Who Must File</h4>
+          <p>Applicable Large Employers (ALEs) — those with 50 or more full-time equivalent employees in the prior year — must furnish Form 1095-C to each full-time employee and file Forms 1094-C and 1095-C with the IRS. If you sponsor a self-insured health plan and are not an ALE, you file Form 1095-B instead. If you are an ALE with a self-insured plan, you handle both the 1095-C and the enrollment coverage reporting in Part III of the form.</p>
+
+          <h4>2026 Deadlines</h4>
+          <ul>
+            <li><strong>Furnish 1095-C to employees:</strong> March 3, 2026</li>
+            <li><strong>Electronic filing with IRS:</strong> March 31, 2026</li>
+            <li><strong>Paper filing with IRS (if under 10 forms — new threshold):</strong> February 28, 2026</li>
+          </ul>
+          <p>Starting with 2023 reporting, the IRS lowered the electronic filing threshold from 250 forms to 10. If you have 10 or more ACA forms to file, you must file electronically through the IRS's ACA Information Returns (AIR) system. Paper filing is only available for fewer than 10 forms.</p>
+
+          <h4>Penalty Amounts for 2025 Reporting</h4>
+          <p>Penalties for 2025 ACA reporting (filed in 2026) increased with inflation. The penalty for failure to furnish a correct 1095-C to an employee is $330 per return, up to a $3,987,000 annual cap. The penalty for failure to file correct returns with the IRS is the same — $330 per return. If the failure is intentional, the penalty is $660 per return with no cap. These are per-form penalties — they add up quickly for a large workforce.</p>
+
+          <h4>What to Review Before Filing</h4>
+          <p>Start by confirming your full-time employee count for each month of 2025 — the 50 FTE threshold is based on 2024, but the forms reflect 2025 coverage. Review your offer of coverage codes (Line 14) to confirm the correct code is applied for each month, particularly for employees who had coverage gaps, were in a waiting period, or moved between employment classifications. Confirm the applicable safe harbor code on Line 16 for months when coverage wasn't offered or accepted.</p>
+          <p>Common errors that trigger IRS letters: missing or incorrect employee SSNs, mismatched codes between Lines 14 and 16, and failure to report coverage for dependents on self-insured plans. Pull a sample of forms before submitting to catch systematic errors.</p>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="news-card fade-in">
+        <div class="news-cat" style="color:#0891B2;background:rgba(8,145,178,.08);">HR Compliance</div>
+        <h3 class="news-headline">NY Secure Choice: First Deadline Is March 18 — Start Your Prep Now</h3>
+        <p class="news-summary">New York's Secure Choice Savings Program requires employers with 10 or more NY employees who don't offer a qualified retirement plan to register and auto-enroll employees in a state-facilitated Roth IRA. The first deadline — for employers with 30 or more employees — is March 18, 2026. Employers already offering a 401(k) or similar qualified plan are exempt but must certify that exemption through the state portal. January is the time to confirm your status and start the process.</p>
+        <div class="news-takeaway">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;color:var(--color-primary);"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span><strong>Takeaway:</strong> Determine now whether you're covered (must register) or exempt (must certify). The March 18 deadline for 30+ employee employers is closer than it looks. Contact StaffPro at <a href="mailto:securechoice@staffproonline.com">securechoice@staffproonline.com</a> — we have the full checklist ready.</span>
+        </div>
+        <button class="news-expand-toggle" aria-expanded="false">
+          <span class="expand-label">Read more</span>
+          <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="news-detail" hidden>
+          <h4>Who Is Covered</h4>
+          <p>An employer is covered by Secure Choice if it: (1) has been in business for at least two years, (2) had 10 or more employees in New York during 2025, and (3) does not currently offer a qualified retirement plan. Eligible employee types include full-time, part-time, and seasonal workers who are at least 18 years old, work 20+ hours per week for 30+ days, and don't already have access to a workplace retirement plan.</p>
+
+          <h4>What "Exempt" Actually Means — and What You Still Need to Do</h4>
+          <p>If you already offer a 401(k), 403(b), SEP IRA, SIMPLE IRA, or similar qualified plan, you are exempt from Secure Choice enrollment. However, exempt status is not automatic — you must log into the Secure Choice employer portal and complete the exemption certification. Simply having a plan and doing nothing is not compliant. Employers who fail to certify may be treated as non-compliant regardless of whether they have an active plan.</p>
+
+          <h4>Staggered Registration Deadlines</h4>
+          <ul>
+            <li><strong>30 or more employees:</strong> March 18, 2026</li>
+            <li><strong>15–29 employees:</strong> May 15, 2026</li>
+            <li><strong>10–14 employees:</strong> July 15, 2026</li>
+          </ul>
+
+          <h4>How It Works for Covered Employers</h4>
+          <p>Secure Choice is a payroll deduction Roth IRA. Eligible employees are automatically enrolled at a default 3% contribution rate. They can opt out or adjust their rate at any time. Employer contributions are not required — the employer's role is to register, set up payroll deductions, and remit contributions to the program on schedule. Accounts are portable, so employees keep them when they change jobs.</p>
+
+          <h4>What StaffPro Has Ready</h4>
+          <p>We've built out a complete Secure Choice compliance packet: a step-by-step registration guide, employee notice templates (in English and Spanish), a new-hire enrollment workflow integrated with onboarding, and an exemption certification walkthrough. Email <a href="mailto:securechoice@staffproonline.com">securechoice@staffproonline.com</a> and we'll walk you through your specific situation.</p>
+        </div>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="news-card fade-in">
+        <div class="news-cat" style="color:var(--color-primary);background:rgba(37,64,200,.08);">Employment Law</div>
+        <h3 class="news-headline">Federal Regulatory Rollbacks: What Changed, What Didn't, and What NY Employers Still Owe</h3>
+        <p class="news-summary">The new administration moved quickly in its first weeks to undo several Biden-era employment regulations. The DOL's expanded independent contractor classification rule under the FLSA has been rescinded. Federal DEI program requirements for contractors are being unwound. The FTC's non-compete ban remains in legal limbo after being blocked by courts. Critically: none of these federal rollbacks affect New York State or New York City employment law, which continues to impose some of the most employee-protective requirements in the country.</p>
+        <div class="news-takeaway">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;color:var(--color-primary);"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span><strong>Takeaway:</strong> Don't read federal enforcement pullbacks as permission to relax compliance. New York's own labor standards, human rights protections, and enforcement agencies are operating independently — and they are not standing down.</span>
+        </div>
+        <button class="news-expand-toggle" aria-expanded="false">
+          <span class="expand-label">Read more</span>
+          <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="news-detail" hidden>
+          <h4>Independent Contractor Classification</h4>
+          <p>The Biden DOL's 2024 independent contractor rule — which applied an economic reality test with a strong emphasis on economic dependence — has been rescinded. The administration is expected to return to a more business-friendly multi-factor test. However, New York State applies its own separate test for contractor classification under state wage and labor law, and New York City has additional requirements. Federal rollback does not change your obligations under NY law — misclassification liability under the NY Labor Law remains fully intact.</p>
+
+          <h4>Federal DEI Requirements for Contractors</h4>
+          <p>Executive Orders requiring federal contractors to maintain DEI programs and affirmative action plans are being rescinded. If your organization is a federal contractor, you should consult counsel on what compliance obligations remain. For non-contractors, federal DEI rollbacks have no direct legal effect — New York State Human Rights Law and NYC Human Rights Law continue to prohibit discrimination on all protected bases and remain among the most broadly protective anti-discrimination statutes in the country.</p>
+
+          <h4>NLRB and Labor Relations</h4>
+          <p>The NLRB under the new administration is pulling back from several Biden-era decisions on joint employer status and is expected to take a more employer-friendly posture on union organizing and unfair labor practice complaints. However, for employers with unionized workforces or active organizing activity, the fundamentals of labor relations law haven't changed — collective bargaining obligations, grievance handling, and good-faith bargaining requirements remain in force.</p>
+
+          <h4>What New York Employers Still Owe</h4>
+          <p>New York law is entirely independent of federal rollbacks in the following areas: minimum wage and overtime, anti-discrimination and anti-harassment protections (NYSHRL and NYCHRL), paid family leave, paid sick leave, salary transparency, background check restrictions, and predictive scheduling for certain industries. The state Division of Human Rights and NYC Commission on Human Rights have not changed their enforcement postures. Compliance with NY law is a completely separate analysis from federal compliance — and the state standard is often stricter.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="news-closing fade-in">
+      <p>New year, new numbers, new rules — and all of them have effective dates. If you're not sure where your organization stands on any of these, reach out. Getting a head start in January is always better than catching up in March.</p>
+      <a href="../contact.html" class="btn btn-primary">Get in Touch</a>
+    </div>
+
+    <p class="news-meta">Published January 2026 &middot; StaffPro Inc.</p>
+    <p class="news-disclaimer">This bulletin is provided for general informational purposes only and does not constitute legal advice. Employment laws vary by jurisdiction and are subject to change — consult qualified legal counsel before taking action based on any content in this publication.</p>
+
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="../assets/images/logo.png" alt="StaffPro Inc." class="footer-logo-img"
+               onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <span class="footer-logo-fallback" aria-hidden="true"><span class="lf-staff">staff</span><span class="lf-pro">pro</span></span>
+        </div>
+        <p class="footer-tagline">Build Your Business, Not Your HR Department</p>
+        <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.57 3.46 2 2 0 0 1 3.54 1.29h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 5.55 5.55l1.88-1.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.93 14.72"/></svg><a href="tel:7184711122">718-471-1122</a></div>
+        <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:info@staffproonline.com">info@staffproonline.com</a></div>
+        <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>167 Lawrence Avenue, Inwood, NY 11096</span></div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <div class="footer-links">
+          <a href="../services.html#payroll"     class="footer-link">Payroll Processing</a>
+          <a href="../services.html#hr"          class="footer-link">HR Administration</a>
+          <a href="../services.html#benefits"    class="footer-link">Employee Benefits</a>
+          <a href="../services.html#workerscomp" class="footer-link">Workers' Compensation</a>
+          <a href="../services.html#screening"   class="footer-link">Background Screening</a>
+          <a href="../services.html#compliance"  class="footer-link">Tax &amp; Compliance</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <div class="footer-links">
+          <a href="../resources.html#w2"         class="footer-link">W-2 Retrieval</a>
+          <a href="../resources.html#1095"        class="footer-link">1095 Retrieval</a>
+          <a href="../resources.html#onboarding"  class="footer-link">Client Onboarding Tutorials</a>
+          <a href="../resources.html#posters"     class="footer-link">Labor Law Poster Orders</a>
+        </div>
+        <div style="margin-top:var(--sp-5);">
+          <div class="footer-col-title">Company</div>
+          <div class="footer-links">
+            <a href="../about.html"   class="footer-link">About StaffPro</a>
+            <a href="../news.html"    class="footer-link">HR News</a>
+            <a href="../contact.html" class="footer-link">Contact Us</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Client Access</div>
+        <div class="footer-links">
+          <a href="https://staffpro.payplus360.com/login/" class="footer-link" target="_blank" rel="noopener noreferrer">PayPlus — Client Login</a>
+          <a href="https://staffpro.payplus360.com/login/" class="footer-link" target="_blank" rel="noopener noreferrer">PayPlus — Employee Login</a>
+        </div>
+        <div style="margin-top:var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-2);">
+          <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer" style="justify-content:center;">Client Login</a>
+          <a href="https://staffpro.payplus360.com/login/" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer" style="justify-content:center;border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);">Employee Login</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 StaffPro Inc. All rights reserved.</span>
+      <span>167 Lawrence Avenue &middot; Inwood, NY 11096</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
