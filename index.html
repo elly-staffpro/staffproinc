@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StaffPro Inc. — Build Your Business, Not Your HR Department</title>
+  <meta name="description" content="StaffPro Inc. is a New York-based Professional Employer Organization providing full-service payroll, HR, benefits, workers' comp, and compliance solutions." />
+  <meta property="og:title"       content="StaffPro Inc. — Professional Employer Organization" />
+  <meta property="og:description" content="Build Your Business, Not Your HR Department. Full-service PEO serving New York businesses." />
+  <meta property="og:url"         content="https://www.staffproinc.com" />
+  <meta property="og:type"        content="website" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ============================  NAVIGATION  ============================ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+
+    <a href="index.html" class="nav-logo">
+      <img src="assets/images/logo.png" alt="StaffPro Inc." class="nav-logo-img"
+           onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <span class="nav-logo-fallback" aria-hidden="true"><span class="lf-staff">staff</span><span class="lf-pro">pro</span></span>
+    </a>
+
+    <div class="nav-links">
+      <a href="services.html"  class="nav-link">Services</a>
+      <a href="about.html"     class="nav-link">About Us</a>
+      <a href="resources.html" class="nav-link">Resources</a>
+      <a href="contact.html"   class="nav-link">Contact</a>
+    </div>
+
+    <div class="nav-actions">
+      <!-- TODO: Confirm employee portal URL with PayPlus -->
+      <a href="https://staffpro.payplus360.com/login/" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">Employee Login</a>
+      <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary btn-sm"  target="_blank" rel="noopener noreferrer">Client Login</a>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="nav-mobile" id="navMobile">
+  <a href="services.html"  class="nav-mobile-link">Services</a>
+  <a href="about.html"     class="nav-mobile-link">About Us</a>
+  <a href="resources.html" class="nav-mobile-link">Resources</a>
+  <a href="contact.html"   class="nav-mobile-link">Contact</a>
+  <div class="nav-mobile-divider"></div>
+  <a href="https://staffpro.payplus360.com/login/" class="nav-mobile-link" target="_blank" rel="noopener noreferrer">Employee Login ↗</a>
+  <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary nav-mobile-cta" target="_blank" rel="noopener noreferrer">Client Login</a>
+</div>
+
+
+<!-- ============================  HERO  ============================ -->
+<section class="hero">
+  <div class="hero-inner container">
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        New York State Licensed PEO
+      </div>
+      <h1 class="hero-title">
+        Build Your Business,<br>
+        Not Your <em>HR Department</em>
+      </h1>
+      <p class="hero-text">
+        StaffPro Inc. is your full-service Professional Employer Organization. We handle payroll, benefits, HR compliance, and workers' compensation — so you can focus on growing your company.
+      </p>
+      <div class="hero-actions">
+        <a href="services.html" class="btn btn-white btn-lg">Explore Our Services</a>
+        <a href="contact.html"  class="btn btn-secondary btn-lg">Get Started</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-label">What We Handle For You</div>
+
+        <div class="hero-service-item">
+          <div class="hero-service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <div>
+            <div class="hero-service-name">Payroll Processing</div>
+            <div class="hero-service-sub">Accurate, on-time, every cycle</div>
+          </div>
+        </div>
+
+        <div class="hero-service-item">
+          <div class="hero-service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div>
+            <div class="hero-service-name">HR Administration</div>
+            <div class="hero-service-sub">Policies, onboarding &amp; compliance</div>
+          </div>
+        </div>
+
+        <div class="hero-service-item">
+          <div class="hero-service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="hero-service-name">Employee Benefits</div>
+            <div class="hero-service-sub">Health, dental, vision &amp; 401(k)</div>
+          </div>
+        </div>
+
+        <div class="hero-service-item">
+          <div class="hero-service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="hero-service-name">Workers' Compensation</div>
+            <div class="hero-service-sub">Full coverage &amp; claims management</div>
+          </div>
+        </div>
+
+        <div class="hero-service-item">
+          <div class="hero-service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+          </div>
+          <div>
+            <div class="hero-service-name">Background Screening</div>
+            <div class="hero-service-sub">Pre-employment checks &amp; I-9</div>
+          </div>
+        </div>
+
+        <a href="https://staffpro.payplus360.com/login/" class="hero-card-cta" target="_blank" rel="noopener noreferrer">
+          Access Client Portal
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================  STATS BAR  ============================ -->
+<section class="stats">
+  <div class="stats-inner container">
+    <div class="stat-item fade-in">
+      <div class="stat-number" data-target="25" data-suffix="+">25+</div>
+      <div class="stat-label">Years in Business</div>
+    </div>
+    <div class="stat-item fade-in fade-in-delay-1">
+      <div class="stat-number" data-target="200" data-suffix="+">200+</div>
+      <div class="stat-label">Businesses Served</div>
+    </div>
+    <div class="stat-item fade-in fade-in-delay-2">
+      <div class="stat-number" data-target="6" data-suffix="">6</div>
+      <div class="stat-label">Core HR Services</div>
+    </div>
+    <div class="stat-item fade-in fade-in-delay-3">
+      <div class="stat-number" data-target="100" data-suffix="%">100%</div>
+      <div class="stat-label">NY Compliance Focused</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================  SERVICES OVERVIEW  ============================ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">What We Do</span>
+      <h2 class="section-title">Everything Your Business Needs to Manage Its People</h2>
+      <p class="section-subtitle">
+        From your first hire to your hundredth, StaffPro provides the infrastructure, expertise, and tools to keep your workforce running smoothly.
+      </p>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-card fade-in">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <h3 class="service-title">Payroll Processing</h3>
+        <p class="service-text">Accurate, on-time payroll every cycle — including tax calculations, direct deposit, and year-end reporting.</p>
+        <ul class="service-list">
+          <li class="service-list-item">Weekly, bi-weekly &amp; semi-monthly cycles</li>
+          <li class="service-list-item">Direct deposit &amp; live check options</li>
+          <li class="service-list-item">Tax filing &amp; remittance</li>
+          <li class="service-list-item">W-2 preparation &amp; distribution</li>
+        </ul>
+      </div>
+
+      <div class="service-card fade-in fade-in-delay-1">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3 class="service-title">HR Administration</h3>
+        <p class="service-text">Expert HR support that keeps your policies current, your onboarding smooth, and your employees informed.</p>
+        <ul class="service-list">
+          <li class="service-list-item">Employee handbook consulting &amp; support</li>
+          <li class="service-list-item">New hire onboarding via PayPlus</li>
+          <li class="service-list-item">HR policy &amp; compliance guidance</li>
+          <li class="service-list-item">Termination processing</li>
+        </ul>
+      </div>
+
+      <div class="service-card fade-in fade-in-delay-2">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <h3 class="service-title">Employee Benefits</h3>
+        <p class="service-text">Give your employees access to large-group benefits at rates small businesses couldn't achieve on their own.</p>
+        <ul class="service-list">
+          <li class="service-list-item">Medical, dental &amp; vision insurance</li>
+          <li class="service-list-item">401(k) plan administration</li>
+          <li class="service-list-item">Life &amp; disability insurance</li>
+          <li class="service-list-item">Section 125 / cafeteria plans</li>
+        </ul>
+      </div>
+
+      <div class="service-card fade-in fade-in-delay-3">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3 class="service-title">Workers' Compensation</h3>
+        <p class="service-text">Comprehensive NY workers' compensation coverage with dedicated claims management and liability oversight.</p>
+        <ul class="service-list">
+          <li class="service-list-item">Workers' compensation policy management</li>
+          <li class="service-list-item">Claims filing assistance</li>
+          <li class="service-list-item">Return-to-work coordination</li>
+          <li class="service-list-item">Annual premium audits</li>
+        </ul>
+      </div>
+
+      <div class="service-card fade-in fade-in-delay-4">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </div>
+        <h3 class="service-title">Background Screening</h3>
+        <p class="service-text">Make confident hiring decisions with thorough pre-employment background checks and eligibility verification.</p>
+        <ul class="service-list">
+          <li class="service-list-item">Criminal background checks</li>
+          <li class="service-list-item">I-9 &amp; E-Verify guidance</li>
+          <li class="service-list-item">Motor vehicle record checks</li>
+          <li class="service-list-item">Reference verification</li>
+        </ul>
+      </div>
+
+      <div class="service-card fade-in fade-in-delay-5">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <h3 class="service-title">Tax &amp; Compliance</h3>
+        <p class="service-text">Stay ahead of complex employment tax obligations with expert filing, reporting, and regulatory monitoring.</p>
+        <ul class="service-list">
+          <li class="service-list-item">Federal, state &amp; local tax filing</li>
+          <li class="service-list-item">NYS unemployment insurance</li>
+          <li class="service-list-item">ACA reporting</li>
+          <li class="service-list-item">Paid Family Leave compliance</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div style="text-align:center; margin-top: var(--sp-10);">
+      <a href="services.html" class="btn btn-outline btn-lg">View All Services</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================  WHY STAFFPRO  ============================ -->
+<section class="section section-light">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">Why StaffPro</span>
+      <h2 class="section-title">A Trusted Partner, Not Just a Vendor</h2>
+      <p class="section-subtitle">
+        For over two decades, New York businesses have turned to StaffPro to reduce risk, cut administrative overhead, and gain access to HR expertise they couldn't afford alone.
+      </p>
+    </div>
+
+    <div class="features-grid">
+
+      <div class="feature-item fade-in">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="feature-title">New York Expertise</h3>
+          <p class="feature-text">Deep knowledge of New York State employment law, tax requirements, and regulatory compliance — built over 25+ years of serving NY businesses.</p>
+        </div>
+      </div>
+
+      <div class="feature-item fade-in fade-in-delay-1">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.57 3.46 2 2 0 0 1 3.54 1.29h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 5.55 5.55l1.88-1.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.93 14.72"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="feature-title">Dedicated Support</h3>
+          <p class="feature-text">Real people who know your business. Your dedicated StaffPro contact is available when you need answers — not a ticket queue.</p>
+        </div>
+      </div>
+
+      <div class="feature-item fade-in fade-in-delay-2">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="feature-title">Cost-Effective Benefits</h3>
+          <p class="feature-text">Through StaffPro, your employees gain access to Fortune 500-level benefits at small-business prices — because we pool buying power across all the businesses we serve.</p>
+        </div>
+      </div>
+
+      <div class="feature-item fade-in fade-in-delay-3">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <div>
+          <h3 class="feature-title">PayPlus Client Portal</h3>
+          <p class="feature-text">Manage your account 24/7 through our PayPlus360 portal — run payroll, view reports, access employee data, and handle onboarding anytime.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================  HOW IT WORKS  ============================ -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow">How It Works</span>
+      <h2 class="section-title">Simple to Start, Powerful by Design</h2>
+      <p class="section-subtitle">Getting started with StaffPro is straightforward. We guide you through every step of the transition.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step fade-in">
+        <div class="step-number">1</div>
+        <h3 class="step-title">Consult</h3>
+        <p class="step-text">We start with a conversation to understand your business, your workforce, and the HR challenges you're facing. No obligation.</p>
+      </div>
+      <div class="step fade-in fade-in-delay-2">
+        <div class="step-number">2</div>
+        <h3 class="step-title">Onboard</h3>
+        <p class="step-text">We transition your employees, set up payroll, enroll in benefits, and get your account live in the PayPlus portal — quickly and carefully.</p>
+      </div>
+      <div class="step fade-in fade-in-delay-4">
+        <div class="step-number">3</div>
+        <h3 class="step-title">Grow</h3>
+        <p class="step-text">We handle HR. You focus on running and growing your business, knowing compliance, payroll, and benefits are in expert hands.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================  CTA BANNER  ============================ -->
+<section class="section-sm">
+  <div class="container">
+    <div class="cta-banner fade-in">
+      <div class="cta-banner-inner">
+        <h2 class="cta-title">Ready to Simplify Your HR?</h2>
+        <p class="cta-text">
+          Let StaffPro take HR, payroll, and compliance off your plate — so you can get back to what you do best. Reach out today for a no-obligation consultation.
+        </p>
+        <div class="cta-actions">
+          <a href="contact.html" class="btn btn-white btn-lg">Contact Us</a>
+          <a href="https://staffpro.payplus360.com/login/" class="btn btn-secondary btn-lg" target="_blank" rel="noopener noreferrer">Client Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================  FOOTER  ============================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+
+      <div>
+        <div class="footer-logo">
+          <img src="assets/images/logo.png" alt="StaffPro Inc." class="footer-logo-img"
+               onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <span class="footer-logo-fallback" aria-hidden="true"><span class="lf-staff">staff</span><span class="lf-pro">pro</span></span>
+        </div>
+        <p class="footer-tagline">Build Your Business, Not Your HR Department</p>
+        <div class="footer-contact-item">
+          <svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.57 3.46 2 2 0 0 1 3.54 1.29h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 5.55 5.55l1.88-1.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.93 14.72"/></svg>
+          <a href="tel:7184711122">718-471-1122</a>
+        </div>
+        <div class="footer-contact-item">
+          <svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:info@staffproonline.com">info@staffproonline.com</a>
+        </div>
+        <div class="footer-contact-item">
+          <svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>167 Lawrence Avenue, Inwood, NY 11096</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Services</div>
+        <div class="footer-links">
+          <a href="services.html#payroll"     class="footer-link">Payroll Processing</a>
+          <a href="services.html#hr"          class="footer-link">HR Administration</a>
+          <a href="services.html#benefits"    class="footer-link">Employee Benefits</a>
+          <a href="services.html#workerscomp" class="footer-link">Workers' Compensation</a>
+          <a href="services.html#screening"   class="footer-link">Background Screening</a>
+          <a href="services.html#compliance"  class="footer-link">Tax &amp; Compliance</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <div class="footer-links">
+          <a href="resources.html#w2"          class="footer-link">W-2 Retrieval</a>
+          <a href="resources.html#1095"         class="footer-link">1095 Retrieval</a>
+          <a href="resources.html#onboarding"   class="footer-link">New Employee Onboarding</a>
+          <a href="resources.html#posters"      class="footer-link">Labor Law Poster Orders</a>
+        </div>
+        <div style="margin-top:var(--sp-5);">
+          <div class="footer-col-title">Company</div>
+          <div class="footer-links">
+            <a href="about.html"   class="footer-link">About StaffPro</a>
+            <a href="contact.html" class="footer-link">Contact Us</a>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Client Access</div>
+        <div class="footer-links">
+          <a href="https://staffpro.payplus360.com/login/" class="footer-link" target="_blank" rel="noopener noreferrer">PayPlus — Client Login</a>
+          <a href="https://staffpro.payplus360.com/login/" class="footer-link" target="_blank" rel="noopener noreferrer">PayPlus — Employee Login</a>
+        </div>
+        <div style="margin-top:var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-2);">
+          <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer" style="justify-content:center;">Client Login</a>
+          <a href="https://staffpro.payplus360.com/login/" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer" style="justify-content:center;border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);">Employee Login</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2026 StaffPro Inc. All rights reserved.</span>
+      <span>167 Lawrence Avenue &middot; Inwood, NY 11096</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

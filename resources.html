@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resources — StaffPro Inc.</title>
+  <meta name="description" content="StaffPro employee and employer resources: W-2 retrieval, 1095 retrieval, new employee onboarding guide, and labor law poster orders." />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ---- Client Tutorial Videos ---- */
+    .video-full {
+      background: var(--gray-900);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: var(--sp-8);
+    }
+    .video-full video {
+      display: block;
+      width: 100%;
+      max-height: 520px;
+      object-fit: contain;
+      background: #000;
+    }
+    .video-full-label {
+      padding: var(--sp-3) var(--sp-5);
+      background: var(--gray-900);
+      color: rgba(255,255,255,0.7);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .video-segments-label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--sp-4);
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-5);
+    }
+    .video-card {
+      background: var(--white);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color var(--trans), box-shadow var(--trans);
+    }
+    .video-card:hover {
+      border-color: var(--blue-200);
+      box-shadow: 0 4px 24px rgba(37,64,200,.08);
+    }
+    .video-card video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      object-fit: contain;
+    }
+    .video-card-info {
+      padding: var(--sp-3) var(--sp-4);
+      border-top: 1.5px solid var(--color-border);
+    }
+    .video-card-title {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--color-text);
+    }
+
+    /* ---- Poster Order / JotForm section ---- */
+    .jotform-container {
+      background: var(--white);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+    .jotform-container iframe {
+      display: block;
+      width: 100%;
+      border: none;
+      min-height: 600px;
+    }
+
+    @media (max-width: 768px) {
+      .video-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/images/logo.png" alt="StaffPro Inc." class="nav-logo-img"
+           onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <span class="nav-logo-fallback" aria-hidden="true"><span class="lf-staff">staff</span><span class="lf-pro">pro</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="services.html"  class="nav-link">Services</a>
+      <a href="about.html"     class="nav-link">About Us</a>
+      <a href="resources.html" class="nav-link active">Resources</a>
+      <a href="contact.html"   class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="https://staffpro.payplus360.com/login/" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">Employee Login</a>
+      <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary btn-sm"  target="_blank" rel="noopener noreferrer">Client Login</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="services.html"  class="nav-mobile-link">Services</a>
+  <a href="about.html"     class="nav-mobile-link">About Us</a>
+  <a href="resources.html" class="nav-mobile-link">Resources</a>
+  <a href="contact.html"   class="nav-mobile-link">Contact</a>
+  <div class="nav-mobile-divider"></div>
+  <a href="https://staffpro.payplus360.com/login/" class="nav-mobile-link" target="_blank" rel="noopener noreferrer">Employee Login ↗</a>
+  <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary nav-mobile-cta" target="_blank" rel="noopener noreferrer">Client Login</a>
+</div>
+
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <span class="eyebrow eyebrow-light">Tools &amp; Links</span>
+    <h1 class="page-hero-title">Resources</h1>
+    <p class="page-hero-text">
+      Quick access to tax document retrieval, the employee onboarding guide, portal logins, and poster ordering.
+    </p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<section class="section">
+  <div class="container" style="max-width: 940px;">
+
+
+    <!-- ===================================================
+         EMPLOYEE RESOURCES
+         =================================================== -->
+    <div id="employee-resources" class="fade-in">
+      <div class="resource-section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+        Employee Resources
+      </div>
+
+      <div class="resource-cards">
+
+        <!-- W-2 Retrieval -->
+        <a href="https://www.staffproinc.com/_files/ugd/ca9ba3_69d2d49593214f72bc96fad026d381ae.pdf"
+           class="resource-card" id="w2" target="_blank" rel="noopener noreferrer">
+          <div class="resource-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <div class="resource-card-title">Register for W-2 Retrieval</div>
+            <div class="resource-card-desc">Instructions for registering to receive and download your W-2 tax form electronically. Opens as a PDF guide.</div>
+          </div>
+          <div class="resource-card-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </div>
+        </a>
+
+        <!-- 1095 Retrieval -->
+        <a href="https://www.staffproinc.com/_files/ugd/ca9ba3_81f4a50a327446b892812774149d30dd.pdf"
+           class="resource-card" id="1095" target="_blank" rel="noopener noreferrer">
+          <div class="resource-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <polyline points="9 11 12 14 22 4"/>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <div class="resource-card-title">Register for 1095 Retrieval</div>
+            <div class="resource-card-desc">Instructions for accessing your 1095-C health coverage form electronically. Required for ACA reporting on your federal return. Opens as a PDF guide.</div>
+          </div>
+          <div class="resource-card-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </div>
+        </a>
+
+        <!-- Employee Portal -->
+        <a href="https://staffpro.payplus360.com/login/" class="resource-card" target="_blank" rel="noopener noreferrer">
+          <div class="resource-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <div class="resource-card-title">Employee Self-Service — PayPlus Portal</div>
+            <div class="resource-card-desc">View your pay stubs, benefits information, tax documents, and personal HR records through the PayPlus360 employee portal.</div>
+          </div>
+          <div class="resource-card-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+
+    <!-- ===================================================
+         CLIENT ONBOARDING TUTORIALS
+         =================================================== -->
+    <div id="onboarding" style="margin-top: var(--sp-16);" class="fade-in fade-in-delay-1">
+      <div class="resource-section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="23 7 16 12 23 17 23 7"/>
+          <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+        </svg>
+        Client Onboarding Tutorials
+      </div>
+
+      <p style="font-size:var(--text-base);color:var(--color-text-secondary);line-height:1.75;margin-bottom:var(--sp-8);max-width:720px;">
+        Step-by-step video tutorials for <strong style="color:var(--color-text);">clients and employers</strong> on using the StaffPro PayPlus360 portal — from hiring and onboarding to wage notifications and I-9 verification.
+      </p>
+
+      <!-- Full walkthrough video -->
+      <div class="video-full">
+        <video controls preload="none" title="Streamlining Your Hiring and Onboarding Processes">
+          <source src="https://video.wixstatic.com/video/ca9ba3_e4a898a4efff4c8d8131376de078d9e8/1080p/mp4/file.mp4" type="video/mp4" />
+          Your browser does not support HTML5 video.
+        </video>
+        <div class="video-full-label">Full Tutorial — Streamlining Your Hiring &amp; Onboarding Processes</div>
+      </div>
+
+      <!-- 7 segment videos -->
+      <div class="video-segments-label">Individual Segments</div>
+      <div class="video-grid">
+
+        <div class="video-card">
+          <video controls preload="none" title="Part 1 - Intro & Getting Started">
+            <source src="https://video.wixstatic.com/video/ca9ba3_961988b13b3741d4b72fccd9b8e603a4/1080p/mp4/file.mp4" type="video/mp4" />
+          </video>
+          <div class="video-card-info">
+            <div class="video-card-title">Part 1 — Intro &amp; Getting Started</div>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <video controls preload="none" title="Part 2 - Hiring a Candidate">
+            <source src="https://video.wixstatic.com/video/ca9ba3_db79fe6bf2c5439aa00231993bfa5c9e/1080p/mp4/file.mp4" type="video/mp4" />
+          </video>
+          <div class="video-card-info">
+            <div class="video-card-title">Part 2 — Hiring a Candidate</div>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <video controls preload="none" title="Part 3 - Wage Notification">
+            <source src="https://video.wixstatic.com/video/ca9ba3_e3face57af354039ac763bc9d1356e7c/1080p/mp4/file.mp4" type="video/mp4" />
+          </video>
+          <div class="video-card-info">
+            <div class="video-card-title">Part 3 — Wage Notification</div>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <video controls preload="none" title="Part 4 - Tracking a Candidate">
+            <source src="https://video.wixstatic.com/video/ca9ba3_c226e3760706408fbc5649caf62c96f7/1080p/mp4/file.mp4" type="video/mp4" />
+          </video>
+          <div class="video-card-info">
+            <div class="video-card-title">Part 4 — Tracking a Candidate</div>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <video controls preload="none" title="Part 5 - I-9 Verification">
+            <source src="https://video.wixstatic.com/video/ca9ba3_9d0c4ddd5f3d46c6a658ad3a8f2bcdca/1080p/mp4/file.mp4" type="video/mp4" />
+          </video>
+          <div class="video-card-info">
+            <div class="video-card-title">Part 5 — I-9 Verification</div>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <video controls preload="none" title="Part 6 - Sending Onboarding Documents">
+            <source src="https://video.wixstatic.com/video/ca9ba3_4d01bd2f168c46f2890b1a09aa00f191/1080p/mp4/file.mp4" type="video/mp4" />
+          </video>
+          <div class="video-card-info">
+            <div class="video-card-title">Part 6 — Sending Onboarding Documents</div>
+          </div>
+        </div>
+
+        <div class="video-card" style="grid-column: 1 / -1; max-width: 50%; margin: 0 auto; width: 100%;">
+          <video controls preload="none" title="Part 7 - Additional Tips & Conclusion">
+            <source src="https://video.wixstatic.com/video/ca9ba3_2114301b98244fc3a4b7b4785b603160/1080p/mp4/file.mp4" type="video/mp4" />
+          </video>
+          <div class="video-card-info">
+            <div class="video-card-title">Part 7 — Additional Tips &amp; Conclusion</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- ===== END VIDEO GRID ===== -->
+
+      <!-- Help callout -->
+      <div style="margin-top:var(--sp-6);background:var(--blue-50);border:1.5px solid var(--blue-100);border-radius:var(--radius-lg);padding:var(--sp-5) var(--sp-6);display:flex;align-items:center;gap:var(--sp-5);">
+        <svg style="width:24px;height:24px;color:var(--color-primary);flex-shrink:0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <p style="font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.75;margin:0;">
+          <strong style="color:var(--color-text);">Need help with onboarding?</strong> Call us at <a href="tel:7184711122" style="color:var(--color-primary);font-weight:600;">718-471-1122</a> or email <a href="mailto:info@staffproonline.com" style="color:var(--color-primary);font-weight:600;">info@staffproonline.com</a> and a StaffPro team member will walk you through it.
+        </p>
+      </div>
+    </div>
+
+
+    <!-- ===================================================
+         POSTER ORDERS (JotForm)
+         =================================================== -->
+    <div id="posters" style="margin-top: var(--sp-16);" class="fade-in fade-in-delay-2">
+      <div class="resource-section-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        Labor Law Poster Orders
+      </div>
+
+      <p style="font-size:var(--text-base);color:var(--color-text-secondary);line-height:1.75;margin-bottom:var(--sp-6);max-width:700px;">
+        New York employers are required to display current federal and state labor law compliance posters in the workplace. Use the form below to place your poster order.
+      </p>
+
+      <!-- =====================================================
+           JOTFORM EMBED
+           Replace the src URL below with your JotForm embed URL.
+           Format: https://form.jotform.com/YOUR_FORM_ID
+           You can also paste the full iframe embed code from JotForm here.
+           ===================================================== -->
+      <div class="jotform-container">
+        <iframe
+          id="posterOrderForm"
+          title="Labor Law Poster Order Form"
+          src="https://form.jotform.com/253574472181056"
+          scrolling="yes"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <!-- ===== END JOTFORM EMBED ===== -->
+
+    </div>
+
+
+    <!-- ===================================================
+         NEED HELP CALLOUT
+         =================================================== -->
+    <div class="fade-in" style="background:var(--blue-50);border:1.5px solid var(--blue-100);border-radius:var(--radius-xl);padding:var(--sp-8) var(--sp-10);display:flex;align-items:center;gap:var(--sp-8);margin-top:var(--sp-16);">
+      <div style="flex:1;">
+        <h3 style="font-size:var(--text-xl);font-weight:700;margin-bottom:var(--sp-2);">Can't find what you need?</h3>
+        <p style="font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.75;">
+          Our team is available to help with any HR, payroll, or portal questions.
+        </p>
+      </div>
+      <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;flex-shrink:0;">
+        <a href="tel:7184711122" class="btn btn-outline">Call 718-471-1122</a>
+        <a href="contact.html"   class="btn btn-primary">Contact Us</a>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="assets/images/logo.png" alt="StaffPro Inc." class="footer-logo-img"
+               onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <span class="footer-logo-fallback" aria-hidden="true"><span class="lf-staff">staff</span><span class="lf-pro">pro</span></span>
+        </div>
+        <p class="footer-tagline">Build Your Business, Not Your HR Department</p>
+        <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.57 3.46 2 2 0 0 1 3.54 1.29h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 5.55 5.55l1.88-1.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.93 14.72"/></svg><a href="tel:7184711122">718-471-1122</a></div>
+        <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:info@staffproonline.com">info@staffproonline.com</a></div>
+        <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>167 Lawrence Avenue, Inwood, NY 11096</span></div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <div class="footer-links">
+          <a href="services.html#payroll"     class="footer-link">Payroll Processing</a>
+          <a href="services.html#hr"          class="footer-link">HR Administration</a>
+          <a href="services.html#benefits"    class="footer-link">Employee Benefits</a>
+          <a href="services.html#workerscomp" class="footer-link">Workers' Compensation</a>
+          <a href="services.html#screening"   class="footer-link">Background Screening</a>
+          <a href="services.html#compliance"  class="footer-link">Tax &amp; Compliance</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <div class="footer-links">
+          <a href="#w2"        class="footer-link">W-2 Retrieval</a>
+          <a href="#1095"      class="footer-link">1095 Retrieval</a>
+          <a href="#onboarding" class="footer-link">Client Onboarding Tutorials</a>
+          <a href="#posters"   class="footer-link">Labor Law Poster Orders</a>
+        </div>
+        <div style="margin-top:var(--sp-5);">
+          <div class="footer-col-title">Company</div>
+          <div class="footer-links">
+            <a href="about.html"   class="footer-link">About StaffPro</a>
+            <a href="contact.html" class="footer-link">Contact Us</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Client Access</div>
+        <div class="footer-links">
+          <a href="https://staffpro.payplus360.com/login/" class="footer-link" target="_blank" rel="noopener noreferrer">PayPlus — Client Login</a>
+          <a href="https://staffpro.payplus360.com/login/" class="footer-link" target="_blank" rel="noopener noreferrer">PayPlus — Employee Login</a>
+        </div>
+        <div style="margin-top:var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-2);">
+          <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer" style="justify-content:center;">Client Login</a>
+          <a href="https://staffpro.payplus360.com/login/" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer" style="justify-content:center;border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);">Employee Login</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 StaffPro Inc. All rights reserved.</span>
+      <span>167 Lawrence Avenue &middot; Inwood, NY 11096</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
