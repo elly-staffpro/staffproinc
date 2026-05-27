@@ -15,13 +15,6 @@
       overflow: hidden;
       margin-bottom: var(--sp-8);
     }
-    .video-full video {
-      display: block;
-      width: 100%;
-      max-height: 520px;
-      object-fit: contain;
-      background: #000;
-    }
     .video-full-label {
       padding: var(--sp-3) var(--sp-5);
       background: var(--gray-900);
@@ -55,12 +48,16 @@
       border-color: var(--blue-200);
       box-shadow: 0 4px 24px rgba(37,64,200,.08);
     }
-    .video-card video {
+    .embed-wrap {
+      aspect-ratio: 16/9;
+      width: 100%;
+      background: #000;
+    }
+    .embed-wrap iframe {
       display: block;
       width: 100%;
-      aspect-ratio: 16/9;
-      background: #000;
-      object-fit: contain;
+      height: 100%;
+      border: 0;
     }
     .video-card-info {
       padding: var(--sp-3) var(--sp-4);
@@ -243,10 +240,9 @@
 
       <!-- Full walkthrough video -->
       <div class="video-full">
-        <video controls preload="none" title="Streamlining Your Hiring and Onboarding Processes">
-          <source src="https://video.wixstatic.com/video/ca9ba3_e4a898a4efff4c8d8131376de078d9e8/1080p/mp4/file.mp4" type="video/mp4" />
-          Your browser does not support HTML5 video.
-        </video>
+        <div class="embed-wrap">
+          <iframe src="https://www.youtube.com/embed/uWgL4ehCVB8?rel=0" title="Full Tutorial — Streamlining Your Hiring and Onboarding Processes" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
         <div class="video-full-label">Full Tutorial — Streamlining Your Hiring &amp; Onboarding Processes</div>
       </div>
 
@@ -255,63 +251,63 @@
       <div class="video-grid">
 
         <div class="video-card">
-          <video controls preload="none" title="Part 1 - Intro & Getting Started">
-            <source src="https://video.wixstatic.com/video/ca9ba3_961988b13b3741d4b72fccd9b8e603a4/1080p/mp4/file.mp4" type="video/mp4" />
-          </video>
+          <div class="embed-wrap">
+            <iframe src="https://www.youtube.com/embed/qzuTh48Tu-E?rel=0" title="Part 1 — Intro & Getting Started" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
           <div class="video-card-info">
             <div class="video-card-title">Part 1 — Intro &amp; Getting Started</div>
           </div>
         </div>
 
         <div class="video-card">
-          <video controls preload="none" title="Part 2 - Hiring a Candidate">
-            <source src="https://video.wixstatic.com/video/ca9ba3_db79fe6bf2c5439aa00231993bfa5c9e/1080p/mp4/file.mp4" type="video/mp4" />
-          </video>
+          <div class="embed-wrap">
+            <iframe src="https://www.youtube.com/embed/VfVa4e7bTaE?rel=0" title="Part 2 — Hiring a Candidate" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
           <div class="video-card-info">
             <div class="video-card-title">Part 2 — Hiring a Candidate</div>
           </div>
         </div>
 
         <div class="video-card">
-          <video controls preload="none" title="Part 3 - Wage Notification">
-            <source src="https://video.wixstatic.com/video/ca9ba3_e3face57af354039ac763bc9d1356e7c/1080p/mp4/file.mp4" type="video/mp4" />
-          </video>
+          <div class="embed-wrap">
+            <iframe src="https://www.youtube.com/embed/Bkv4Zsjqm0Y?rel=0" title="Part 3 — Wage Notification" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
           <div class="video-card-info">
             <div class="video-card-title">Part 3 — Wage Notification</div>
           </div>
         </div>
 
         <div class="video-card">
-          <video controls preload="none" title="Part 4 - Tracking a Candidate">
-            <source src="https://video.wixstatic.com/video/ca9ba3_c226e3760706408fbc5649caf62c96f7/1080p/mp4/file.mp4" type="video/mp4" />
-          </video>
+          <div class="embed-wrap">
+            <iframe src="https://www.youtube.com/embed/BHMVVG9SO-Y?rel=0" title="Part 4 — Tracking a Candidate" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
           <div class="video-card-info">
             <div class="video-card-title">Part 4 — Tracking a Candidate</div>
           </div>
         </div>
 
         <div class="video-card">
-          <video controls preload="none" title="Part 5 - I-9 Verification">
-            <source src="https://video.wixstatic.com/video/ca9ba3_9d0c4ddd5f3d46c6a658ad3a8f2bcdca/1080p/mp4/file.mp4" type="video/mp4" />
-          </video>
+          <div class="embed-wrap">
+            <iframe src="https://www.youtube.com/embed/bXvc8Q7F9sk?rel=0" title="Part 5 — I-9 Verification" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
           <div class="video-card-info">
             <div class="video-card-title">Part 5 — I-9 Verification</div>
           </div>
         </div>
 
         <div class="video-card">
-          <video controls preload="none" title="Part 6 - Sending Onboarding Documents">
-            <source src="https://video.wixstatic.com/video/ca9ba3_4d01bd2f168c46f2890b1a09aa00f191/1080p/mp4/file.mp4" type="video/mp4" />
-          </video>
+          <div class="embed-wrap">
+            <iframe src="https://www.youtube.com/embed/tkKB4pKtv8M?rel=0" title="Part 6 — Sending Onboarding Documents" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
           <div class="video-card-info">
             <div class="video-card-title">Part 6 — Sending Onboarding Documents</div>
           </div>
         </div>
 
         <div class="video-card" style="grid-column: 1 / -1; max-width: 50%; margin: 0 auto; width: 100%;">
-          <video controls preload="none" title="Part 7 - Additional Tips & Conclusion">
-            <source src="https://video.wixstatic.com/video/ca9ba3_2114301b98244fc3a4b7b4785b603160/1080p/mp4/file.mp4" type="video/mp4" />
-          </video>
+          <div class="embed-wrap">
+            <iframe src="https://www.youtube.com/embed/6NGAhmJt6_M?rel=0" title="Part 7 — Additional Tips & Conclusion" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
           <div class="video-card-info">
             <div class="video-card-title">Part 7 — Additional Tips &amp; Conclusion</div>
           </div>
