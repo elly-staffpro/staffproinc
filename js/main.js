@@ -101,6 +101,19 @@
     statEls.forEach(el => statObserver.observe(el));
   }
 
+  /* --- News card expand/collapse --- */
+  document.querySelectorAll('.news-expand-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var card    = btn.closest('.news-card');
+      var detail  = card.querySelector('.news-detail');
+      var label   = btn.querySelector('.expand-label');
+      var expanded = card.classList.toggle('expanded');
+      btn.setAttribute('aria-expanded', expanded);
+      detail.hidden  = !expanded;
+      label.textContent = expanded ? 'Show less' : 'Read more';
+    });
+  });
+
   /* --- Contact form handler (Formspree) --- */
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {

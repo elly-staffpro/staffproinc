@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR &amp; Compliance News — March 2026 | StaffPro Inc.</title>
+  <meta name="description" content="March 2026 HR &amp; compliance update from StaffPro Inc. — 2026 payroll withholding changes and New York Secure Choice Program deadlines." />
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .news-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--sp-6);
+      max-width: 780px;
+      margin-inline: auto;
+    }
+    .news-card {
+      background: var(--white);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-6) var(--sp-7);
+      transition: box-shadow var(--trans), border-color var(--trans);
+    }
+    .news-card:hover {
+      border-color: var(--blue-200);
+      box-shadow: 0 4px 24px rgba(37,64,200,.07);
+    }
+    .news-cat {
+      display: inline-block;
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: var(--sp-3);
+    }
+    .news-headline {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: var(--sp-3);
+      line-height: 1.35;
+    }
+    .news-summary {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      margin-bottom: var(--sp-4);
+    }
+    .news-takeaway {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-2);
+      background: var(--blue-50);
+      border: 1px solid var(--blue-100);
+      border-radius: var(--radius);
+      padding: var(--sp-3) var(--sp-4);
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+    }
+    .news-intro {
+      max-width: 780px;
+      margin-inline: auto;
+      margin-bottom: var(--sp-10);
+    }
+    .news-intro p {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+      margin-top: var(--sp-3);
+    }
+    .news-closing {
+      max-width: 780px;
+      margin-inline: auto;
+      margin-top: var(--sp-12);
+      padding: var(--sp-8) var(--sp-10);
+      background: var(--blue-50);
+      border: 1.5px solid var(--blue-100);
+      border-radius: var(--radius-xl);
+      text-align: center;
+    }
+    .news-closing p {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      margin-bottom: var(--sp-5);
+    }
+    .news-meta {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      text-align: center;
+      margin-top: var(--sp-8);
+      max-width: 780px;
+      margin-inline: auto;
+    }
+    /* Expand / collapse */
+    .news-expand-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      width: 100%;
+      margin-top: var(--sp-4);
+      padding: var(--sp-4) 0 0;
+      border: none;
+      border-top: 1px solid var(--color-border);
+      background: none;
+      cursor: pointer;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-primary);
+      text-align: left;
+      user-select: none;
+    }
+    .news-expand-toggle:hover { opacity: .75; }
+    .expand-icon {
+      flex-shrink: 0;
+      margin-left: auto;
+      transition: transform .2s ease;
+    }
+    .news-card.expanded .expand-icon { transform: rotate(180deg); }
+    .news-detail {
+      margin-top: var(--sp-5);
+      padding-top: var(--sp-5);
+      border-top: 1px dashed var(--color-border);
+    }
+    .news-detail h4 {
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-top: var(--sp-5);
+      margin-bottom: var(--sp-2);
+    }
+    .news-detail h4:first-child { margin-top: 0; }
+    .news-detail p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      margin-bottom: var(--sp-3);
+    }
+    .news-detail ul, .news-detail ol {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      margin-bottom: var(--sp-3);
+      padding-left: var(--sp-5);
+    }
+    .news-detail li { margin-bottom: var(--sp-1); }
+    .news-detail strong { color: var(--color-text); font-weight: 600; }
+    .news-detail a { color: var(--color-primary); }
+  </style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <img src="../assets/images/logo.png" alt="StaffPro Inc." class="nav-logo-img"
+           onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <span class="nav-logo-fallback" aria-hidden="true"><span class="lf-staff">staff</span><span class="lf-pro">pro</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="../services.html"  class="nav-link">Services</a>
+      <a href="../about.html"     class="nav-link">About Us</a>
+      <a href="../resources.html" class="nav-link">Resources</a>
+      <a href="../news.html"      class="nav-link active">News</a>
+      <a href="../contact.html"   class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="https://staffpro.payplus360.com/login/" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">Employee Login</a>
+      <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Client Login</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="../services.html"  class="nav-mobile-link">Services</a>
+  <a href="../about.html"     class="nav-mobile-link">About Us</a>
+  <a href="../resources.html" class="nav-mobile-link">Resources</a>
+  <a href="../news.html"      class="nav-mobile-link">News</a>
+  <a href="../contact.html"   class="nav-mobile-link">Contact</a>
+  <div class="nav-mobile-divider"></div>
+  <a href="https://staffpro.payplus360.com/login/" class="nav-mobile-link" target="_blank" rel="noopener noreferrer">Employee Login ↗</a>
+  <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary nav-mobile-cta" target="_blank" rel="noopener noreferrer">Client Login</a>
+</div>
+
+
+<section class="page-hero">
+  <div class="container page-hero-inner">
+    <span class="eyebrow eyebrow-light">Monthly Bulletin</span>
+    <h1 class="page-hero-title">HR &amp; Compliance News</h1>
+    <p class="page-hero-text">
+      A monthly roundup of what's changing in HR, employment law, payroll, and compliance — curated for business owners.
+    </p>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container">
+
+    <div class="news-intro fade-in">
+      <span class="eyebrow">March 2026</span>
+      <p>March 2026 brought two compliance topics front of mind for employers: important updates to federal payroll withholding rules tied to new tax legislation, and the approaching registration deadlines for the New York Secure Choice Program. Here's what you need to know.</p>
+    </div>
+
+    <div class="news-grid">
+
+      <article class="news-card fade-in">
+        <div class="news-cat" style="color:#059669;background:rgba(5,150,105,.08);">Payroll &amp; Tax</div>
+        <h3 class="news-headline">2026 Payroll Withholding Updates: New Tables, Higher Wage Base, 18+ State Minimum Wage Increases</h3>
+        <p class="news-summary">Federal withholding rules are being updated to reflect new tax legislation — including changes under the One Big Beautiful Bill Act — along with annual inflation adjustments. The Social Security taxable wage base has increased for 2026, meaning employees with higher earnings will hit the cap later in the year. More than 18 states have enacted minimum wage increases taking effect this year, each on its own schedule, and multi-state employers must track each jurisdiction independently.</p>
+        <div class="news-takeaway">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;color:var(--color-primary);"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span><strong>Takeaway:</strong> Confirm your payroll system has the current federal and state withholding tables applied. Conduct a wage analysis for employees near the minimum to catch pay equity issues, and encourage employees with changed circumstances to review and update their W-4.</span>
+        </div>
+        <button class="news-expand-toggle" aria-expanded="false">
+          <span class="expand-label">Read more</span>
+          <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="news-detail" hidden>
+          <h4>Federal Withholding Updates</h4>
+          <p>Federal withholding rules are updated regularly, and 2026 is particularly active. Changes stem from the One Big Beautiful Bill Act (OBBBA), which introduced new deductions and modified existing tax structures. Importantly, not all new provisions immediately translate into updated withholding forms — employers must stay especially vigilant in monitoring IRS guidance and adjusting internal processes accordingly, rather than waiting for a system prompt.</p>
+
+          <h4>State Income Tax Withholding Changes</h4>
+          <p>Several states have published updated withholding tables for 2026 that employers must implement promptly. For multi-state employers, these state-by-state differences underscore the importance of a jurisdiction-specific compliance approach — a table that's current in one state may be outdated in another. Confirm with your payroll provider that each state's current tables are loaded.</p>
+
+          <h4>Social Security Wage Base Increase</h4>
+          <p>The Social Security Administration has adjusted the taxable wage base for 2026 — the ceiling on earnings subject to Social Security tax. High-earning employees who previously hit the cap earlier in the year will now reach it later, meaning Social Security taxes apply to a larger portion of their annual compensation. Employers should update payroll forecasting and review how this interacts with retirement plan contribution limits to keep withholding and benefit deductions accurate throughout the year.</p>
+
+          <h4>State Minimum Wage Increases</h4>
+          <p>More than 18 states have enacted minimum wage increases taking effect in 2026. Failing to implement these on time exposes employers to wage-and-hour violations and associated penalties. Beyond the base wage, employers should assess how increases ripple through their compensation structure — workers earning just above the minimum may expect proportional adjustments to maintain internal pay equity. A wage analysis can identify affected groups, prompt updates to offer letters and compensation bands, and help communicate changes clearly before they take effect.</p>
+
+          <h4>FUTA Credit Reductions</h4>
+          <p>Employers in states with outstanding federal unemployment loan balances face reduced FUTA credits, effectively increasing their federal unemployment tax liability. State unemployment insurance taxable wage bases are also shifting in several jurisdictions. Multi-state employers should check whether any of their operating states have outstanding loan balances that could trigger a credit reduction.</p>
+
+          <h4>Paid Family and Medical Leave</h4>
+          <p>PFML programs are expanding across the country, adding new withholding and contribution obligations for both employers and employees. Employers should ensure they're registered and reporting accurately in every state where PFML programs apply — errors in contribution calculations can lead to audits and retroactive assessments.</p>
+
+          <h4>W-4 Compliance and Employee Records</h4>
+          <p>Accurate employee records are foundational to correct withholding. This is particularly critical for remote and hybrid workforces, where employees may have relocated without formally updating their work location. Employers should encourage employees to revisit their Form W-4 elections in light of new deductions under recent legislation. The IRS Tax Withholding Estimator tool can help employees determine the most accurate withholding amount for their situation.</p>
+
+          <h4>Ongoing Compliance and Audit Culture</h4>
+          <p>Technical system updates alone are insufficient if the people managing payroll are not informed of the regulatory landscape. Conducting regular payroll audits can surface discrepancies before they become regulatory issues. Embedding compliance awareness beyond the payroll department — into HR, finance, and management — is essential for sustainable adherence to rules that change every year.</p>
+        </div>
+      </article>
+
+      <article class="news-card fade-in">
+        <div class="news-cat" style="color:#0891B2;background:rgba(8,145,178,.08);">HR Compliance</div>
+        <h3 class="news-headline">NY Secure Choice Program: What Employers Need to Know Before the Deadlines</h3>
+        <p class="news-summary">New York's Secure Choice Savings Program requires employers with 10 or more New York employees, in business at least two years, who don't offer a qualified retirement plan to auto-enroll employees in a state-facilitated Roth IRA. Employees are enrolled at a default 3% contribution rate and can opt out at any time — no employer contributions are required. Deadlines are staggered: 30+ employees by March 18 (passed); 15–29 employees by May 15; 10–14 employees by July 15, 2026.</p>
+        <div class="news-takeaway">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;color:var(--color-primary);"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span><strong>Takeaway:</strong> If you have 10 or more NY employees and no qualified retirement plan, register before your deadline. If you already offer a 401(k) or similar plan, certify your exemption through the portal. Contact StaffPro at <a href="mailto:securechoice@staffproonline.com">securechoice@staffproonline.com</a> — we have the full packet ready.</span>
+        </div>
+        <button class="news-expand-toggle" aria-expanded="false">
+          <span class="expand-label">Read more</span>
+          <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="news-detail" hidden>
+          <h4>Who Must Participate</h4>
+          <p>New York employers with 10 or more employees who have been in business for at least two years and do not currently offer a qualified retirement plan must participate. This includes private-sector employers and nonprofits. Eligible employees are those who are 18 or older, work at least 20 hours per week for 30 or more days, and don't already participate in a workplace retirement plan. Employers with fewer than 10 employees, or those already offering a 401(k), SEP, SIMPLE IRA, or similar qualified plan, are exempt — but must certify that exemption through the Secure Choice portal. Simply having a plan isn't enough; you need to log in and actively complete the certification.</p>
+
+          <h4>How the Program Works</h4>
+          <p>Secure Choice is a Roth IRA payroll deduction plan. Eligible employees are automatically enrolled at a default contribution rate of 3% of each paycheck, with contributions going directly into their individual Roth IRA accounts. Employees can opt out entirely or change their contribution rate at any time — there's no lock-in period. Employers do not contribute; the employer's role is to register, facilitate payroll deductions, and remit contributions to the program on schedule.</p>
+          <p>Investment options are limited to a curated menu designed for long-term growth and capital preservation. Accounts are portable — employees keep them if they change jobs.</p>
+
+          <h4>Registration Deadlines by Employer Size</h4>
+          <ul>
+            <li><strong>30 or more employees:</strong> March 18, 2026 (deadline has passed)</li>
+            <li><strong>15–29 employees:</strong> May 15, 2026</li>
+            <li><strong>10–14 employees:</strong> July 15, 2026</li>
+          </ul>
+          <p>Missing these deadlines can result in state-imposed penalties and enforcement actions. Noncompliance may also surface during a Department of Labor audit. There is no cost to register, and the process is completed entirely online through the Secure Choice portal.</p>
+
+          <h4>Steps to Comply</h4>
+          <ol>
+            <li>Confirm your NY employee count and whether you currently offer a qualifying retirement plan.</li>
+            <li>If exempt (you already have a 401(k) or similar), certify your exemption through the Secure Choice portal.</li>
+            <li>If enrolling, register online and notify employees about automatic enrollment and their opt-out rights.</li>
+            <li>Coordinate with your payroll provider to set up deductions.</li>
+            <li>Remit contributions on time and maintain records of employee notices, registrations, and payments.</li>
+          </ol>
+
+          <h4>Benefits for Employees</h4>
+          <p>For employees without access to an employer retirement plan, Secure Choice provides a straightforward path to save. Roth IRA contributions grow tax-free and qualified withdrawals are tax-free. The automatic enrollment default encourages consistent saving without requiring any action, and employees can always opt out or adjust their rate if needed.</p>
+
+          <h4>Common Questions</h4>
+          <p><strong>Can employees opt out?</strong> Yes, at any time, with no waiting period or penalty.</p>
+          <p><strong>What if we already offer a retirement plan?</strong> You are exempt — log into the Secure Choice portal and certify that fact.</p>
+          <p><strong>Are employer contributions required?</strong> No. Only employee payroll deductions are required. The employer's role is administrative.</p>
+          <p><strong>How much can employees contribute?</strong> Up to the annual Roth IRA contribution limits set by the IRS each year (currently $7,000 for most employees; $8,000 for those 50 and older).</p>
+          <p><strong>What if we miss the deadline?</strong> The state may impose penalties and require compliance actions retroactively. Register as soon as possible — there's no benefit to waiting.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="news-closing fade-in">
+      <p>Questions about payroll withholding, Secure Choice, or anything else in here? Compliance is what StaffPro does every day — reach out and we'll walk through your specific situation at no extra charge.</p>
+      <a href="../contact.html" class="btn btn-primary">Get in Touch</a>
+    </div>
+
+    <p class="news-meta">Published March 2026 &middot; StaffPro Inc.</p>
+
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="../assets/images/logo.png" alt="StaffPro Inc." class="footer-logo-img"
+               onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <span class="footer-logo-fallback" aria-hidden="true"><span class="lf-staff">staff</span><span class="lf-pro">pro</span></span>
+        </div>
+        <p class="footer-tagline">Build Your Business, Not Your HR Department</p>
+        <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.57 3.46 2 2 0 0 1 3.54 1.29h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 5.55 5.55l1.88-1.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.93 14.72"/></svg><a href="tel:7184711122">718-471-1122</a></div>
+        <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:info@staffproonline.com">info@staffproonline.com</a></div>
+        <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>167 Lawrence Avenue, Inwood, NY 11096</span></div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <div class="footer-links">
+          <a href="../services.html#payroll"     class="footer-link">Payroll Processing</a>
+          <a href="../services.html#hr"          class="footer-link">HR Administration</a>
+          <a href="../services.html#benefits"    class="footer-link">Employee Benefits</a>
+          <a href="../services.html#workerscomp" class="footer-link">Workers' Compensation</a>
+          <a href="../services.html#screening"   class="footer-link">Background Screening</a>
+          <a href="../services.html#compliance"  class="footer-link">Tax &amp; Compliance</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <div class="footer-links">
+          <a href="../resources.html#w2"         class="footer-link">W-2 Retrieval</a>
+          <a href="../resources.html#1095"        class="footer-link">1095 Retrieval</a>
+          <a href="../resources.html#onboarding"  class="footer-link">Client Onboarding Tutorials</a>
+          <a href="../resources.html#posters"     class="footer-link">Labor Law Poster Orders</a>
+        </div>
+        <div style="margin-top:var(--sp-5);">
+          <div class="footer-col-title">Company</div>
+          <div class="footer-links">
+            <a href="../about.html"   class="footer-link">About StaffPro</a>
+            <a href="../news.html"    class="footer-link">HR News</a>
+            <a href="../contact.html" class="footer-link">Contact Us</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Client Access</div>
+        <div class="footer-links">
+          <a href="https://staffpro.payplus360.com/login/" class="footer-link" target="_blank" rel="noopener noreferrer">PayPlus — Client Login</a>
+          <a href="https://staffpro.payplus360.com/login/" class="footer-link" target="_blank" rel="noopener noreferrer">PayPlus — Employee Login</a>
+        </div>
+        <div style="margin-top:var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-2);">
+          <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer" style="justify-content:center;">Client Login</a>
+          <a href="https://staffpro.payplus360.com/login/" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer" style="justify-content:center;border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);">Employee Login</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 StaffPro Inc. All rights reserved.</span>
+      <span>167 Lawrence Avenue &middot; Inwood, NY 11096</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

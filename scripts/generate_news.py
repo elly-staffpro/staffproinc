@@ -112,7 +112,8 @@ Write a polished monthly bulletin for {month_year}. Return ONLY valid JSON — n
       "headline": "Clear, compelling headline written in your own words",
       "category": "One of: Employment Law | Payroll & Tax | Employee Benefits | Workplace Safety | Workers' Comp | HR Compliance",
       "summary": "2–3 sentences explaining what happened and why it matters to employers.",
-      "takeaway": "One practical sentence: what should a business owner do or know because of this?"
+      "takeaway": "One practical sentence: what should a business owner do or know because of this?",
+      "detail": "3–5 paragraphs expanding on the story with specific details, affected parties, step-by-step guidance where relevant, and any important nuance. Use short paragraphs. Optionally use a section heading (prefix with ##) before each paragraph to organize the content. Plain English only."
     }}
   ],
   "closing": "1–2 sentences encouraging readers to reach out to StaffPro with questions."
@@ -136,8 +137,36 @@ Select the 5 most relevant stories for small-to-mid-size employers. Plain Englis
 
 # ── HTML rendering ──────────────────────────────────────────────────────────────
 
+def build_detail_html(raw_detail: str) -> str:
+    """Convert the detail field (plain text with optional ## headings) into HTML paragraphs."""
+    if not raw_detail:
+        return ""
+    lines, html_parts = raw_detail.strip().split("\n"), []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        if line.startswith("## "):
+            html_parts.append(f"<h4>{line[3:].strip()}</h4>")
+        else:
+            html_parts.append(f"<p>{line}</p>")
+    return "\n        ".join(html_parts)
+
+
 def build_story_html(story):
     color, bg = CATEGORY_STYLES.get(story["category"], ("var(--color-primary)", "rgba(37,64,200,.08)"))
+    detail_raw  = story.get("detail", "")
+    detail_html = build_detail_html(detail_raw)
+    expand_block = ""
+    if detail_html:
+        expand_block = f"""
+        <button class="news-expand-toggle" aria-expanded="false">
+          <span class="expand-label">Read more</span>
+          <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="news-detail" hidden>
+        {detail_html}
+        </div>"""
     return f"""
       <article class="news-card fade-in">
         <div class="news-cat" style="color:{color};background:{bg};">{story['category']}</div>
@@ -146,7 +175,7 @@ def build_story_html(story):
         <div class="news-takeaway">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;color:var(--color-primary);"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           <span><strong>Takeaway:</strong> {story['takeaway']}</span>
-        </div>
+        </div>{expand_block}
       </article>"""
 
 
@@ -296,7 +325,60 @@ SHARED_STYLES = """
     }
     @media (max-width: 640px) {
       .archive-grid { grid-template-columns: repeat(2, 1fr); }
-    }"""
+    }
+    .news-expand-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      width: 100%;
+      margin-top: var(--sp-4);
+      padding: var(--sp-4) 0 0;
+      border: none;
+      border-top: 1px solid var(--color-border);
+      background: none;
+      cursor: pointer;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-primary);
+      text-align: left;
+      user-select: none;
+    }
+    .news-expand-toggle:hover { opacity: .75; }
+    .expand-icon {
+      flex-shrink: 0;
+      margin-left: auto;
+      transition: transform .2s ease;
+    }
+    .news-card.expanded .expand-icon { transform: rotate(180deg); }
+    .news-detail {
+      margin-top: var(--sp-5);
+      padding-top: var(--sp-5);
+      border-top: 1px dashed var(--color-border);
+    }
+    .news-detail h4 {
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-text);
+      margin-top: var(--sp-5);
+      margin-bottom: var(--sp-2);
+    }
+    .news-detail h4:first-child { margin-top: 0; }
+    .news-detail p {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      margin-bottom: var(--sp-3);
+    }
+    .news-detail ul, .news-detail ol {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      margin-bottom: var(--sp-3);
+      padding-left: var(--sp-5);
+    }
+    .news-detail li { margin-bottom: var(--sp-1); }
+    .news-detail strong { color: var(--color-text); font-weight: 600; }
+    .news-detail a { color: var(--color-primary); }"""
 
 
 def render_nav(p, active_news=True):
