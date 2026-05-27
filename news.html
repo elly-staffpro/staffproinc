@@ -138,6 +138,7 @@
     .news-expand-toggle {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: var(--sp-2);
       width: 100%;
       margin-top: var(--sp-4);
@@ -149,13 +150,12 @@
       font-size: var(--text-sm);
       font-weight: 600;
       color: var(--color-primary);
-      text-align: left;
+      text-align: center;
       user-select: none;
     }
     .news-expand-toggle:hover { opacity: .75; }
     .expand-icon {
       flex-shrink: 0;
-      margin-left: auto;
       transition: transform .2s ease;
     }
     .news-card.expanded .expand-icon { transform: rotate(180deg); }

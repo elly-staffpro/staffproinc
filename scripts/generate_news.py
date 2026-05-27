@@ -211,6 +211,7 @@ SHARED_STYLES = """
       border: 1.5px solid var(--color-border);
       border-radius: var(--radius-lg);
       padding: var(--sp-6) var(--sp-7);
+      overflow: hidden;
       transition: box-shadow var(--trans), border-color var(--trans);
     }
     .news-card:hover {
@@ -329,10 +330,11 @@ SHARED_STYLES = """
     .news-expand-toggle {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: var(--sp-2);
       width: 100%;
       margin-top: var(--sp-4);
-      padding: var(--sp-4) 0 0;
+      padding: var(--sp-4) 0 var(--sp-1);
       border: none;
       border-top: 1px solid var(--color-border);
       background: none;
@@ -340,13 +342,12 @@ SHARED_STYLES = """
       font-size: var(--text-sm);
       font-weight: 600;
       color: var(--color-primary);
-      text-align: left;
+      text-align: center;
       user-select: none;
     }
     .news-expand-toggle:hover { opacity: .75; }
     .expand-icon {
       flex-shrink: 0;
-      margin-left: auto;
       transition: transform .2s ease;
     }
     .news-card.expanded .expand-icon { transform: rotate(180deg); }
