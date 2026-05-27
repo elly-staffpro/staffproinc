@@ -274,6 +274,17 @@ SHARED_STYLES = """
       border-radius: var(--radius-xl);
       text-align: center;
     }
+    .news-disclaimer {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      text-align: center;
+      max-width: 780px;
+      margin-inline: auto;
+      margin-top: var(--sp-6);
+      padding-top: var(--sp-5);
+      border-top: 1px solid var(--color-border);
+    }
     .news-closing p {
       font-size: var(--text-base);
       color: var(--color-text-secondary);
@@ -537,6 +548,8 @@ def render_page(data, p="", archive=None):
       <p>{data['closing']}</p>
       <a href="{p}contact.html" class="btn btn-primary">Get in Touch</a>
     </div>
+
+    <p class="news-disclaimer">This bulletin is provided for general informational purposes only and does not constitute legal advice. Employment laws vary by jurisdiction and are subject to change — consult qualified legal counsel before taking action based on any content in this publication.</p>
 
 {archive_html}
 
