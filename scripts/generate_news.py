@@ -113,7 +113,7 @@ Write a polished monthly bulletin for {month_year}. Return ONLY valid JSON — n
       "category": "One of: Employment Law | Payroll & Tax | Employee Benefits | Workplace Safety | Workers' Comp | HR Compliance",
       "summary": "2–3 sentences explaining what happened and why it matters to employers.",
       "takeaway": "One practical sentence: what should a business owner do or know because of this?",
-      "detail": "3–5 paragraphs expanding on the story with specific details, affected parties, step-by-step guidance where relevant, and any important nuance. Use short paragraphs. Optionally use a section heading (prefix with ##) before each paragraph to organize the content. Plain English only."
+      "detail": "2–3 short paragraphs expanding on the story with specific details, affected parties, and any important nuance. No section headings. Plain English only."
     }}
   ],
   "closing": "1–2 sentences encouraging readers to reach out to StaffPro with questions."
@@ -123,7 +123,7 @@ Select the 5 most relevant stories for small-to-mid-size employers. Plain Englis
 
     message = client.messages.create(
         model="claude-sonnet-4-5",
-        max_tokens=4096,
+        max_tokens=8192,
         messages=[{"role": "user", "content": prompt}],
     )
 
