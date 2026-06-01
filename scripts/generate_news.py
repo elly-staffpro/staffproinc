@@ -123,7 +123,7 @@ Select the 5 most relevant stories for small-to-mid-size employers. Plain Englis
 
     message = client.messages.create(
         model="claude-sonnet-4-5",
-        max_tokens=2048,
+        max_tokens=4096,
         messages=[{"role": "user", "content": prompt}],
     )
 
