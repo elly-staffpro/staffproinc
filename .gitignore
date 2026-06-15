@@ -1,0 +1,7 @@
+# Python build artifacts
+__pycache__/
+*.pyc
+
+# Internal reference docs — keep OUT of the public site
+StaffPro Website Hosting Reference.pdf
+assets/docs/_PUT-PDFS-HERE.txt

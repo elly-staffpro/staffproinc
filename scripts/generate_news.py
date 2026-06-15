@@ -7,8 +7,10 @@ Saves each issue to news/YYYY-MM.html and maintains an archive index.
 """
 
 import os
+import sys
 import json
 import re
+import time
 import requests
 from anthropic import Anthropic
 from datetime import datetime
@@ -87,6 +89,24 @@ def fetch_articles():
 
 # ── Curate with Claude ──────────────────────────────────────────────────────────
 
+def extract_json(text: str):
+    """Pull a JSON object out of the model response, tolerant of code fences or
+    stray prose around it. Raises ValueError if no parseable object is found."""
+    text = text.strip()
+    # Strip leading/trailing markdown code fences if present.
+    text = re.sub(r"^```(?:json)?\s*", "", text)
+    text = re.sub(r"\s*```$", "", text)
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+    # Fallback: grab everything from the first '{' to the last '}'.
+    start, end = text.find("{"), text.rfind("}")
+    if start != -1 and end != -1 and end > start:
+        return json.loads(text[start:end + 1])
+    raise ValueError("No JSON object found in model response")
+
+
 def curate_with_claude(articles):
     client = Anthropic(api_key=ANTHROPIC_API_KEY)
     month_year = datetime.now().strftime("%B %Y")
@@ -121,18 +141,28 @@ Write a polished monthly bulletin for {month_year}. Return ONLY valid JSON — n
 
 Select the 5 most relevant stories for small-to-mid-size employers. Plain English only — no legalese, no filler."""
 
-    message = client.messages.create(
-        model="claude-sonnet-4-5",
-        max_tokens=8192,
-        messages=[{"role": "user", "content": prompt}],
-    )
+    last_err = None
+    for attempt in range(1, 4):  # up to 3 tries
+        try:
+            message = client.messages.create(
+                model="claude-sonnet-4-5",
+                max_tokens=8192,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            if not message.content or not message.content[0].text:
+                raise ValueError("Empty response from Claude")
+            data = extract_json(message.content[0].text)
+            if not data.get("stories"):
+                raise ValueError("Response contained no stories")
+            print(f"  Generated {len(data['stories'])} stories for {data['month']}.")
+            return data
+        except Exception as e:  # noqa: BLE001 — retry on any transient/parse failure
+            last_err = e
+            print(f"  Attempt {attempt}/3 failed: {e}")
+            if attempt < 3:
+                time.sleep(2 ** attempt)  # 2s, then 4s
 
-    text = message.content[0].text.strip()
-    text = re.sub(r"^```(?:json)?\s*", "", text)
-    text = re.sub(r"\s*```$", "", text)
-    data = json.loads(text)
-    print(f"  Generated {len(data['stories'])} stories for {data['month']}.")
-    return data
+    raise RuntimeError(f"Claude curation failed after 3 attempts: {last_err}")
 
 
 # ── HTML rendering ──────────────────────────────────────────────────────────────
@@ -510,6 +540,10 @@ def render_page(data, p="", archive=None):
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HR &amp; Compliance News — {month_year} | StaffPro Inc.</title>
   <meta name="description" content="Monthly HR and compliance news bulletin from StaffPro Inc. — {month_year}" />
+  <meta property="og:title"       content="HR &amp; Compliance News — {month_year} | StaffPro Inc." />
+  <meta property="og:description" content="Monthly HR and compliance news bulletin from StaffPro Inc. — {month_year}" />
+  <meta property="og:type"        content="article" />
+  <meta property="og:image"       content="https://www.staffproinc.com/assets/images/logo.png" />
   <link rel="icon" type="image/png" href="{p}assets/images/favicon.png" />
   <link rel="stylesheet" href="{p}css/style.css" />
   <style>{SHARED_STYLES}
@@ -563,6 +597,35 @@ def render_page(data, p="", archive=None):
 </html>"""
 
 
+# ── Sitemap ─────────────────────────────────────────────────────────────────────
+
+SITEMAP_STATIC = [
+    ("",               "monthly", "1.0"),
+    ("services.html",  "monthly", "0.9"),
+    ("about.html",     "yearly",  "0.7"),
+    ("resources.html", "monthly", "0.7"),
+    ("news.html",      "monthly", "0.8"),
+    ("contact.html",   "yearly",  "0.6"),
+]
+BASE_URL = "https://www.staffproinc.com/"
+
+def build_sitemap(archive):
+    """Rebuild sitemap.xml from the static pages plus every archived news issue,
+    so it never goes stale as new monthly issues are added."""
+    rows = []
+    for path, freq, prio in SITEMAP_STATIC:
+        rows.append(f"  <url>\n    <loc>{BASE_URL}{path}</loc>\n"
+                    f"    <changefreq>{freq}</changefreq>\n    <priority>{prio}</priority>\n  </url>")
+    for e in archive:
+        rows.append(f"  <url>\n    <loc>{BASE_URL}news/{e['file']}</loc>\n"
+                    f"    <changefreq>never</changefreq>\n    <priority>0.4</priority>\n  </url>")
+    xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+           + "\n".join(rows) + "\n</urlset>\n")
+    (ROOT / "sitemap.xml").write_text(xml, encoding="utf-8")
+    print(f"  Rebuilt sitemap.xml ({len(SITEMAP_STATIC)} pages + {len(archive)} news issues).")
+
+
 # ── Main ────────────────────────────────────────────────────────────────────────
 
 def main():
@@ -575,6 +638,8 @@ def main():
     # Fetch and curate
     print("Fetching articles...")
     articles = fetch_articles()
+    if not articles:
+        raise RuntimeError("NewsAPI returned zero usable articles — aborting so we don't publish an empty bulletin.")
 
     print("Curating with Claude...")
     data = curate_with_claude(articles)
@@ -604,8 +669,18 @@ def main():
     main_html   = render_page(data, p="", archive=past_issues)
     (ROOT / "news.html").write_text(main_html, encoding="utf-8")
 
+    # Keep sitemap.xml in sync with the full archive
+    print("Rebuilding sitemap...")
+    build_sitemap(archive)
+
     print("Done.")
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:  # noqa: BLE001
+        # ::error:: makes GitHub Actions surface this prominently and the
+        # non-zero exit marks the whole run as failed (so it isn't silent).
+        print(f"::error::Monthly news generation failed: {e}")
+        sys.exit(1)
