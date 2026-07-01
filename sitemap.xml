@@ -31,6 +31,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.staffproinc.com/news/2026-07.html</loc>
+    <changefreq>never</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://www.staffproinc.com/news/2026-06.html</loc>
     <changefreq>never</changefreq>
     <priority>0.4</priority>
