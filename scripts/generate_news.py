@@ -635,6 +635,15 @@ def main():
     archive = load_archive()
     print(f"  Archive has {len(archive)} existing issues.")
 
+    # Idempotency guard: if this month's issue was already generated, a SCHEDULED
+    # run is the safety-net second attempt — do nothing. A manual run
+    # (workflow_dispatch) or local run still regenerates on purpose.
+    this_month_file = f"{datetime.now().strftime('%Y-%m')}.html"
+    already_done = (ARCHIVE_DIR / this_month_file).exists()
+    if already_done and os.environ.get("GITHUB_EVENT_NAME") == "schedule":
+        print(f"  {this_month_file} already exists — this month is done. Skipping.")
+        return
+
     # Fetch and curate
     print("Fetching articles...")
     articles = fetch_articles()

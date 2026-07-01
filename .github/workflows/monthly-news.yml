@@ -2,7 +2,11 @@ name: Monthly HR News Update
 
 on:
   schedule:
-    - cron: '0 9 1 * *'   # 9:00 AM UTC on the 1st of every month
+    # 09:32 & 13:32 UTC on the 1st. Off the top of the hour (which GitHub drops
+    # most often under load), and a second attempt a few hours later as a safety
+    # net in case the first is skipped. The run is idempotent for the month.
+    - cron: '32 9 1 * *'
+    - cron: '32 13 1 * *'
   workflow_dispatch:       # Allow manual trigger from GitHub Actions tab
 
 permissions:
