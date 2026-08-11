@@ -121,6 +121,7 @@
       e.preventDefault();
 
       const btn = contactForm.querySelector('.form-submit');
+      const originalLabel = btn.textContent;
       btn.disabled = true;
       btn.textContent = 'Sending…';
 
@@ -138,13 +139,13 @@
           if (success) success.classList.add('show');
         } else {
           btn.disabled = false;
-          btn.textContent = 'Send Message';
+          btn.textContent = originalLabel;
           alert('Something went wrong. Please try again or call us at (718) 471-1122.');
         }
       })
       .catch(function () {
         btn.disabled = false;
-        btn.textContent = 'Send Message';
+        btn.textContent = originalLabel;
         alert('Something went wrong. Please try again or call us at (718) 471-1122.');
       });
     });

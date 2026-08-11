@@ -444,8 +444,11 @@ def render_nav(p, active_news=True):
       <a href="{p}contact.html"   class="nav-link">Contact</a>
     </div>
     <div class="nav-actions">
-      <a href="https://staffpro.payplus360.com/login/" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer">Employee Login</a>
-      <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Client Login</a>
+      <a href="tel:7184711122" class="nav-icon-btn" aria-label="Call StaffPro at 718-471-1122" title="Call 718-471-1122">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.57 3.46 2 2 0 0 1 3.54 1.29h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 5.55 5.55l1.88-1.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.93 14.72"/></svg>
+      </a>
+      <a href="https://staffpro.payplus360.com/login/" class="nav-login-link" target="_blank" rel="noopener noreferrer">Login</a>
+      <a href="{p}contact.html" class="btn btn-primary btn-sm">Get a Quote</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -459,8 +462,9 @@ def render_nav(p, active_news=True):
   <a href="{p}news.html"      class="nav-mobile-link">News</a>
   <a href="{p}contact.html"   class="nav-mobile-link">Contact</a>
   <div class="nav-mobile-divider"></div>
-  <a href="https://staffpro.payplus360.com/login/" class="nav-mobile-link" target="_blank" rel="noopener noreferrer">Employee Login ↗</a>
-  <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary nav-mobile-cta" target="_blank" rel="noopener noreferrer">Client Login</a>
+  <a href="tel:7184711122" class="nav-mobile-link">Call 718-471-1122</a>
+  <a href="https://staffpro.payplus360.com/login/" class="nav-mobile-link" target="_blank" rel="noopener noreferrer">Client / Employee Login ↗</a>
+  <a href="{p}contact.html" class="btn btn-primary nav-mobile-cta">Get a Quote</a>
 </div>"""
 
 

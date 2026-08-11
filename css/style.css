@@ -340,7 +340,34 @@ input, textarea, select { font-family: inherit; }
 .nav-link.active::after { transform: scaleX(1); }
 
 /* Nav Actions */
-.nav-actions { display: flex; align-items: center; gap: var(--sp-2); }
+.nav-actions { display: flex; align-items: center; gap: var(--sp-3); }
+
+.nav-icon-btn {
+  display: none; /* shown only at wide desktop widths, see media query below */
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  color: var(--gray-600);
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+  transition: color var(--trans), border-color var(--trans), background var(--trans);
+}
+.nav-icon-btn svg { width: 16px; height: 16px; }
+.nav-icon-btn:hover { color: var(--color-primary); border-color: var(--blue-200); background: var(--blue-50); }
+@media (min-width: 1150px) {
+  .nav-icon-btn { display: flex; }
+}
+
+.nav-login-link {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--gray-500);
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: color var(--trans);
+}
+.nav-login-link:hover { color: var(--color-primary); }
 
 /* Resources Page */
 .resource-section-title {
@@ -1171,6 +1198,13 @@ input, textarea, select { font-family: inherit; }
 .form-select   { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237C7C92' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 2.5rem; }
 
 .form-submit { width: 100%; justify-content: center; margin-top: var(--sp-2); padding: 1rem; font-size: var(--text-base); }
+
+.form-reassurance {
+  text-align: center;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--sp-3);
+}
 
 .form-success {
   display: none;
