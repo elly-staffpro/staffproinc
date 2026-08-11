@@ -1224,6 +1224,47 @@ input, textarea, select { font-family: inherit; }
 .form-success-text    { font-size: var(--text-sm); color: var(--color-text-secondary); }
 
 /* ------------------------------------------------
+   FAQ ACCORDION
+   ------------------------------------------------ */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.faq-item {
+  background: var(--white);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--trans), box-shadow var(--trans);
+}
+.faq-item:hover { border-color: var(--blue-200); }
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-6);
+  text-align: left;
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+}
+.faq-icon {
+  flex-shrink: 0;
+  color: var(--color-primary);
+  transition: transform 0.2s ease;
+}
+.faq-item.open .faq-icon { transform: rotate(180deg); }
+.faq-answer {
+  padding: 0 var(--sp-6) var(--sp-5);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+}
+
+/* ------------------------------------------------
    FOOTER
    ------------------------------------------------ */
 .footer {

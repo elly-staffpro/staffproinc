@@ -114,6 +114,17 @@
     });
   });
 
+  /* --- FAQ accordion --- */
+  document.querySelectorAll('.faq-question').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item    = btn.closest('.faq-item');
+      var answer  = item.querySelector('.faq-answer');
+      var open    = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+      answer.hidden = !open;
+    });
+  });
+
   /* --- Contact form handler (Formspree) --- */
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
