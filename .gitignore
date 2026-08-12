@@ -5,3 +5,6 @@ __pycache__/
 # Internal reference docs — keep OUT of the public site
 StaffPro Website Hosting Reference.pdf
 assets/docs/_PUT-PDFS-HERE.txt
+
+# Testimonial/content staging — not live until built into a real section
+content-drafts/

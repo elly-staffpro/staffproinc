@@ -1224,6 +1224,92 @@ input, textarea, select { font-family: inherit; }
 .form-success-text    { font-size: var(--text-sm); color: var(--color-text-secondary); }
 
 /* ------------------------------------------------
+   TESTIMONIALS
+   ------------------------------------------------ */
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--sp-6);
+  max-width: 980px;
+  margin-inline: auto;
+}
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-7) var(--sp-7) var(--sp-6);
+  transition: border-color var(--trans), box-shadow var(--trans);
+}
+.testimonial-card:hover {
+  border-color: var(--blue-200);
+  box-shadow: 0 4px 24px rgba(37,64,200,.07);
+}
+.testimonial-quote-mark {
+  width: 30px; height: 30px;
+  color: var(--blue-200);
+  margin-bottom: var(--sp-4);
+  flex-shrink: 0;
+}
+.testimonial-text {
+  font-size: var(--text-lg);
+  color: var(--color-text);
+  line-height: 1.7;
+  margin-bottom: var(--sp-5);
+  flex: 1;
+}
+.testimonial-attr {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--color-border);
+}
+.testimonial-initial {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--blue-50);
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: var(--text-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.testimonial-name    { font-size: var(--text-sm); font-weight: 700; color: var(--color-text); }
+.testimonial-company { font-size: var(--text-sm); color: var(--color-text-muted); }
+
+/* Credential / membership badge row */
+.trust-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-6) var(--sp-10);
+  max-width: 980px;
+  margin: var(--sp-12) auto 0;
+  padding-top: var(--sp-8);
+  border-top: 1px solid var(--color-border);
+}
+.trust-badge-img {
+  height: auto;
+  width: 168px;
+  max-width: 100%;
+  opacity: 0.9;
+}
+.trust-badge-note {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  max-width: 420px;
+}
+@media (max-width: 640px) {
+  .trust-badges { flex-direction: column; text-align: center; gap: var(--sp-5); }
+}
+
+/* ------------------------------------------------
    FAQ ACCORDION
    ------------------------------------------------ */
 .faq-list {
