@@ -497,8 +497,8 @@ def render_footer(p):
       <div>
         <div class="footer-col-title">Resources</div>
         <div class="footer-links">
-          <a href="{p}resources.html#w2"         class="footer-link">W-2 Retrieval</a>
-          <a href="{p}resources.html#1095"        class="footer-link">1095 Retrieval</a>
+          <a href="{p}employee-resources.html#w2"         class="footer-link">W-2 Retrieval</a>
+          <a href="{p}employee-resources.html#1095"        class="footer-link">1095 Retrieval</a>
           <a href="{p}resources.html#onboarding"  class="footer-link">Client Onboarding Tutorials</a>
           <a href="{p}resources.html#posters"     class="footer-link">Labor Law Poster Orders</a>
         </div>
@@ -608,6 +608,7 @@ SITEMAP_STATIC = [
     ("services.html",  "monthly", "0.9"),
     ("about.html",     "yearly",  "0.7"),
     ("resources.html", "monthly", "0.7"),
+    ("employee-resources.html", "monthly", "0.7"),
     ("news.html",      "monthly", "0.8"),
     ("contact.html",   "yearly",  "0.6"),
 ]
