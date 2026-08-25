@@ -386,65 +386,57 @@
             </div>
           </div>
 
-          <div class="product-row">
-            <div class="product-main">
-              <div class="product-name">All Other States &mdash; English</div>
-              <div class="product-price">$34.95 each</div>
-              <div class="product-opts">
-                <select class="form-select" name="English State" aria-label="State for English poster">
-                  <option value="">Select a state</option>
-                <option value="AL">AL</option>
-                <option value="AR">AR</option>
-                <option value="CT">CT</option>
-                <option value="FL">FL</option>
-                <option value="GA">GA</option>
-                <option value="LA">LA</option>
-                <option value="MA">MA</option>
-                <option value="MD">MD</option>
-                <option value="MS">MS</option>
-                <option value="SC">SC</option>
-                <option value="TX">TX</option>
-                <option value="WV">WV</option>
-                <option value="VA">VA</option>
-                </select>
-              </div>
-            </div>
-            <div class="qty-wrap">
-              <label for="qty-en">Qty</label>
-              <input class="qty-input" type="number" id="qty-en" name="English Poster Qty"
-                     min="0" step="1" value="0" data-price="34.95" data-label="All Other States — English" />
-            </div>
+          <div class="other-states-head">
+            <span class="other-states-title">All Other States</span>
+            <span class="other-states-price">$34.95 each</span>
           </div>
 
-          <div class="product-row">
-            <div class="product-main">
-              <div class="product-name">All Other States &mdash; Spanish</div>
-              <div class="product-price">$34.95 each</div>
-              <div class="product-opts">
-                <select class="form-select" name="Spanish State" aria-label="State for Spanish poster">
-                  <option value="">Select a state</option>
-                <option value="AL">AL</option>
-                <option value="AR">AR</option>
-                <option value="CT">CT</option>
-                <option value="FL">FL</option>
-                <option value="GA">GA</option>
-                <option value="LA">LA</option>
-                <option value="MA">MA</option>
-                <option value="MD">MD</option>
-                <option value="MS">MS</option>
-                <option value="SC">SC</option>
-                <option value="TX">TX</option>
-                <option value="WV">WV</option>
-                <option value="VA">VA</option>
-                </select>
+          <div id="otherStates"></div>
+
+          <div class="add-state-wrap">
+            <button type="button" id="addStateRow" class="btn btn-outline btn-sm">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add another state
+            </button>
+          </div>
+
+          <template id="otherStateTemplate">
+            <div class="product-row other-row">
+              <div class="product-main">
+                <div class="product-name os-name">Select a state</div>
+                <div class="product-opts">
+                  <select class="form-select os-state" aria-label="State">
+                    <option value="">Select a state</option>
+            <option value="AL">Alabama</option>
+            <option value="AR">Arkansas</option>
+            <option value="CT">Connecticut</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="LA">Louisiana</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MD">Maryland</option>
+            <option value="MS">Mississippi</option>
+            <option value="SC">South Carolina</option>
+            <option value="TX">Texas</option>
+            <option value="WV">West Virginia</option>
+            <option value="VA">Virginia</option>
+                  </select>
+                  <select class="form-select os-lang" aria-label="Language">
+                    <option value="English">English</option>
+                    <option value="Spanish">Spanish</option>
+                  </select>
+                </div>
+              </div>
+              <div class="qty-wrap">
+                <label>Qty</label>
+                <input class="qty-input os-qty" type="number" min="0" step="1" value="0" data-price="34.95" aria-label="Quantity" />
+                <button type="button" class="os-remove" aria-label="Remove this state">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
               </div>
             </div>
-            <div class="qty-wrap">
-              <label for="qty-es">Qty</label>
-              <input class="qty-input" type="number" id="qty-es" name="Spanish Poster Qty"
-                     min="0" step="1" value="0" data-price="34.95" data-label="All Other States — Spanish" />
-            </div>
-          </div>
+          </template>
+
         </fieldset>
 
         <div class="order-summary" id="orderTotals" aria-live="polite">
