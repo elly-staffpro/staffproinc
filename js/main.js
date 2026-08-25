@@ -173,8 +173,8 @@
     function describe(input) {
       const row = input.closest('.product-row');
       if (input.dataset.label) {                       // fixed NY / NJ rows
-        const lang = row.querySelector('select');
-        return { name: input.dataset.label, option: lang ? lang.value : '', missing: null };
+        // Each language has its own quantity box, so the language lives on the input
+        return { name: input.dataset.label, option: input.dataset.lang || '', missing: null };
       }
       const stateSel = row.querySelector('.os-state');  // repeatable rows
       const langSel = row.querySelector('.os-lang');
@@ -291,12 +291,24 @@
       summary += '\nESTIMATED TOTAL: ' + money(items + ship) + '\n';
       document.getElementById('orderSummary').value = summary;
 
-      // Name the repeatable rows so they arrive as readable fields too
-      statesEl.querySelectorAll('.other-row').forEach(function (row, i) {
-        const n = i + 1;
-        row.querySelector('.os-state').name = 'Other State ' + n;
-        row.querySelector('.os-lang').name = 'Other State ' + n + ' Language';
-        row.querySelector('.os-qty').name = 'Other State ' + n + ' Qty';
+      // Name the repeatable rows so they arrive as readable fields too.
+      // Rows left empty stay unnamed, so they aren't submitted at all.
+      let n = 0;
+      statesEl.querySelectorAll('.other-row').forEach(function (row) {
+        const stateSel = row.querySelector('.os-state');
+        const langSel = row.querySelector('.os-lang');
+        const qtyEl = row.querySelector('.os-qty');
+        const qty = parseInt(qtyEl.value, 10);
+        if (!qty || qty < 1) {
+          stateSel.removeAttribute('name');
+          langSel.removeAttribute('name');
+          qtyEl.removeAttribute('name');
+          return;
+        }
+        n += 1;
+        stateSel.name = 'Other State ' + n;
+        langSel.name = 'Other State ' + n + ' Language';
+        qtyEl.name = 'Other State ' + n + ' Qty';
       });
 
       const btn = posterForm.querySelector('.form-submit');
