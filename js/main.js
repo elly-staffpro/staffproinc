@@ -125,6 +125,136 @@
     });
   });
 
+  /* --- Labor law poster order form --- */
+  const posterForm = document.getElementById('posterOrderForm');
+  if (posterForm) {
+    const SHIPPING = 18.50;
+    const qtyInputs = Array.prototype.slice.call(posterForm.querySelectorAll('.qty-input'));
+    const linesEl = document.getElementById('orderLines');
+    const emptyEl = document.getElementById('orderEmpty');
+
+    function money(n) { return '$' + n.toFixed(2); }
+
+    // Which <select> qualifies a given product row (language or state)
+    function optionFor(input) {
+      const row = input.closest('.product-row');
+      const sel = row ? row.querySelector('select') : null;
+      if (!sel) return { label: '', value: '', el: null };
+      return { label: sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].text : '', value: sel.value, el: sel };
+    }
+
+    function currentLines() {
+      const out = [];
+      qtyInputs.forEach(function (input) {
+        const qty = parseInt(input.value, 10);
+        if (!qty || qty < 1) return;
+        const price = parseFloat(input.dataset.price);
+        const opt = optionFor(input);
+        out.push({
+          label: input.dataset.label,
+          option: opt.value ? opt.label : '',
+          qty: qty,
+          price: price,
+          subtotal: qty * price
+        });
+      });
+      return out;
+    }
+
+    function render() {
+      const lines = currentLines();
+      if (!lines.length) {
+        emptyEl.hidden = false;
+        linesEl.hidden = true;
+        linesEl.innerHTML = '';
+        return;
+      }
+      emptyEl.hidden = true;
+      linesEl.hidden = false;
+
+      let items = 0;
+      let html = '';
+      lines.forEach(function (l) {
+        items += l.subtotal;
+        const name = l.option ? (l.label + ' (' + l.option + ')') : l.label;
+        html += '<div class="order-line"><span>' + name + ' &times; ' + l.qty + '</span><span>' + money(l.subtotal) + '</span></div>';
+      });
+      html += '<div class="order-line"><span>Shipping (estimated)</span><span>' + money(SHIPPING) + '</span></div>';
+      html += '<div class="order-line total"><span>Estimated Total</span><span>' + money(items + SHIPPING) + '</span></div>';
+      html += '<p class="order-note">Shipping is an estimate and may vary with quantity. We’ll confirm the final amount before billing.</p>';
+      linesEl.innerHTML = html;
+    }
+
+    posterForm.addEventListener('input', render);
+    posterForm.addEventListener('change', render);
+    render();
+
+    posterForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const lines = currentLines();
+      if (!lines.length) {
+        alert('Please enter a quantity for at least one poster before submitting.');
+        return;
+      }
+      // A state must be chosen for the "All Other States" rows when ordered
+      let missingState = null;
+      qtyInputs.forEach(function (input) {
+        const qty = parseInt(input.value, 10);
+        if (!qty || qty < 1) return;
+        const opt = optionFor(input);
+        if (opt.el && opt.el.value === '') missingState = opt.el;
+      });
+      if (missingState) {
+        alert('Please choose a state for the poster you ordered.');
+        missingState.focus();
+        return;
+      }
+
+      // Compose a readable order block so the notification email is workable as-is
+      let items = 0;
+      let summary = 'POSTER ORDER\n------------------------------\n';
+      lines.forEach(function (l) {
+        items += l.subtotal;
+        const name = l.option ? (l.label + ' (' + l.option + ')') : l.label;
+        summary += l.qty + ' x ' + name + ' @ ' + money(l.price) + ' = ' + money(l.subtotal) + '\n';
+      });
+      summary += '------------------------------\n';
+      summary += 'Shipping (estimated): ' + money(SHIPPING) + '\n';
+      summary += 'ESTIMATED TOTAL: ' + money(items + SHIPPING) + '\n';
+      summary += '\nShipping is an estimate and may vary with quantity.';
+      document.getElementById('orderSummary').value = summary;
+
+      const btn = posterForm.querySelector('.form-submit');
+      const originalLabel = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(posterForm)
+      })
+      .then(function (response) { return response.json().then(function (d) { return { ok: response.ok, data: d }; }); })
+      .then(function (res) {
+        if (res.ok && res.data.success) {
+          posterForm.style.display = 'none';
+          const success = document.getElementById('posterSuccess');
+          if (success) success.classList.add('show');
+        } else {
+          btn.disabled = false;
+          btn.textContent = originalLabel;
+          alert('Something went wrong sending your order. Please try again or call us at (718) 471-1122.');
+        }
+      })
+      .catch(function () {
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+        alert('Something went wrong sending your order. Please try again or call us at (718) 471-1122.');
+      });
+    });
+  }
+
   /* --- Contact form handler (Formspree) --- */
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {

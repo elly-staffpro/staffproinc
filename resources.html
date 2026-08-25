@@ -289,25 +289,205 @@
       </div>
 
       <p style="font-size:var(--text-base);color:var(--color-text-secondary);line-height:1.75;margin-bottom:var(--sp-6);max-width:700px;">
-        New York employers are required to display current federal and state labor law compliance posters in the workplace. Use the form below to place your poster order.
+        New York employers are required to display current federal and state labor law compliance posters in the workplace. Use the form below to place your order &mdash; we&rsquo;ll confirm shipping and bill your account. <strong style="color:var(--color-text);">One shipping address per order</strong> &mdash; submit the form again for additional addresses. New York and New Jersey employers must order complete new posters for 2026.
       </p>
 
-      <!-- =====================================================
-           JOTFORM EMBED
-           Replace the src URL below with your JotForm embed URL.
-           Format: https://form.jotform.com/YOUR_FORM_ID
-           You can also paste the full iframe embed code from JotForm here.
-           ===================================================== -->
-      <div class="jotform-container">
-        <iframe
-          id="posterOrderForm"
-          title="Labor Law Poster Order Form"
-          src="https://form.jotform.com/253574472181056"
-          scrolling="yes"
-          allowfullscreen>
-        </iframe>
+      <form id="posterOrderForm" class="order-card">
+
+        <!-- Web3Forms delivers the submission to info@staffproonline.com.
+             ACTION REQUIRED: replace the access key below with the real one
+             from the Web3Forms account before this goes live. -->
+        <input type="hidden" name="access_key" value="REPLACE_WITH_WEB3FORMS_ACCESS_KEY" />
+        <input type="hidden" name="subject" value="Labor Law Poster Order — StaffPro website" />
+        <input type="hidden" name="from_name" value="StaffPro Poster Orders" />
+        <!-- Composed by JS on submit so the notification email reads as a clean order. -->
+        <input type="hidden" name="order_summary" id="orderSummary" />
+        <!-- Honeypot: bots fill this, humans never see it. -->
+        <input type="checkbox" name="botcheck" class="sr-only" style="display:none" tabindex="-1" autocomplete="off" />
+
+        <fieldset class="order-fieldset">
+          <legend class="order-legend">Your details</legend>
+
+          <div class="form-group">
+            <label class="form-label" for="po-company">Company Name *</label>
+            <input class="form-input" type="text" id="po-company" name="Company Name" required />
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="po-first">First Name *</label>
+              <input class="form-input" type="text" id="po-first" name="First Name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="po-last">Last Name *</label>
+              <input class="form-input" type="text" id="po-last" name="Last Name" required />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="po-email">Email Address *</label>
+              <input class="form-input" type="email" id="po-email" name="Email" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="po-phone">Phone Number</label>
+              <input class="form-input" type="tel" id="po-phone" name="Phone" placeholder="(555) 000-0000" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="order-fieldset">
+          <legend class="order-legend">Shipping address</legend>
+
+          <div class="form-group">
+            <label class="form-label" for="po-street">Street Address *</label>
+            <input class="form-input" type="text" id="po-street" name="Street Address" required />
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="po-city">City *</label>
+              <input class="form-input" type="text" id="po-city" name="City" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="po-zip">ZIP Code *</label>
+              <input class="form-input" type="text" id="po-zip" name="ZIP" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="po-state">State *</label>
+            <input class="form-input" type="text" id="po-state" name="State" required />
+          </div>
+        </fieldset>
+
+        <fieldset class="order-fieldset">
+          <legend class="order-legend">Select your posters</legend>
+
+          <div class="product-row">
+            <div class="product-main">
+              <div class="product-name">2026 New York Poster</div>
+              <div class="product-price">$39.95 each</div>
+              <div class="product-opts">
+                <select class="form-select" name="NY Poster Language" aria-label="New York poster language">
+                  <option value="English">English</option>
+                  <option value="Spanish">Spanish</option>
+                </select>
+              </div>
+            </div>
+            <div class="qty-wrap">
+              <label for="qty-ny">Qty</label>
+              <input class="qty-input" type="number" id="qty-ny" name="NY Poster Qty"
+                     min="0" step="1" value="0" data-price="39.95" data-label="2026 New York Poster" />
+            </div>
+          </div>
+
+          <div class="product-row">
+            <div class="product-main">
+              <div class="product-name">2026 New Jersey Poster</div>
+              <div class="product-price">$37.95 each</div>
+              <div class="product-opts">
+                <select class="form-select" name="NJ Poster Language" aria-label="New Jersey poster language">
+                  <option value="English">English</option>
+                  <option value="Spanish">Spanish</option>
+                </select>
+              </div>
+            </div>
+            <div class="qty-wrap">
+              <label for="qty-nj">Qty</label>
+              <input class="qty-input" type="number" id="qty-nj" name="NJ Poster Qty"
+                     min="0" step="1" value="0" data-price="37.95" data-label="2026 New Jersey Poster" />
+            </div>
+          </div>
+
+          <div class="product-row">
+            <div class="product-main">
+              <div class="product-name">All Other States &mdash; English</div>
+              <div class="product-price">$34.95 each</div>
+              <div class="product-opts">
+                <select class="form-select" name="English State" aria-label="State for English poster">
+                  <option value="">Select a state</option>
+                <option value="AL">AL</option>
+                <option value="AR">AR</option>
+                <option value="CT">CT</option>
+                <option value="FL">FL</option>
+                <option value="GA">GA</option>
+                <option value="LA">LA</option>
+                <option value="MA">MA</option>
+                <option value="MD">MD</option>
+                <option value="MS">MS</option>
+                <option value="SC">SC</option>
+                <option value="TX">TX</option>
+                <option value="WV">WV</option>
+                <option value="VA">VA</option>
+                </select>
+              </div>
+            </div>
+            <div class="qty-wrap">
+              <label for="qty-en">Qty</label>
+              <input class="qty-input" type="number" id="qty-en" name="English Poster Qty"
+                     min="0" step="1" value="0" data-price="34.95" data-label="All Other States — English" />
+            </div>
+          </div>
+
+          <div class="product-row">
+            <div class="product-main">
+              <div class="product-name">All Other States &mdash; Spanish</div>
+              <div class="product-price">$34.95 each</div>
+              <div class="product-opts">
+                <select class="form-select" name="Spanish State" aria-label="State for Spanish poster">
+                  <option value="">Select a state</option>
+                <option value="AL">AL</option>
+                <option value="AR">AR</option>
+                <option value="CT">CT</option>
+                <option value="FL">FL</option>
+                <option value="GA">GA</option>
+                <option value="LA">LA</option>
+                <option value="MA">MA</option>
+                <option value="MD">MD</option>
+                <option value="MS">MS</option>
+                <option value="SC">SC</option>
+                <option value="TX">TX</option>
+                <option value="WV">WV</option>
+                <option value="VA">VA</option>
+                </select>
+              </div>
+            </div>
+            <div class="qty-wrap">
+              <label for="qty-es">Qty</label>
+              <input class="qty-input" type="number" id="qty-es" name="Spanish Poster Qty"
+                     min="0" step="1" value="0" data-price="34.95" data-label="All Other States — Spanish" />
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="order-summary" id="orderTotals" aria-live="polite">
+          <div class="order-empty" id="orderEmpty">Select a quantity above to see your order total.</div>
+          <div id="orderLines" hidden></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="po-notes">Order Notes</label>
+          <textarea class="form-textarea" id="po-notes" name="Notes" style="min-height:90px;"
+                    placeholder="Anything else we should know about this order?"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary form-submit">Submit Poster Order</button>
+        <p class="form-reassurance">
+          Shipping is estimated. We&rsquo;ll confirm the final amount and bill your account &mdash; no payment is taken here.
+        </p>
+
+      </form>
+
+      <div class="form-success" id="posterSuccess">
+        <div class="form-success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h3 class="form-success-title">Order Received</h3>
+        <p class="form-success-text">Thank you &mdash; your poster order has been sent to our team. We&rsquo;ll confirm shipping and billing shortly.</p>
       </div>
-      <!-- ===== END JOTFORM EMBED ===== -->
 
     </div>
 
