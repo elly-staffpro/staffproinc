@@ -169,6 +169,36 @@
     const addBtn = document.getElementById('addStateRow');
     if (addBtn) addBtn.addEventListener('click', addStateRow);
 
+    /* "Order for another address" — each shipping address needs its own order,
+       so keep who they are and clear only the address and the order itself. */
+    const submitBtn = posterForm.querySelector('.form-submit');
+    const submitLabel = submitBtn ? submitBtn.textContent : 'Submit Poster Order';
+    const anotherBtn = document.getElementById('posterAnother');
+    if (anotherBtn) {
+      anotherBtn.addEventListener('click', function () {
+        ['Street Address', 'City', 'ZIP', 'State', 'Notes'].forEach(function (n) {
+          const el = posterForm.querySelector('[name="' + n + '"]');
+          if (el) el.value = '';
+        });
+        posterForm.querySelectorAll('.qty-input').forEach(function (i) { i.value = 0; });
+
+        // collapse the repeatable rows back to a single empty one
+        statesEl.innerHTML = '';
+        addStateRow();
+
+        const success = document.getElementById('posterSuccess');
+        if (success) success.classList.remove('show');
+        posterForm.style.display = '';
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = submitLabel; }
+
+        syncRowNames();
+        render();
+        posterForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const street = posterForm.querySelector('[name="Street Address"]');
+        if (street) street.focus({ preventScroll: true });
+      });
+    }
+
     /* Describe a row for the totals list and the order email. */
     function describe(input) {
       const row = input.closest('.product-row');
