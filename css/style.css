@@ -419,6 +419,8 @@ input, textarea, select { font-family: inherit; }
   padding-block: 0.45rem;
   font-size: var(--text-sm);
 }
+.qty-group { display: flex; gap: var(--sp-5); align-items: flex-end; }
+.qty-group .qty-wrap { flex-direction: column; align-items: flex-start; gap: var(--sp-1); }
 .qty-wrap { display: flex; align-items: center; gap: var(--sp-2); }
 .qty-wrap label {
   font-size: var(--text-xs);
@@ -525,6 +527,9 @@ input, textarea, select { font-family: inherit; }
   .order-card { padding: var(--sp-5); }
   .product-row { grid-template-columns: 1fr; }
   .qty-wrap { justify-content: flex-start; }
+  .qty-group { gap: var(--sp-4); }
+  .qty-group .qty-input { width: 100%; }
+  .qty-group .qty-wrap { flex: 1; }
   .product-opts .form-select { width: 100%; }
 }
 
