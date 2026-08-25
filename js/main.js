@@ -125,6 +125,210 @@
     });
   });
 
+  /* --- Labor law poster order form --- */
+  const posterForm = document.getElementById('posterOrderForm');
+  if (posterForm) {
+    /* Shipping: flat rate for the first poster, reduced rate for each one after. */
+    const SHIP_FIRST = 18.95;
+    const SHIP_ADDITIONAL = 9.75;
+
+    const linesEl = document.getElementById('orderLines');
+    const emptyEl = document.getElementById('orderEmpty');
+    const statesEl = document.getElementById('otherStates');
+    const stateTpl = document.getElementById('otherStateTemplate');
+
+    function money(n) { return '$' + n.toFixed(2); }
+    function allQtyInputs() {
+      return Array.prototype.slice.call(posterForm.querySelectorAll('.qty-input'));
+    }
+
+    /* --- repeatable "all other states" rows --- */
+    function refreshRemoveButtons() {
+      const rows = statesEl.querySelectorAll('.other-row');
+      rows.forEach(function (r) {
+        r.querySelector('.os-remove').hidden = (rows.length <= 1);
+      });
+    }
+
+    function addStateRow() {
+      statesEl.appendChild(stateTpl.content.cloneNode(true));
+      refreshRemoveButtons();
+      render();
+    }
+
+    statesEl.addEventListener('click', function (e) {
+      const btn = e.target.closest('.os-remove');
+      if (!btn) return;
+      const rows = statesEl.querySelectorAll('.other-row');
+      if (rows.length <= 1) return;
+      btn.closest('.other-row').remove();
+      refreshRemoveButtons();
+      render();
+    });
+
+    const addBtn = document.getElementById('addStateRow');
+    if (addBtn) addBtn.addEventListener('click', addStateRow);
+
+    /* Describe a row for the totals list and the order email. */
+    function describe(input) {
+      const row = input.closest('.product-row');
+      if (input.dataset.label) {                       // fixed NY / NJ rows
+        const lang = row.querySelector('select');
+        return { name: input.dataset.label, option: lang ? lang.value : '', missing: null };
+      }
+      const stateSel = row.querySelector('.os-state');  // repeatable rows
+      const langSel = row.querySelector('.os-lang');
+      const stateName = stateSel.options[stateSel.selectedIndex]
+        ? stateSel.options[stateSel.selectedIndex].text : '';
+      return {
+        name: stateSel.value ? stateName + ' Poster' : '',
+        option: langSel ? langSel.value : '',
+        missing: stateSel.value ? null : stateSel
+      };
+    }
+
+    function shippingFor(totalQty) {
+      if (totalQty < 1) return 0;
+      return SHIP_FIRST + (totalQty - 1) * SHIP_ADDITIONAL;
+    }
+
+    function currentLines() {
+      const out = [];
+      allQtyInputs().forEach(function (input) {
+        const qty = parseInt(input.value, 10);
+        if (!qty || qty < 1) return;
+        const price = parseFloat(input.dataset.price);
+        const d = describe(input);
+        out.push({
+          label: d.name, option: d.option, missing: d.missing,
+          qty: qty, price: price, subtotal: qty * price
+        });
+      });
+      return out;
+    }
+
+    function render() {
+      const lines = currentLines();
+      if (!lines.length) {
+        emptyEl.hidden = false;
+        linesEl.hidden = true;
+        linesEl.innerHTML = '';
+        return;
+      }
+      emptyEl.hidden = true;
+      linesEl.hidden = false;
+
+      let items = 0;
+      let totalQty = 0;
+      let html = '';
+      lines.forEach(function (l) {
+        items += l.subtotal;
+        totalQty += l.qty;
+        const base = l.label || 'Select a state';
+        const name = l.option ? (base + ' (' + l.option + ')') : base;
+        html += '<div class="order-line"><span>' + name + ' &times; ' + l.qty + '</span><span>' + money(l.subtotal) + '</span></div>';
+      });
+
+      const ship = shippingFor(totalQty);
+      const shipDetail = totalQty > 1
+        ? ' (' + money(SHIP_FIRST) + ' first, ' + money(SHIP_ADDITIONAL) + ' &times; ' + (totalQty - 1) + ')'
+        : '';
+      html += '<div class="order-line"><span>Shipping' + shipDetail + '</span><span>' + money(ship) + '</span></div>';
+      html += '<div class="order-line total"><span>Estimated Total</span><span>' + money(items + ship) + '</span></div>';
+      html += '<p class="order-note">' + money(SHIP_FIRST) + ' shipping for the first poster, ' + money(SHIP_ADDITIONAL) + ' for each additional. We’ll confirm the final amount before billing.</p>';
+      linesEl.innerHTML = html;
+    }
+
+    // Keep each repeatable row's heading in step with its state selection
+    function syncRowNames() {
+      statesEl.querySelectorAll('.other-row').forEach(function (row) {
+        const sel = row.querySelector('.os-state');
+        const nameEl = row.querySelector('.os-name');
+        const txt = sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].text : '';
+        nameEl.textContent = sel.value ? txt + ' Poster' : 'Select a state';
+        nameEl.style.color = sel.value ? 'var(--color-text)' : '';
+      });
+    }
+
+    posterForm.addEventListener('input', function () { syncRowNames(); render(); });
+    posterForm.addEventListener('change', function () { syncRowNames(); render(); });
+
+    addStateRow();   // start with one row present
+
+    posterForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const lines = currentLines();
+      if (!lines.length) {
+        alert('Please enter a quantity for at least one poster before submitting.');
+        return;
+      }
+      // A state must be chosen on any repeatable row that has a quantity
+      const missing = lines.filter(function (l) { return l.missing; })[0];
+      if (missing) {
+        alert('Please choose a state for each poster you ordered.');
+        missing.missing.focus();
+        return;
+      }
+
+      // Compose a readable order block so the notification email is workable as-is
+      let items = 0;
+      let totalQty = 0;
+      let summary = 'POSTER ORDER\n------------------------------\n';
+      lines.forEach(function (l) {
+        items += l.subtotal;
+        totalQty += l.qty;
+        const name = l.option ? (l.label + ' (' + l.option + ')') : l.label;
+        summary += l.qty + ' x ' + name + ' @ ' + money(l.price) + ' = ' + money(l.subtotal) + '\n';
+      });
+      const ship = shippingFor(totalQty);
+      summary += '------------------------------\n';
+      summary += 'Posters: ' + totalQty + '\n';
+      summary += 'Shipping: ' + money(ship);
+      if (totalQty > 1) {
+        summary += '  (' + money(SHIP_FIRST) + ' first + ' + money(SHIP_ADDITIONAL) + ' x ' + (totalQty - 1) + ')';
+      }
+      summary += '\nESTIMATED TOTAL: ' + money(items + ship) + '\n';
+      document.getElementById('orderSummary').value = summary;
+
+      // Name the repeatable rows so they arrive as readable fields too
+      statesEl.querySelectorAll('.other-row').forEach(function (row, i) {
+        const n = i + 1;
+        row.querySelector('.os-state').name = 'Other State ' + n;
+        row.querySelector('.os-lang').name = 'Other State ' + n + ' Language';
+        row.querySelector('.os-qty').name = 'Other State ' + n + ' Qty';
+      });
+
+      const btn = posterForm.querySelector('.form-submit');
+      const originalLabel = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(posterForm)
+      })
+      .then(function (response) { return response.json().then(function (d) { return { ok: response.ok, data: d }; }); })
+      .then(function (res) {
+        if (res.ok && res.data.success) {
+          posterForm.style.display = 'none';
+          const success = document.getElementById('posterSuccess');
+          if (success) success.classList.add('show');
+        } else {
+          btn.disabled = false;
+          btn.textContent = originalLabel;
+          alert('Something went wrong sending your order. Please try again or call us at (718) 471-1122.');
+        }
+      })
+      .catch(function () {
+        btn.disabled = false;
+        btn.textContent = originalLabel;
+        alert('Something went wrong sending your order. Please try again or call us at (718) 471-1122.');
+      });
+    });
+  }
+
   /* --- Contact form handler (Formspree) --- */
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {

@@ -75,20 +75,6 @@
       color: var(--color-text);
     }
 
-    /* ---- Poster Order / JotForm section ---- */
-    .jotform-container {
-      background: var(--white);
-      border: 1.5px solid var(--color-border);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-    }
-    .jotform-container iframe {
-      display: block;
-      width: 100%;
-      border: none;
-      min-height: 600px;
-    }
-
     @media (max-width: 768px) {
       .video-grid { grid-template-columns: 1fr; }
     }
@@ -289,25 +275,197 @@
       </div>
 
       <p style="font-size:var(--text-base);color:var(--color-text-secondary);line-height:1.75;margin-bottom:var(--sp-6);max-width:700px;">
-        New York employers are required to display current federal and state labor law compliance posters in the workplace. Use the form below to place your poster order.
+        New York employers are required to display current federal and state labor law compliance posters in the workplace. Use the form below to place your order &mdash; we&rsquo;ll confirm shipping and bill your account. <strong style="color:var(--color-text);">One shipping address per order</strong> &mdash; submit the form again for additional addresses. New York and New Jersey employers must order complete new posters for 2026.
       </p>
 
-      <!-- =====================================================
-           JOTFORM EMBED
-           Replace the src URL below with your JotForm embed URL.
-           Format: https://form.jotform.com/YOUR_FORM_ID
-           You can also paste the full iframe embed code from JotForm here.
-           ===================================================== -->
-      <div class="jotform-container">
-        <iframe
-          id="posterOrderForm"
-          title="Labor Law Poster Order Form"
-          src="https://form.jotform.com/253574472181056"
-          scrolling="yes"
-          allowfullscreen>
-        </iframe>
+      <form id="posterOrderForm" class="order-card">
+
+        <!-- Web3Forms delivers the submission to info@staffproonline.com.
+             This access key is public by design (client-side submission);
+             it only permits posting to the configured StaffPro address. -->
+        <input type="hidden" name="access_key" value="77ee980f-2fd6-45cf-a4e7-d685a1239e26" />
+        <input type="hidden" name="subject" value="Labor Law Poster Order — StaffPro website" />
+        <input type="hidden" name="from_name" value="StaffPro Poster Orders" />
+        <!-- Composed by JS on submit so the notification email reads as a clean order. -->
+        <input type="hidden" name="order_summary" id="orderSummary" />
+        <!-- Honeypot: bots fill this, humans never see it. -->
+        <input type="checkbox" name="botcheck" class="sr-only" style="display:none" tabindex="-1" autocomplete="off" />
+
+        <fieldset class="order-fieldset">
+          <legend class="order-legend">Your details</legend>
+
+          <div class="form-group">
+            <label class="form-label" for="po-company">Company Name *</label>
+            <input class="form-input" type="text" id="po-company" name="Company Name" required />
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="po-first">First Name *</label>
+              <input class="form-input" type="text" id="po-first" name="First Name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="po-last">Last Name *</label>
+              <input class="form-input" type="text" id="po-last" name="Last Name" required />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="po-email">Email Address *</label>
+              <input class="form-input" type="email" id="po-email" name="Email" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="po-phone">Phone Number</label>
+              <input class="form-input" type="tel" id="po-phone" name="Phone" placeholder="(555) 000-0000" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="order-fieldset">
+          <legend class="order-legend">Shipping address</legend>
+
+          <div class="form-group">
+            <label class="form-label" for="po-street">Street Address *</label>
+            <input class="form-input" type="text" id="po-street" name="Street Address" required />
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="po-city">City *</label>
+              <input class="form-input" type="text" id="po-city" name="City" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="po-zip">ZIP Code *</label>
+              <input class="form-input" type="text" id="po-zip" name="ZIP" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="po-state">State *</label>
+            <input class="form-input" type="text" id="po-state" name="State" required />
+          </div>
+        </fieldset>
+
+        <fieldset class="order-fieldset">
+          <legend class="order-legend">Select your posters</legend>
+
+          <div class="product-row">
+            <div class="product-main">
+              <div class="product-name">2026 New York Poster</div>
+              <div class="product-price">$39.95 each</div>
+              <div class="product-opts">
+                <select class="form-select" name="NY Poster Language" aria-label="New York poster language">
+                  <option value="English">English</option>
+                  <option value="Spanish">Spanish</option>
+                </select>
+              </div>
+            </div>
+            <div class="qty-wrap">
+              <label for="qty-ny">Qty</label>
+              <input class="qty-input" type="number" id="qty-ny" name="NY Poster Qty"
+                     min="0" step="1" value="0" data-price="39.95" data-label="2026 New York Poster" />
+            </div>
+          </div>
+
+          <div class="product-row">
+            <div class="product-main">
+              <div class="product-name">2026 New Jersey Poster</div>
+              <div class="product-price">$37.95 each</div>
+              <div class="product-opts">
+                <select class="form-select" name="NJ Poster Language" aria-label="New Jersey poster language">
+                  <option value="English">English</option>
+                  <option value="Spanish">Spanish</option>
+                </select>
+              </div>
+            </div>
+            <div class="qty-wrap">
+              <label for="qty-nj">Qty</label>
+              <input class="qty-input" type="number" id="qty-nj" name="NJ Poster Qty"
+                     min="0" step="1" value="0" data-price="37.95" data-label="2026 New Jersey Poster" />
+            </div>
+          </div>
+
+          <div class="other-states-head">
+            <span class="other-states-title">All Other States</span>
+            <span class="other-states-price">$34.95 each</span>
+          </div>
+
+          <div id="otherStates"></div>
+
+          <div class="add-state-wrap">
+            <button type="button" id="addStateRow" class="btn btn-outline btn-sm">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add another state
+            </button>
+          </div>
+
+          <template id="otherStateTemplate">
+            <div class="product-row other-row">
+              <div class="product-main">
+                <div class="product-name os-name">Select a state</div>
+                <div class="product-opts">
+                  <select class="form-select os-state" aria-label="State">
+                    <option value="">Select a state</option>
+            <option value="AL">Alabama</option>
+            <option value="AR">Arkansas</option>
+            <option value="CT">Connecticut</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+            <option value="LA">Louisiana</option>
+            <option value="MA">Massachusetts</option>
+            <option value="MD">Maryland</option>
+            <option value="MS">Mississippi</option>
+            <option value="SC">South Carolina</option>
+            <option value="TX">Texas</option>
+            <option value="WV">West Virginia</option>
+            <option value="VA">Virginia</option>
+                  </select>
+                  <select class="form-select os-lang" aria-label="Language">
+                    <option value="English">English</option>
+                    <option value="Spanish">Spanish</option>
+                  </select>
+                </div>
+              </div>
+              <div class="qty-wrap">
+                <label>Qty</label>
+                <input class="qty-input os-qty" type="number" min="0" step="1" value="0" data-price="34.95" aria-label="Quantity" />
+                <button type="button" class="os-remove" aria-label="Remove this state">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+              </div>
+            </div>
+          </template>
+
+        </fieldset>
+
+        <div class="order-summary" id="orderTotals" aria-live="polite">
+          <div class="order-empty" id="orderEmpty">Select a quantity above to see your order total.</div>
+          <div id="orderLines" hidden></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="po-notes">Order Notes</label>
+          <textarea class="form-textarea" id="po-notes" name="Notes" style="min-height:90px;"
+                    placeholder="Anything else we should know about this order?"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary form-submit">Submit Poster Order</button>
+        <p class="form-reassurance">
+          Shipping is estimated. We&rsquo;ll confirm the final amount and bill your account &mdash; no payment is taken here.
+        </p>
+
+      </form>
+
+      <div class="form-success" id="posterSuccess">
+        <div class="form-success-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <h3 class="form-success-title">Order Received</h3>
+        <p class="form-success-text">Thank you &mdash; your poster order has been sent to our team. We&rsquo;ll confirm shipping and billing shortly.</p>
       </div>
-      <!-- ===== END JOTFORM EMBED ===== -->
 
     </div>
 
