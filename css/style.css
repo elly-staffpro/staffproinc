@@ -30,9 +30,10 @@
   --gray-600: #5C5C72;
   --gray-500: #7C7C92;
   --gray-400: #9C9CB0;
-  /* Lightest gray that still clears WCAG AA (4.5:1) on both white and --gray-50.
+  /* Lightest gray that still clears WCAG AA (4.5:1) on every background it
+     actually sits on: white (5.13), --gray-50 (4.80) and --blue-50 (4.56).
      Used for muted TEXT; --gray-400 stays for borders/icons only. */
-  --gray-450: #707084;
+  --gray-450: #6C6C80;
   --gray-300: #BCBCCC;
   --gray-200: #D8D8E6;
   --gray-100: #EEEEF6;
@@ -308,8 +309,8 @@ input, textarea, select { font-family: inherit; }
 .footer-logo-fallback { font-size: 1.3rem; }
 .nav-logo-fallback .lf-staff,
 .footer-logo-fallback .lf-staff { color: var(--color-primary); }
-.nav-logo-fallback .lf-pro      { color: var(--gray-500); }
-.footer-logo-fallback .lf-pro   { color: rgba(255,255,255,0.45); }
+.nav-logo-fallback .lf-pro      { color: var(--gray-450); }
+.footer-logo-fallback .lf-pro   { color: rgba(255,255,255,0.48); }
 .footer-logo-fallback .lf-staff { color: rgba(255,255,255,0.88); }
 
 /* Nav Links */
@@ -365,7 +366,7 @@ input, textarea, select { font-family: inherit; }
 .nav-login-link {
   font-size: var(--text-sm);
   font-weight: 500;
-  color: var(--gray-500);
+  color: var(--gray-450);
   flex-shrink: 0;
   white-space: nowrap;
   transition: color var(--trans);
@@ -1404,8 +1405,10 @@ input, textarea, select { font-family: inherit; }
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(37, 64, 200, 0.1);
 }
+/* Placeholders are still text, so they need to clear AA too. --gray-450 is
+   well lighter than --color-text, so an empty field still reads as empty. */
 .form-input::placeholder,
-.form-textarea::placeholder { color: var(--gray-400); }
+.form-textarea::placeholder { color: var(--gray-450); }
 .form-textarea { resize: vertical; min-height: 140px; }
 .form-select   { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237C7C92' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 2.5rem; }
 
