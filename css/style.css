@@ -30,6 +30,9 @@
   --gray-600: #5C5C72;
   --gray-500: #7C7C92;
   --gray-400: #9C9CB0;
+  /* Lightest gray that still clears WCAG AA (4.5:1) on both white and --gray-50.
+     Used for muted TEXT; --gray-400 stays for borders/icons only. */
+  --gray-450: #707084;
   --gray-300: #BCBCCC;
   --gray-200: #D8D8E6;
   --gray-100: #EEEEF6;
@@ -43,7 +46,7 @@
   --color-primary-light:  var(--blue-50);
   --color-text:           var(--gray-900);
   --color-text-secondary: var(--gray-600);
-  --color-text-muted:     var(--gray-400);
+  --color-text-muted:     var(--gray-450);
   --color-border:         var(--gray-200);
   --color-bg:             var(--white);
   --color-bg-light:       var(--gray-50);
@@ -1636,12 +1639,16 @@ input, textarea, select { font-family: inherit; }
 /* ------------------------------------------------
    ANIMATIONS
    ------------------------------------------------ */
-.fade-in {
+/* Scroll animations are OPT-IN: the .js-anim class is added to <html> only when
+   scripting is working. If JS is disabled, blocked, or main.js fails to load,
+   .js-anim is never applied (or is removed by the failsafe) and every .fade-in
+   element renders normally. Content must never depend on JS to be visible. */
+.js-anim .fade-in {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
 }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
+.js-anim .fade-in.visible { opacity: 1; transform: translateY(0); }
 
 .fade-in-delay-1 { transition-delay: 0.08s; }
 .fade-in-delay-2 { transition-delay: 0.16s; }

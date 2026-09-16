@@ -13,6 +13,19 @@
   <link rel="canonical" href="https://www.staffproinc.com/contact.html" />
   <link rel="icon" type="image/png" href="assets/images/favicon.png" />
   <link rel="stylesheet" href="css/style.css" />
+  <script>
+    /* Reveal-on-scroll is opt-in. Hide content only when scripting works, and
+       reveal it again if main.js never initializes (blocked, 404, offline). */
+    (function () {
+      var d = document.documentElement;
+      d.className += (d.className ? ' ' : '') + 'js-anim';
+      setTimeout(function () {
+        if (!window.__spAnimReady) {
+          d.className = d.className.replace(/\bjs-anim\b/, '').trim();
+        }
+      }, 2500);
+    })();
+  </script>
 </head>
 <body>
 
@@ -140,7 +153,7 @@
         <h2 class="contact-form-title">Send Us a Message</h2>
         <p class="contact-form-sub">Fill out the form below and a member of our team will be in touch shortly.</p>
 
-        <form id="contactForm" novalidate>
+        <form id="contactForm" action="https://formspree.io/f/mnjroder" method="POST">
 
           <div class="form-grid-2">
             <div class="form-group">

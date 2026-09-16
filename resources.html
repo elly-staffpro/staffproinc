@@ -13,6 +13,19 @@
   <link rel="canonical" href="https://www.staffproinc.com/resources.html" />
   <link rel="icon" type="image/png" href="assets/images/favicon.png" />
   <link rel="stylesheet" href="css/style.css" />
+  <script>
+    /* Reveal-on-scroll is opt-in. Hide content only when scripting works, and
+       reveal it again if main.js never initializes (blocked, 404, offline). */
+    (function () {
+      var d = document.documentElement;
+      d.className += (d.className ? ' ' : '') + 'js-anim';
+      setTimeout(function () {
+        if (!window.__spAnimReady) {
+          d.className = d.className.replace(/\bjs-anim\b/, '').trim();
+        }
+      }, 2500);
+    })();
+  </script>
   <style>
     /* ---- Client Tutorial Videos ---- */
     .video-full {
@@ -278,7 +291,7 @@
         New York employers are required to display current federal and state labor law compliance posters in the workplace. Use the form below to place your order &mdash; we&rsquo;ll confirm shipping and bill your account. <strong style="color:var(--color-text);">One shipping address per order</strong> &mdash; submit the form again for additional addresses. New York and New Jersey employers must order complete new posters for 2026.
       </p>
 
-      <form id="posterOrderForm" class="order-card">
+      <form id="posterOrderForm" class="order-card" action="https://api.web3forms.com/submit" method="POST">
 
         <!-- Web3Forms delivers the submission to info@staffproonline.com.
              This access key is public by design (client-side submission);
@@ -394,6 +407,11 @@
           </div>
 
           <div id="otherStates"></div>
+          <noscript>
+            <p class="order-note">Additional-state rows and the running total need JavaScript.
+            With it turned off you can still order New York and New Jersey posters above, or
+            call us at 718-471-1122 and we'll take the order over the phone.</p>
+          </noscript>
 
           <div class="add-state-wrap">
             <button type="button" id="addStateRow" class="btn btn-outline btn-sm">

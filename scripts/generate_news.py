@@ -550,6 +550,19 @@ def render_page(data, p="", archive=None):
   <meta property="og:image"       content="https://www.staffproinc.com/assets/images/logo.png" />
   <link rel="icon" type="image/png" href="{p}assets/images/favicon.png" />
   <link rel="stylesheet" href="{p}css/style.css" />
+  <script>
+    /* Reveal-on-scroll is opt-in. Hide content only when scripting works, and
+       reveal it again if main.js never initializes (blocked, 404, offline). */
+    (function () {{
+      var d = document.documentElement;
+      d.className += (d.className ? ' ' : '') + 'js-anim';
+      setTimeout(function () {{
+        if (!window.__spAnimReady) {{
+          d.className = d.className.replace(/\\bjs-anim\\b/, '').trim();
+        }}
+      }}, 2500);
+    }})();
+  </script>
   <style>{SHARED_STYLES}
   </style>
 </head>

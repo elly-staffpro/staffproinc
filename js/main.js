@@ -70,6 +70,11 @@
     fadeEls.forEach(el => el.classList.add('visible'));
   }
 
+  /* Tells the inline head script that animations are wired up, so its failsafe
+     stands down. If this file never loads, the failsafe strips .js-anim and all
+     content becomes visible instead of being stuck at opacity:0. */
+  window.__spAnimReady = true;
+
   /* --- Animated stat counters --- */
   function animateCount(el) {
     const target = parseInt(el.dataset.target, 10);
