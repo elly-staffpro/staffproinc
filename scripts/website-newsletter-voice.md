@@ -96,8 +96,15 @@ Each story on the page is:
 
 1. **Category** — one of the six fixed labels
 2. **Headline** — plain and specific. What happened, in StaffPro's words, not the outlet's.
-3. **Summary** — 2–4 sentences. What changed, who it touches, why it matters. Mention the
-   source naturally in the prose: *"The Labor Department finalized a rule that…"*
+3. **Summary — two paragraphs**, 2–3 sentences each.
+   - *First:* what changed and who it touches. Mention the source naturally in the
+     prose: *"The Labor Department finalized a rule that…"*
+   - *Second:* why it matters to an employer, and the honest scope — who is actually
+     affected and who is not.
+
+   Two short paragraphs that each stand on their own, not one long one split in half.
+   Only write a second paragraph the source supports. If there is genuinely nothing
+   more to say, the story is too thin to run — cut it rather than padding.
 4. **Takeaway** — one sentence that **orients**, not instructs.
    - Good: "Worth knowing if you employ tipped staff in more than one state."
    - Good: "Employers with 15 or more employees are the ones affected here."

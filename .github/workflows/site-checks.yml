@@ -49,7 +49,8 @@ jobs:
                                tier=1, public_domain=True)
                   for i in range(1, 5)]
           stories = [{"headline": "H", "category": "Payroll & Tax",
-                      "summary": "An original sentence describing the change.",
+                      "summary": ["An original sentence describing the change.",
+                                  "A second paragraph on why it matters."],
                       "takeaway": "Worth knowing.", "source_index": i}
                      for i in (1, 2, 3)]
           data = {"month": "January 2027", "intro": "I", "closing": "C", "stories": stories}
@@ -62,6 +63,7 @@ jobs:
                                    archive=[{"month": "December 2026",
                                              "file": "2026-12.html", "count": 5}])
               assert html.count('<p class="news-source">') == 3, "missing source citations"
+              assert html.count('<p class="news-summary">') == 6, "stories are not two paragraphs"
               assert 'class="news-detail"' not in html.split("<style>")[0], "detail block returned"
               assert "__spAnimReady" in html, "no-JS reveal failsafe missing"
               assert "archive-card" in html, "archive navigation missing"

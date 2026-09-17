@@ -448,7 +448,7 @@ def enforce_originality(data, articles):
         if not src or not src.get("body"):
             kept.append(s)
             continue
-        published = " ".join([s.get("headline", ""), s.get("summary", ""),
+        published = " ".join([s.get("headline", "")] + summary_paragraphs(s.get("summary")) + [
                               s.get("takeaway", "")])
         run = longest_verbatim_run(published, src["body"])
         s["_verbatim_run"] = run
@@ -468,6 +468,21 @@ def enforce_originality(data, articles):
     print(f"  Originality: longest shared run across kept stories is {worst} words "
           f"(limit {MAX_VERBATIM_WORDS}).")
     return data
+
+
+def summary_paragraphs(summary):
+    """
+    Normalise a story summary to a list of paragraphs.
+
+    The model is asked for a two-element array, but a single string or a string
+    with blank lines in it both have to render sensibly rather than blow up.
+    """
+    if isinstance(summary, (list, tuple)):
+        parts = [str(s).strip() for s in summary]
+    else:
+        parts = re.split(r"\n\s*\n", str(summary or ""))
+        parts = [p.strip() for p in parts]
+    return [p for p in parts if p]
 
 
 def attach_sources(data, articles):
@@ -614,7 +629,8 @@ Return ONLY valid JSON — no markdown, no code fences — in this exact structu
     {{
       "headline": "Plain and specific. What happened, in StaffPro's words.",
       "category": "One of: Employment Law | Payroll & Tax | Employee Benefits | Workplace Safety | Workers' Comp | HR Compliance",
-      "summary": "2-4 sentences: what changed, who it touches, why it matters. Mention the source naturally in the prose.",
+      "summary": ["First paragraph: what changed and who it touches. Mention the source naturally in the prose.",
+                  "Second paragraph: why it matters to an employer, and the honest scope - who is actually affected and who is not."],
       "takeaway": "One sentence that ORIENTS the reader. Do not instruct a public reader to do something by a date.",
       "source_index": 3
     }}
@@ -654,6 +670,13 @@ SOURCING. "source_index" is REQUIRED and must be the number of the ONE candidate
 the story is based on. Each story is published with a link to that source, so the
 number must be the one you actually used. Never merge several candidates into one
 story.
+
+LENGTH. "summary" is an array of exactly TWO paragraphs, 2-3 sentences each.
+The first says what changed; the second says why it matters and who it really
+affects. Two short paragraphs, not one long one split in half — each should
+stand on its own. Only write a second paragraph you can support from the
+source; if there is genuinely nothing more to say, the story is too thin to
+run and should be cut.
 
 ACCURACY. Write only what the source text supports. Do not add dates, dollar
 amounts, thresholds, effective dates, agency names, or case outcomes that the
@@ -710,11 +733,17 @@ def build_story_html(story):
     # deliberately KEPT: already-published archive pages still contain those blocks
     # and would break without them.
     color, bg = CATEGORY_STYLES.get(story["category"], ("var(--color-primary)", "rgba(37,64,200,.08)"))
+    paras = summary_paragraphs(story.get("summary"))
+    if len(paras) < 2:
+        print(f"  Note - only {len(paras)} paragraph(s) for: {story.get('headline','?')[:55]}")
+    sep = chr(10) + "        "
+    summary_html = sep.join(
+        f'<p class="news-summary">{para}</p>' for para in paras)
     return f"""
       <article class="news-card fade-in">
         <div class="news-cat" style="color:{color};background:{bg};">{story['category']}</div>
         <h3 class="news-headline">{story['headline']}</h3>
-        <p class="news-summary">{story['summary']}</p>
+        {summary_html}
         <div class="news-takeaway">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;color:var(--color-primary);"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           <span><strong>Takeaway:</strong> {story['takeaway']}</span>
@@ -795,9 +824,13 @@ SHARED_STYLES = """
       font-size: var(--text-base);
       color: var(--color-text-secondary);
       line-height: 1.75;
-      margin-bottom: var(--sp-4);
+      margin-bottom: var(--sp-3);
     }
+    /* Stories run two paragraphs, kept close together. The larger gap before the
+       takeaway lives on the takeaway itself — :last-of-type cannot do this job,
+       because the last <p> in a card is the source line, not the last paragraph. */
     .news-takeaway {
+      margin-top: var(--sp-5);
       display: flex;
       align-items: flex-start;
       gap: var(--sp-2);
