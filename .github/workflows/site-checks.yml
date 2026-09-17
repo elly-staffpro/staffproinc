@@ -42,13 +42,20 @@ jobs:
           sys.path.insert(0, "scripts")
           import generate_news as g
 
-          arts = [{"title": f"A{i}", "source": {"name": f"Outlet{i}"},
-                   "url": f"https://example.com/{i}", "_approved_source": True}
+          # Build candidates through the real constructor so the render test
+          # exercises the shape the fetchers actually produce.
+          arts = [g._candidate(f"A{i}", f"Outlet{i}", f"https://example.com/{i}",
+                               "2027-01-05", f"Source body number {i} about wages.",
+                               tier=1, public_domain=True)
                   for i in range(1, 5)]
-          stories = [{"headline": "H", "category": "Payroll & Tax", "summary": "S",
-                      "takeaway": "T", "source_index": i} for i in (1, 2, 3)]
-          data = {"month": "January 2027", "intro": "I", "closing": "C",
-                  "stories": g.attach_sources({"stories": stories}, arts)["stories"]}
+          stories = [{"headline": "H", "category": "Payroll & Tax",
+                      "summary": "An original sentence describing the change.",
+                      "takeaway": "Worth knowing.", "source_index": i}
+                     for i in (1, 2, 3)]
+          data = {"month": "January 2027", "intro": "I", "closing": "C", "stories": stories}
+          data = g.attach_sources(data, arts)
+          data = g.enforce_originality(data, arts)
+          assert g.load_voice_spec(), "voice spec did not load"
 
           for prefix in ("", "../"):
               html = g.render_page(data, p=prefix,

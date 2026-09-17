@@ -115,6 +115,31 @@ CASES = [
     ("minimum sourced-story floor removed", "newsletter",
      lambda s: edit(s / "scripts" / "generate_news.py",
                     lambda t: t.replace("MIN_STORIES", "MIN_STORIES_OFF"))),
+
+    ("voice spec deleted", "newsletter",
+     lambda s: (s / "scripts" / "website-newsletter-voice.md").unlink()),
+
+    ("voice spec no longer loaded into the prompt", "newsletter",
+     lambda s: edit(s / "scripts" / "generate_news.py",
+                    lambda t: t.replace("voice_spec = load_voice_spec()",
+                                        "voice_spec = ''"))),
+
+    ("originality guard no longer called", "newsletter",
+     lambda s: edit(s / "scripts" / "generate_news.py",
+                    lambda t: t.replace("data = enforce_originality(data, articles)",
+                                        "pass  # enforce_originality removed"))),
+
+    ("Federal Register term-filter trap reintroduced", "newsletter",
+     lambda s: edit(s / "scripts" / "generate_news.py",
+                    lambda t: t.replace('("order", "newest"),',
+                                        '("order", "newest"), ("conditions[term]", "wage"),'))),
+
+    ("NewsAPI error path leaks the API key", "newsletter",
+     lambda s: edit(s / "scripts" / "generate_news.py",
+                    lambda t: t.replace(
+                        'print(f"  Warning — trade-press query \'{query}\' failed "\n'
+                        '              f"({type(e).__name__}: {_redact(e)})")',
+                        'print(f"  Warning — trade-press query \'{query}\' failed: {e}")'))),
 ]
 
 

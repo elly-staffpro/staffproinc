@@ -345,6 +345,39 @@ def check_newsletter_integrity():
         fail("newsletter", "scripts/generate_news.py",
              "the minimum-sourced-stories floor is no longer enforced")
 
+    # The voice spec is the writing brief. Without it the copy reverts to
+    # generic AI prose, which is the whole thing this was built to avoid.
+    spec = ROOT / "scripts" / "website-newsletter-voice.md"
+    if not spec.exists():
+        fail("newsletter", "scripts/website-newsletter-voice.md",
+             "the approved voice spec is missing")
+    elif len(spec.read_text(encoding="utf-8").split()) < 200:
+        fail("newsletter", "scripts/website-newsletter-voice.md",
+             "the voice spec looks truncated")
+    if not re.search(r"(?<!def )\bload_voice_spec\(", gen):
+        fail("newsletter", "scripts/generate_news.py",
+             "load_voice_spec() is not called — copy would not follow the approved voice")
+
+    # Verbatim-overlap guard: the enforceable half of the copyright rules.
+    if not re.search(r"(?<!def )\benforce_originality\(", gen):
+        fail("newsletter", "scripts/generate_news.py",
+             "enforce_originality() is not called — copy could be lifted from sources")
+
+    # A trap worth a permanent check: conditions[term] looks like a helpful topic
+    # filter on the Federal Register API but collapses 54 results to 1.
+    # Comments are stripped first — the warning comment in the generator names the
+    # parameter, and matching that is how this check first failed on itself.
+    gen_code = "\n".join(l for l in gen.splitlines() if not l.lstrip().startswith("#"))
+    if '"conditions[term]"' in gen_code or "'conditions[term]'" in gen_code:
+        fail("newsletter", "scripts/generate_news.py",
+             "conditions[term] is back in the Federal Register query — it silently "
+             "collapses the result set to almost nothing")
+
+    # requests puts the full URL, apiKey included, in its exception text.
+    if re.search(r"Warning — trade-press query.*\{e\}", gen):
+        fail("newsletter", "scripts/generate_news.py",
+             "the NewsAPI error path logs the raw exception, which contains the API key")
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 8. The news bot must not publish without review
