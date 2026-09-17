@@ -75,6 +75,15 @@
      content becomes visible instead of being stuck at opacity:0. */
   window.__spAnimReady = true;
 
+  /* --- Footer copyright year ---
+     The markup ships with a real year in it, so if this never runs the footer
+     is merely stale, not blank. news.html is not handled here: the generator
+     writes the year into that page when it rebuilds it each month. */
+  var thisYear = String(new Date().getFullYear());
+  document.querySelectorAll('.js-year').forEach(function (el) {
+    el.textContent = thisYear;
+  });
+
   /* --- Animated stat counters --- */
   function animateCount(el) {
     const target = parseInt(el.dataset.target, 10);

@@ -107,14 +107,45 @@ def extract_json(text: str):
     raise ValueError("No JSON object found in model response")
 
 
+def write_source_digest(articles):
+    """
+    Write the candidate articles to the path in NEWS_SOURCES_OUT, if set, so the
+    review PR can list what the month's stories were actually drawn from.
+    No-op when the variable is unset (local runs), and never fatal: failing to
+    write a review aid must not lose an otherwise good bulletin.
+    """
+    dest = os.environ.get("NEWS_SOURCES_OUT")
+    if not dest:
+        return
+    try:
+        lines = ["", "<details><summary>Candidate articles the bulletin was drawn from "
+                     f"({len(articles)})</summary>", ""]
+        for a in articles:
+            title = (a.get("title") or "(untitled)").replace("|", "\\|")
+            name = (a.get("source") or {}).get("name") or "unknown source"
+            url = a.get("url")
+            lines.append(f"- [{title}]({url}) — {name}" if url else f"- {title} — {name}")
+        lines += ["", "</details>", ""]
+        with open(dest, "w", encoding="utf-8") as fh:
+            fh.write("\n".join(lines))
+        print(f"  Wrote source digest for review -> {dest}")
+    except Exception as e:  # noqa: BLE001 — a review aid must never fail the run
+        print(f"  Could not write source digest: {e}")
+
+
 def curate_with_claude(articles):
     client = Anthropic(api_key=ANTHROPIC_API_KEY)
     month_year = datetime.now().strftime("%B %Y")
 
     article_list = "\n".join(
-        f"{i+1}. {a['title']}\n   Source: {a['source']['name']}\n   {a.get('description') or ''}"
+        f"{i+1}. {a['title']}\n   Source: {a['source']['name']}\n   URL: {a.get('url') or '(none)'}\n"
+        f"   {a.get('description') or ''}"
         for i, a in enumerate(articles)
     )
+
+    # Hand the same candidate list to the reviewer. Without this the review PR
+    # asks someone to fact-check stories against sources they cannot see.
+    write_source_digest(articles)
 
     prompt = f"""You are writing the monthly HR & Compliance bulletin for StaffPro Inc., a Professional Employer Organization serving small and mid-size businesses.
 
@@ -132,14 +163,19 @@ Write a polished monthly bulletin for {month_year}. Return ONLY valid JSON — n
       "headline": "Clear, compelling headline written in your own words",
       "category": "One of: Employment Law | Payroll & Tax | Employee Benefits | Workplace Safety | Workers' Comp | HR Compliance",
       "summary": "2–3 sentences explaining what happened and why it matters to employers.",
-      "takeaway": "One practical sentence: what should a business owner do or know because of this?",
-      "detail": "2–3 short paragraphs expanding on the story with specific details, affected parties, and any important nuance. No section headings. Plain English only."
+      "takeaway": "One practical sentence: what should a business owner do or know because of this?"
     }}
   ],
   "closing": "1–2 sentences encouraging readers to reach out to StaffPro with questions."
 }}
 
-Select the 5 most relevant stories for small-to-mid-size employers. Plain English only — no legalese, no filler."""
+Select the 5 most relevant stories for small-to-mid-size employers. Plain English only — no legalese, no filler.
+
+Write ONLY what the source material above actually supports. Do not add specifics
+it does not contain — no dates, dollar amounts, thresholds, effective dates,
+agency names, or case outcomes that are not stated in the source. If a detail is
+not in the source, leave it out. This is published on a PEO's website and readers
+act on it."""
 
     last_err = None
     for attempt in range(1, 4):  # up to 3 tries
@@ -167,36 +203,17 @@ Select the 5 most relevant stories for small-to-mid-size employers. Plain Englis
 
 # ── HTML rendering ──────────────────────────────────────────────────────────────
 
-def build_detail_html(raw_detail: str) -> str:
-    """Convert the detail field (plain text with optional ## headings) into HTML paragraphs."""
-    if not raw_detail:
-        return ""
-    lines, html_parts = raw_detail.strip().split("\n"), []
-    for line in lines:
-        line = line.strip()
-        if not line:
-            continue
-        if line.startswith("## "):
-            html_parts.append(f"<h4>{line[3:].strip()}</h4>")
-        else:
-            html_parts.append(f"<p>{line}</p>")
-    return "\n        ".join(html_parts)
-
-
 def build_story_html(story):
+    # No "Read more" / .news-detail block any more. That section used to be 2-3
+    # paragraphs the model wrote to "expand on" a story it only knew from a
+    # headline and a one-line description, and nothing on the card linked to the
+    # original article — so a reader had no way to check it. A card now says only
+    # what the source supports: category, headline, summary, takeaway.
+    #
+    # The .news-detail CSS in SHARED_STYLES and the expand handler in main.js are
+    # deliberately KEPT: already-published archive pages still contain those blocks
+    # and would break without them.
     color, bg = CATEGORY_STYLES.get(story["category"], ("var(--color-primary)", "rgba(37,64,200,.08)"))
-    detail_raw  = story.get("detail", "")
-    detail_html = build_detail_html(detail_raw)
-    expand_block = ""
-    if detail_html:
-        expand_block = f"""
-        <button class="news-expand-toggle" aria-expanded="false">
-          <span class="expand-label">Read more</span>
-          <svg class="expand-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="news-detail" hidden>
-        {detail_html}
-        </div>"""
     return f"""
       <article class="news-card fade-in">
         <div class="news-cat" style="color:{color};background:{bg};">{story['category']}</div>
@@ -205,7 +222,7 @@ def build_story_html(story):
         <div class="news-takeaway">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;color:var(--color-primary);"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           <span><strong>Takeaway:</strong> {story['takeaway']}</span>
-        </div>{expand_block}
+        </div>
       </article>"""
 
 
@@ -520,7 +537,7 @@ def render_footer(p):
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; 2026 StaffPro Inc. All rights reserved.</span>
+      <span>&copy; {datetime.now().year} StaffPro Inc. All rights reserved.</span>
       <span>167 Lawrence Avenue &middot; Inwood, NY 11096</span>
     </div>
   </div>
