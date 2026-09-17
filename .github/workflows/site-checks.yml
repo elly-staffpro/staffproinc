@@ -1,0 +1,62 @@
+name: Site Checks
+
+# Runs on every push and every pull request, including the monthly newsletter PR.
+# Each check exists because that exact bug reached www.staffproinc.com once.
+# A red X here means something regressed — read the output, it names the file.
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Proves the checks still fail when their bugs are reintroduced, so a
+      # check that has quietly stopped working cannot sit there looking green.
+      - name: Prove the checks actually catch regressions
+        run: python scripts/test_check_site.py
+
+      - name: Check the site
+        run: python scripts/check_site.py
+
+      - name: Confirm the news generator still imports and renders
+        run: |
+          pip install --quiet requests anthropic
+          python - <<'EOF'
+          import os, sys
+          os.environ.setdefault("NEWS_API_KEY", "ci")
+          os.environ.setdefault("ANTHROPIC_API_KEY", "ci")
+          sys.path.insert(0, "scripts")
+          import generate_news as g
+
+          arts = [{"title": f"A{i}", "source": {"name": f"Outlet{i}"},
+                   "url": f"https://example.com/{i}", "_approved_source": True}
+                  for i in range(1, 5)]
+          stories = [{"headline": "H", "category": "Payroll & Tax", "summary": "S",
+                      "takeaway": "T", "source_index": i} for i in (1, 2, 3)]
+          data = {"month": "January 2027", "intro": "I", "closing": "C",
+                  "stories": g.attach_sources({"stories": stories}, arts)["stories"]}
+
+          for prefix in ("", "../"):
+              html = g.render_page(data, p=prefix,
+                                   archive=[{"month": "December 2026",
+                                             "file": "2026-12.html", "count": 5}])
+              assert html.count('<p class="news-source">') == 3, "missing source citations"
+              assert 'class="news-detail"' not in html.split("<style>")[0], "detail block returned"
+              assert "__spAnimReady" in html, "no-JS reveal failsafe missing"
+              assert "archive-card" in html, "archive navigation missing"
+          print("generator renders correctly for both page types")
+          EOF
