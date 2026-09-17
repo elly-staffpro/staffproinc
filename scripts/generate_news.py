@@ -639,6 +639,17 @@ move on. Do not soften it into something that sounds relevant.
 Returning 3 strong stories is a better bulletin than 5 with two that do not apply.
 Do not pad to reach a number.
 
+ROUTINE RELEASES ARE NOT STORIES. Recurring statistical publications — the weekly
+unemployment claims report, monthly jobs numbers, quarterly indices — are not
+developments. Nothing changed for an employer because a number moved. Skip them
+unless the release itself reports a genuine change in policy or method. If the
+only takeaway you can write is that something is "a general indicator", it is not
+a story.
+
+THE INTRO COMES LAST. Choose your stories first, then write the intro describing
+ONLY what those stories cover. Do not mention a topic you decided to cut — an
+intro that promises subjects the bulletin does not contain reads as careless.
+
 SOURCING. "source_index" is REQUIRED and must be the number of the ONE candidate
 the story is based on. Each story is published with a link to that source, so the
 number must be the one you actually used. Never merge several candidates into one

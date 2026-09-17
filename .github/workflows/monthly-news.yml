@@ -135,6 +135,10 @@ jobs:
           - Nothing is wrong for New York or New Jersey specifically.
           - No story is stale, duplicated from last month, or off-topic for a PEO audience.
           - Nothing reads as legal advice.
+          - The intro describes the stories that are actually here, and does not
+            promise a topic that was cut.
+          - No story is just a recurring statistic (weekly claims, monthly jobs
+            numbers) dressed up as news.
 
           A Cloudflare Pages preview for this branch is linked in the checks below.
 
