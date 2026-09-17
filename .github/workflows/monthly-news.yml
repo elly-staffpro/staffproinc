@@ -8,6 +8,26 @@ on:
     - cron: '32 9 1 * *'
     - cron: '32 13 1 * *'
   workflow_dispatch:       # Allow manual trigger from GitHub Actions tab
+    inputs:
+      force:
+        description: >-
+          Generate even if this month is already drafted or published. For a test
+          run or to redo a month. Scheduled runs never set this, so the
+          once-a-month guard still holds on the 1st.
+        type: boolean
+        default: false
+      base:
+        description: >-
+          Branch the review PR targets. Leave as main to publish. Point it at dev
+          to exercise the pipeline without proposing a change to the live site.
+        type: string
+        default: main
+      suffix:
+        description: >-
+          Optional suffix for the branch name, so a test run cannot collide with
+          the real draft branch for the same month.
+        type: string
+        default: ''
 
 # pull-requests: write is what lets the bot open the review PR.
 permissions:
@@ -29,9 +49,11 @@ jobs:
       - name: Work out this month's branch and label
         id: month
         run: |
-          echo "branch=news-$(date -u +'%Y-%m')" >> "$GITHUB_OUTPUT"
+          suffix="${{ inputs.suffix }}"
+          echo "branch=news-$(date -u +'%Y-%m')${suffix}" >> "$GITHUB_OUTPUT"
           echo "file=news/$(date -u +'%Y-%m').html" >> "$GITHUB_OUTPUT"
           echo "label=$(date -u +'%B %Y')"        >> "$GITHUB_OUTPUT"
+          echo "base=${{ inputs.base || 'main' }}" >> "$GITHUB_OUTPUT"
 
       # Two crons fire each month, and the second must not redo the first's work
       # or spend another Claude/NewsAPI call. Skip if this month is already
@@ -40,7 +62,10 @@ jobs:
         id: guard
         run: |
           branch="${{ steps.month.outputs.branch }}"
-          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+          if [ "${{ inputs.force }}" = "true" ]; then
+            echo "force=true on a manual run — generating regardless."
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          elif git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
             echo "Branch $branch already exists — a draft is already open for review."
             echo "skip=true" >> "$GITHUB_OUTPUT"
           elif [ -f "${{ steps.month.outputs.file }}" ]; then
@@ -102,10 +127,11 @@ jobs:
 
           Before merging, read each story and check that:
 
-          - Every factual claim holds up. The published cards do not cite a source, so
-            treat any date, dollar amount, threshold, effective date, agency name or
-            case outcome as unverified until you have checked it against the candidate
-            articles listed below.
+          - Every factual claim holds up. Each story ends with a "Source:" link -
+            open it and check any date, dollar amount, threshold, effective date,
+            agency name or case outcome against what the source actually says.
+          - Federal Register and agency-newsroom stories are authoritative. Trade-press
+            stories are second-hand, so treat those with more caution.
           - Nothing is wrong for New York or New Jersey specifically.
           - No story is stale, duplicated from last month, or off-topic for a PEO audience.
           - Nothing reads as legal advice.
@@ -124,7 +150,7 @@ jobs:
           fi
 
           gh pr create \
-            --base main \
+            --base "${{ steps.month.outputs.base }}" \
             --head "$branch" \
             --title "Monthly HR news — $label" \
             --body-file "$body_file"
