@@ -36,6 +36,35 @@ QUERIES = [
     "minimum wage law",
 ]
 
+# Outlets the bulletin is allowed to draw from: employment-law trade press, the
+# major employment-law firms' update blogs, benefits/payroll trade press, and
+# mainstream business wires. Deliberately excludes SEO content farms and payroll
+# vendors' marketing blogs, which NewsAPI indexes alongside everything else.
+#
+# Note: federal and state agency sites (dol.gov, irs.gov, osha.gov) are NOT here
+# because NewsAPI does not index them. Agency announcements reach us only via the
+# outlets below reporting on them.
+APPROVED_DOMAINS = [
+    # HR / employment trade press
+    "shrm.org", "hrdive.com", "hrexecutive.com", "workforce.com", "hrmorning.com",
+    # Employment law
+    "natlawreview.com", "jdsupra.com", "law360.com", "bloomberglaw.com",
+    "littler.com", "jacksonlewis.com", "ogletree.com", "fisherphillips.com",
+    "seyfarth.com", "employmentlawworldview.com",
+    # Benefits / payroll / retirement
+    "benefitspro.com", "benefitnews.com", "plansponsor.com", "planadviser.com",
+    "accountingtoday.com", "taxnotes.com",
+    # Insurance / workers' comp
+    "businessinsurance.com", "insurancejournal.com", "workcompcentral.com",
+    # Mainstream wires
+    "reuters.com", "apnews.com", "cnbc.com", "bloomberg.com", "wsj.com",
+]
+
+# If the whitelist yields fewer than this, do a second unrestricted pass so a
+# quiet news month still produces a bulletin. Anything from that pass is tagged
+# and called out in the review PR.
+MIN_APPROVED_ARTICLES = 8
+
 CATEGORY_STYLES = {
     "Employment Law":    ("var(--color-primary)", "rgba(37,64,200,.08)"),
     "Payroll & Tax":     ("#059669",              "rgba(5,150,105,.08)"),
@@ -60,30 +89,50 @@ def save_archive_index(entries):
 
 # ── Fetch ───────────────────────────────────────────────────────────────────────
 
+def _query_newsapi(query, seen, articles, domains=None, approved=True):
+    params = {
+        "q": query,
+        "language": "en",
+        # relevancy, not publishedAt: we want the most relevant compliance news of
+        # the month, not simply whatever was posted most recently.
+        "sortBy": "relevancy",
+        "pageSize": 5,
+        "apiKey": NEWS_API_KEY,
+    }
+    if domains:
+        params["domains"] = ",".join(domains)
+    try:
+        resp = requests.get("https://newsapi.org/v2/everything", params=params, timeout=10)
+        resp.raise_for_status()
+        for a in resp.json().get("articles", []):
+            title = a.get("title", "")
+            if title and title != "[Removed]" and title not in seen:
+                seen.add(title)
+                a["_approved_source"] = approved
+                articles.append(a)
+    except Exception as e:
+        print(f"  Warning — query '{query}' failed: {e}")
+
+
 def fetch_articles():
+    """
+    Pull candidate articles, preferring the approved outlet list. Falls back to an
+    unrestricted search only if the whitelist comes up short, and tags anything
+    from that fallback so the review PR can flag it.
+    """
     seen, articles = set(), []
     for query in QUERIES:
-        try:
-            resp = requests.get(
-                "https://newsapi.org/v2/everything",
-                params={
-                    "q": query,
-                    "language": "en",
-                    "sortBy": "publishedAt",
-                    "pageSize": 5,
-                    "apiKey": NEWS_API_KEY,
-                },
-                timeout=10,
-            )
-            resp.raise_for_status()
-            for a in resp.json().get("articles", []):
-                title = a.get("title", "")
-                if title and title != "[Removed]" and title not in seen:
-                    seen.add(title)
-                    articles.append(a)
-        except Exception as e:
-            print(f"  Warning — query '{query}' failed: {e}")
-    print(f"  Fetched {len(articles)} unique articles.")
+        _query_newsapi(query, seen, articles, domains=APPROVED_DOMAINS, approved=True)
+    print(f"  Fetched {len(articles)} articles from approved outlets.")
+
+    if len(articles) < MIN_APPROVED_ARTICLES:
+        print(f"  Below {MIN_APPROVED_ARTICLES} — widening search beyond the approved list.")
+        for query in QUERIES:
+            _query_newsapi(query, seen, articles, domains=None, approved=False)
+        extra = sum(1 for a in articles if not a["_approved_source"])
+        print(f"  Added {extra} article(s) from outside the approved list.")
+
+    print(f"  {len(articles)} unique articles total.")
     return articles[:25]
 
 
@@ -107,6 +156,46 @@ def extract_json(text: str):
     raise ValueError("No JSON object found in model response")
 
 
+MIN_STORIES = 3  # below this the bulletin is too thin to be worth publishing
+
+
+def attach_sources(data, articles):
+    """
+    Resolve each story's source_index against the real article list and attach the
+    actual outlet name and URL. The model never supplies a URL itself, so it cannot
+    invent one. A story whose source cannot be resolved is DROPPED — an uncited
+    story is exactly what we are trying to stop publishing.
+    """
+    kept, dropped = [], []
+    for s in data.get("stories", []):
+        try:
+            i = int(s.get("source_index")) - 1
+        except (TypeError, ValueError):
+            i = -1
+        a = articles[i] if 0 <= i < len(articles) else None
+        if a and a.get("url"):
+            s["_source_name"]     = (a.get("source") or {}).get("name") or "Source"
+            s["_source_url"]      = a["url"]
+            s["_source_approved"] = bool(a.get("_approved_source", True))
+            kept.append(s)
+        else:
+            dropped.append(s.get("headline", "(untitled)"))
+
+    for d in dropped:
+        print(f"  Dropped (no resolvable source): {d}")
+    if len(kept) < MIN_STORIES:
+        raise ValueError(
+            f"only {len(kept)} of {len(data.get('stories', []))} stories had a "
+            f"resolvable source (need {MIN_STORIES})")
+
+    data["stories"] = kept
+    unapproved = [s["_source_name"] for s in kept if not s["_source_approved"]]
+    if unapproved:
+        print(f"  NOTE: {len(unapproved)} story/stories cite outlets outside the "
+              f"approved list: {', '.join(sorted(set(unapproved)))}")
+    return data
+
+
 def write_source_digest(articles):
     """
     Write the candidate articles to the path in NEWS_SOURCES_OUT, if set, so the
@@ -118,13 +207,21 @@ def write_source_digest(articles):
     if not dest:
         return
     try:
-        lines = ["", "<details><summary>Candidate articles the bulletin was drawn from "
-                     f"({len(articles)})</summary>", ""]
+        outside = [a for a in articles if not a.get("_approved_source", True)]
+        lines = [""]
+        if outside:
+            lines += [f"> **{len(outside)} of {len(articles)} candidate articles came from "
+                      f"outside the approved outlet list** (the approved list was short this "
+                      f"month). Anything cited from those needs a closer look.", ""]
+        lines += ["<details><summary>Candidate articles the bulletin was drawn from "
+                  f"({len(articles)})</summary>", ""]
         for a in articles:
             title = (a.get("title") or "(untitled)").replace("|", "\\|")
             name = (a.get("source") or {}).get("name") or "unknown source"
+            flag = "" if a.get("_approved_source", True) else " ⚠️ *outside approved list*"
             url = a.get("url")
-            lines.append(f"- [{title}]({url}) — {name}" if url else f"- {title} — {name}")
+            lines.append(f"- [{title}]({url}) — {name}{flag}" if url
+                         else f"- {title} — {name}{flag}")
         lines += ["", "</details>", ""]
         with open(dest, "w", encoding="utf-8") as fh:
             fh.write("\n".join(lines))
@@ -163,13 +260,19 @@ Write a polished monthly bulletin for {month_year}. Return ONLY valid JSON — n
       "headline": "Clear, compelling headline written in your own words",
       "category": "One of: Employment Law | Payroll & Tax | Employee Benefits | Workplace Safety | Workers' Comp | HR Compliance",
       "summary": "2–3 sentences explaining what happened and why it matters to employers.",
-      "takeaway": "One practical sentence: what should a business owner do or know because of this?"
+      "takeaway": "One practical sentence: what should a business owner do or know because of this?",
+      "source_index": 3
     }}
   ],
   "closing": "1–2 sentences encouraging readers to reach out to StaffPro with questions."
 }}
 
 Select the 5 most relevant stories for small-to-mid-size employers. Plain English only — no legalese, no filler.
+
+"source_index" is REQUIRED and must be the number of the article above that the
+story is based on. Every story is published with a link to that article, so the
+number must be the one you actually used. Base each story on ONE article; do not
+merge several into one story.
 
 Write ONLY what the source material above actually supports. Do not add specifics
 it does not contain — no dates, dollar amounts, thresholds, effective dates,
@@ -190,7 +293,10 @@ act on it."""
             data = extract_json(message.content[0].text)
             if not data.get("stories"):
                 raise ValueError("Response contained no stories")
-            print(f"  Generated {len(data['stories'])} stories for {data['month']}.")
+            # Inside the retry loop on purpose: a response whose stories cannot be
+            # traced back to a real article gets another attempt rather than shipping.
+            data = attach_sources(data, articles)
+            print(f"  Generated {len(data['stories'])} sourced stories for {data['month']}.")
             return data
         except Exception as e:  # noqa: BLE001 — retry on any transient/parse failure
             last_err = e
@@ -223,11 +329,20 @@ def build_story_html(story):
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;color:var(--color-primary);"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           <span><strong>Takeaway:</strong> {story['takeaway']}</span>
         </div>
+        <p class="news-source">Source: <a href="{story['_source_url']}" target="_blank" rel="noopener noreferrer nofollow">{story['_source_name']}</a></p>
       </article>"""
 
 
 def build_archive_section(archive, prefix=""):
-    """Render the Previous Issues grid. prefix='' for main page, '../' unused here."""
+    """
+    Render the Previous Issues grid.
+    prefix='' on news.html, '../' on an archive page (news/YYYY-MM.html).
+
+    An archive page lists the issues published before it, plus a link back to the
+    current issue — so a reader who lands on an old bulletin can reach any other
+    one. Pages are not rewritten in later months: that would put every archive
+    file into every monthly review PR and bury the actual new content.
+    """
     if not archive:
         return ""
     cards = "\n".join(
@@ -236,12 +351,16 @@ def build_archive_section(archive, prefix=""):
         f'<div class="archive-count">{e["count"]} stories</div></a>'
         for e in archive
     )
+    current = (
+        f'\n      <a href="{prefix}news.html" class="archive-current">'
+        f'View the current issue &rarr;</a>' if prefix else ""
+    )
     return f"""
     <div class="archive-section fade-in">
       <div class="archive-title">Previous Issues</div>
       <div class="archive-grid">
 {cards}
-      </div>
+      </div>{current}
     </div>"""
 
 
@@ -341,6 +460,19 @@ SHARED_STYLES = """
       line-height: 1.75;
       margin-bottom: var(--sp-5);
     }
+    .news-source {
+      margin-top: var(--sp-4);
+      padding-top: var(--sp-3);
+      border-top: 1px solid var(--color-border);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+    }
+    .news-source a {
+      color: var(--color-primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .news-source a:hover { text-decoration: underline; }
     .archive-section {
       max-width: 780px;
       margin-inline: auto;
@@ -361,6 +493,15 @@ SHARED_STYLES = """
       grid-template-columns: repeat(3, 1fr);
       gap: var(--sp-4);
     }
+    .archive-current {
+      display: inline-block;
+      margin-top: var(--sp-5);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+    .archive-current:hover { text-decoration: underline; }
     .archive-card {
       display: flex;
       flex-direction: column;
@@ -552,7 +693,9 @@ def render_page(data, p="", archive=None):
     """
     month_year   = data["month"]
     stories_html = "\n".join(build_story_html(s) for s in data["stories"])
-    archive_html = build_archive_section(archive) if archive and not p else ""
+    # Archive pages get the grid too, not just news.html — otherwise a reader who
+    # lands on an old issue has no way to reach any other one.
+    archive_html = build_archive_section(archive, prefix=p) if archive else ""
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -694,7 +837,10 @@ def main():
     # Save archive copy (news/YYYY-MM.html) — with '../' prefix for assets
     print("Saving archive copy...")
     ARCHIVE_DIR.mkdir(exist_ok=True)
-    archive_html = render_page(data, p="../")
+    # The archive copy lists every OTHER issue (this month's own page is current,
+    # so it does not link to itself).
+    other_issues = [e for e in archive if e["file"] != filename]
+    archive_html = render_page(data, p="../", archive=other_issues)
     (ARCHIVE_DIR / filename).write_text(archive_html, encoding="utf-8")
 
     # Update archive index (add current month if not already there)

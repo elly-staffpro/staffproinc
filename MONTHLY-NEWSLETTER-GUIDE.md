@@ -55,8 +55,9 @@ usually right, but it is not a person and it does not know your clients.
 **For each of the five stories, ask:**
 
 - [ ] Is every **date, dollar amount, percentage, deadline, and agency name** correct?
-      Check it against the source articles listed in the draft. If you cannot confirm a
-      number, that story needs to be removed or the number taken out.
+      Click the **"Source:"** link at the bottom of the story and check it against the
+      original article. If you cannot confirm a number, that story needs to be removed or
+      the number taken out.
 - [ ] Is anything **wrong for New York or New Jersey** specifically? Most of our clients
       are NY.
 - [ ] Is this **old news** or a repeat of last month?
@@ -99,8 +100,15 @@ Check https://github.com/elly-staffpro/staffproinc/actions for a red X on
 means it had nothing new to publish.
 
 **Do the published stories link to their sources?**
-Not currently. The source list exists on the review page for *your* checking, but the
-public newsletter does not cite sources. See the note below.
+Yes. Every story ends with **"Source: [outlet name]"** and that link goes to the original
+article. If a story cannot be traced back to a real article, it is dropped automatically
+and never reaches the draft.
+
+**Where do the articles come from?**
+An approved list of HR, employment-law, benefits and workers' comp publications, plus the
+major business wires. If a given month is quiet and the approved list comes up short, the
+search widens — and the draft page shows a clear warning naming which articles came from
+outside the approved list. Those deserve extra scrutiny.
 
 **Who can do this?** Anyone with access to the GitHub repository. It does not have to be
 the same person every month.
