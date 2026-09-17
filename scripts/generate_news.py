@@ -622,15 +622,22 @@ Return ONLY valid JSON — no markdown, no code fences — in this exact structu
   "closing": "1-2 sentences inviting readers to get in touch."
 }}
 
-Pick the 5 most relevant items for small-to-mid-size employers.
+Pick UP TO 5 items. There is no quota — see RELEVANCE.
 
-RELEVANCE. Many candidates will not be relevant — federal rulemaking sweeps in
-corporate and international tax, unrelated agency housekeeping, and enforcement
-actions against single named companies. Skip those. Choose items that affect how
-ordinary employers pay people, provide benefits, keep workers safe, or stay
-compliant. Prefer TIER 1 and TIER 2 items: they are authoritative and public
-domain. If fewer than 5 candidates are genuinely relevant, return fewer stories
-rather than padding with something that is not.
+RELEVANCE. Most candidates will not be relevant. Federal rulemaking sweeps in
+corporate and international tax, agency housekeeping, and rules for narrow
+sectors. Choose only items that affect how ordinary employers pay people, provide
+benefits, keep workers safe, or stay compliant. Prefer TIER 1 and TIER 2: they are
+authoritative and public domain.
+
+Apply this test to every story before you include it: write the honest takeaway
+first. If that takeaway would say the item is "not a general employer issue", that
+"employers don't administer this", or that it is relevant only to a narrow group
+that most readers are not in — then DO NOT INCLUDE THE STORY AT ALL. Cut it and
+move on. Do not soften it into something that sounds relevant.
+
+Returning 3 strong stories is a better bulletin than 5 with two that do not apply.
+Do not pad to reach a number.
 
 SOURCING. "source_index" is REQUIRED and must be the number of the ONE candidate
 the story is based on. Each story is published with a link to that source, so the

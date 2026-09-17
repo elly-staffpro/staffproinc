@@ -116,32 +116,51 @@ Each story on the page is:
 
 ## 6. Worked example
 
-**Source material (public domain, Federal Register):** a DOL final rule,
-*"Federal-State Unemployment Compensation (UC) Program; Data Availability"*, published
-2026-09-16, effective 2026-11-16, requiring disclosure of confidential UC information to
-federal officials for UC program purposes.
+The example below is **fictional**. It has to be: an earlier version of this file
+used a real Federal Register rule that was still in the candidate pool, and the
+generator matched it and reproduced the example's headline and takeaway word for
+word in a live run. Never illustrate this spec with real, current source material.
+
+**Fictional source:** a federal agency finalises a rule requiring employers in a
+narrow licensed industry to file an annual workforce report. Published 4 March,
+effective 1 September, applies to employers with 500 or more employees in that
+industry.
 
 **Wrong — invented specifics, instruction, hype:**
-> In today's rapidly shifting compliance landscape, employers must act fast! The DOL's
-> sweeping new rule imposes significant new reporting burdens on all employers beginning
-> November 16, and failure to comply could result in penalties of up to $10,000 per
-> violation. Update your unemployment reporting procedures immediately.
+> In today's rapidly shifting compliance landscape, employers must act fast! The
+> agency's sweeping new rule imposes significant new reporting burdens on all
+> employers beginning September 1, and failure to file could result in penalties of
+> up to $25,000 per violation. Update your reporting procedures immediately.
 
-Everything after "November 16" was invented, and it instructs a public reader.
+The penalty figure was invented, "all employers" is wrong, and it orders a public
+reader around.
 
 **Right:**
-> **Labor Department finalizes new unemployment data rule**
+> **Agency finalises annual workforce reporting rule**
 >
-> The Labor Department finalized a rule requiring states to share certain confidential
-> unemployment compensation information with federal officials for program administration.
-> It takes effect November 16. The change sits mostly with state agencies rather than
-> individual employers — but it is a signal of how closely unemployment claims data is
-> being tracked.
+> A federal agency finalised a rule requiring an annual workforce report from
+> employers in one licensed industry. It applies to employers with 500 or more
+> employees in that industry and takes effect 1 September. Most employers are
+> outside its scope.
 >
-> *Takeaway: Nothing to do here, but worth knowing if you handle a lot of unemployment claims.*
+> *Takeaway: Only relevant if you operate in that industry at that size.*
 >
 > Source: Federal Register
 
-Note what it does: the effective date is used because the government supplied it, the
-scope is described honestly ("mostly with state agencies"), the takeaway orients instead
-of instructing, and it does not pretend to be more urgent than it is.
+What it does: uses only the dates the source supplied, states the scope honestly,
+orients instead of instructing, and does not inflate the stakes.
+
+## 7. Relevance
+
+A story earns its place only if it affects how ordinary employers pay people,
+provide benefits, keep workers safe, or stay compliant.
+
+**Test it against the takeaway.** If the honest takeaway would be "not a general
+employer issue", "employers don't administer this", or "only relevant to
+[some narrow group nobody reading is in]", then the story does not belong in the
+bulletin at all. Cut it.
+
+Federal rulemaking sweeps in corporate and international tax, agency housekeeping,
+and rules for narrow sectors. Most of it is not our readers' business.
+
+**Four strong stories beat five with two that do not apply.** There is no quota.
