@@ -1146,6 +1146,10 @@ def render_page(data, p="", archive=None):
       }}, 2500);
     }})();
   </script>
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{{"token": "c0b373a9584b47a58428c3ec5453366a"}}'></script>
+  <!-- End Cloudflare Web Analytics -->
   <style>{SHARED_STYLES}
   </style>
 </head>
