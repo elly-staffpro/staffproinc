@@ -134,6 +134,21 @@ CASES = [
                     lambda t: t.replace('("order", "newest"),',
                                         '("order", "newest"), ("conditions[term]", "wage"),'))),
 
+    # Analytics: only meaningful once a beacon is installed, so each of these
+    # installs one first and then breaks it.
+    ("one page loses the analytics beacon", "analytics",
+     lambda s: (subprocess.run([sys.executable, str(s/"scripts"/"set_analytics.py"),
+                                "0123456789abcdef0123456789abcdef"], cwd=str(s), capture_output=True),
+                edit(s / "about.html",
+                     lambda t: t.replace("<!-- Cloudflare Web Analytics -->", "<!-- removed -->", 1)))),
+
+    ("two different analytics tokens in use", "analytics",
+     lambda s: (subprocess.run([sys.executable, str(s/"scripts"/"set_analytics.py"),
+                                "0123456789abcdef0123456789abcdef"], cwd=str(s), capture_output=True),
+                edit(s / "about.html",
+                     lambda t: t.replace("0123456789abcdef0123456789abcdef",
+                                         "ffffffffffffffffffffffffffffffff", 1)))),
+
     ("NewsAPI error path leaks the API key", "newsletter",
      lambda s: edit(s / "scripts" / "generate_news.py",
                     lambda t: t.replace(

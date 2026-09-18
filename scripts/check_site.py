@@ -406,6 +406,46 @@ def check_news_workflow():
         fail("workflow", "monthly-news.yml", "the monthly schedule was removed")
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# 9. Analytics beacon is all-or-nothing, on one token
+#    staffproinc.com is not a Cloudflare zone (nameservers stay at GoDaddy for
+#    the email records), so Cloudflare's automatic injection is unavailable and
+#    the beacon lives in the HTML of every page. A page that misses it is a page
+#    that reports no traffic, and two tokens would split the numbers in half.
+# ─────────────────────────────────────────────────────────────────────────────
+
+def check_analytics():
+    marker = "<!-- Cloudflare Web Analytics -->"
+    token_re = re.compile(r'"token":\s*"([0-9a-fA-F]{6,})"')
+    present, absent, tokens = [], [], set()
+    for page in ALL_PAGES:
+        html = read(page)
+        if marker in html:
+            present.append(page)
+            m = token_re.search(html)
+            tokens.add(m.group(1) if m else "(unreadable)")
+        else:
+            absent.append(page)
+
+    if not present:
+        return  # not installed yet — a deliberate state, not a failure
+
+    for page in absent:
+        fail("analytics", page,
+             "missing the analytics beacon that every other page has — "
+             "its traffic would go uncounted (py scripts/set_analytics.py <token>)")
+    if len(tokens) > 1:
+        fail("analytics", "(across pages)",
+             f"{len(tokens)} different analytics tokens in use — traffic would be "
+             f"split between them: {', '.join(sorted(tokens))}")
+
+    gen = (ROOT / "scripts" / "generate_news.py").read_text(encoding="utf-8")
+    if marker not in gen:
+        fail("analytics", "scripts/generate_news.py",
+             "the generator has no beacon, so next month's news page would ship "
+             "without analytics")
+
+
 CHECKS = [
     ("content visible without JS", check_js_resilience),
     ("forms degrade + validate", check_forms),
@@ -415,6 +455,7 @@ CHECKS = [
     ("no hardcoded year", check_year),
     ("newsletter integrity", check_newsletter_integrity),
     ("news bot needs review", check_news_workflow),
+    ("analytics beacon consistent", check_analytics),
 ]
 
 
