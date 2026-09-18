@@ -56,6 +56,14 @@
       grid-template-columns: repeat(2, 1fr);
       gap: var(--sp-5);
     }
+    /* Part 7 is the odd one out on a two-column grid: span the row but stay
+       the width of a single cell so it does not tower over the others. */
+    .video-card-solo {
+      grid-column: 1 / -1;
+      max-width: 50%;
+      width: 100%;
+      margin-inline: auto;
+    }
     .video-card {
       background: var(--white);
       border: 1.5px solid var(--color-border);
@@ -89,6 +97,9 @@
     }
 
     @media (max-width: 768px) {
+      /* Once the grid is a single column, a half-width video is a 156px
+         postage stamp on a phone. Let the odd-one-out fill the row. */
+      .video-card-solo { max-width: 100%; }
       .video-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -117,7 +128,7 @@
       <a href="https://staffpro.payplus360.com/login/" class="nav-login-link" target="_blank" rel="noopener noreferrer">Login</a>
       <a href="contact.html" class="btn btn-primary btn-sm">Get a Quote</a>
     </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -252,7 +263,7 @@
           </div>
         </div>
 
-        <div class="video-card" style="grid-column: 1 / -1; max-width: 50%; margin: 0 auto; width: 100%;">
+        <div class="video-card video-card-solo">
           <div class="embed-wrap">
             <iframe src="https://www.youtube.com/embed/Rq_9Kkykncc?rel=0" title="Part 7 — Additional Tips & Conclusion" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>

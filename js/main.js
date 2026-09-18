@@ -22,6 +22,10 @@
       const isOpen = toggle.classList.toggle('open');
       mobileNav.classList.toggle('open', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
+      /* A screen reader announces the button, not the menu sliding in, so the
+         open/closed state has to be on the button itself. */
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
     });
 
     // Close on link click
@@ -405,9 +409,10 @@
       })
       .then(function (response) {
         if (response.ok) {
-          contactForm.style.display = 'none';
-          const success = document.getElementById('formSuccess');
-          if (success) success.classList.add('show');
+          /* Go to a real page rather than swapping in an inline panel: a
+             pageview is a conversion analytics can actually count, and it
+             matches where the no-JS _next fallback lands. */
+          window.location.assign('thank-you.html');
         } else {
           btn.disabled = false;
           btn.textContent = originalLabel;

@@ -127,11 +127,11 @@ VOICE_SPEC_PATH = Path(__file__).parent / "website-newsletter-voice.md"
 
 CATEGORY_STYLES = {
     "Employment Law":    ("var(--color-primary)", "rgba(37,64,200,.08)"),
-    "Payroll & Tax":     ("#059669",              "rgba(5,150,105,.08)"),
+    "Payroll & Tax":     ("#007F52",              "rgba(0,127,82,.08)"),
     "Employee Benefits": ("#7C3AED",              "rgba(124,58,237,.08)"),
-    "Workplace Safety":  ("#D97706",              "rgba(217,119,6,.08)"),
-    "Workers' Comp":     ("#DC2626",              "rgba(220,38,38,.08)"),
-    "HR Compliance":     ("#0891B2",              "rgba(8,145,178,.08)"),
+    "Workplace Safety":  ("#B45200",              "rgba(180,82,0,.08)"),
+    "Workers' Comp":     ("#D62020",              "rgba(214,32,32,.08)"),
+    "HR Compliance":     ("#007899",              "rgba(0,120,153,.08)"),
 }
 
 
@@ -1031,7 +1031,7 @@ def render_nav(p, active_news=True):
       <a href="https://staffpro.payplus360.com/login/" class="nav-login-link" target="_blank" rel="noopener noreferrer">Login</a>
       <a href="{p}contact.html" class="btn btn-primary btn-sm">Get a Quote</a>
     </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
       <span></span><span></span><span></span>
     </button>
   </div>

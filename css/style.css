@@ -1325,7 +1325,8 @@ input, textarea, select { font-family: inherit; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.4);
+  /* 0.40 gave 3.47:1 on the navy card. 0.50 clears AA at 4.68:1. */
+  color: rgba(255,255,255,0.50);
   margin-bottom: var(--sp-1);
 }
 .contact-detail-value {
@@ -1619,7 +1620,8 @@ input, textarea, select { font-family: inherit; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.35);
+  /* 0.35 gave 3.20:1 on --gray-900. 0.48 clears AA at 4.83:1. */
+  color: rgba(255,255,255,0.48);
   margin-bottom: var(--sp-5);
 }
 .footer-links { display: flex; flex-direction: column; gap: var(--sp-3); }
@@ -1636,12 +1638,27 @@ input, textarea, select { font-family: inherit; }
   justify-content: space-between;
   padding-block: var(--sp-5);
   font-size: var(--text-xs);
-  color: rgba(255,255,255,0.3);
+  /* 0.30 gave 2.71:1 on --gray-900. 0.48 clears AA at 4.83:1. */
+  color: rgba(255,255,255,0.48);
 }
 
 /* ------------------------------------------------
    ANIMATIONS
    ------------------------------------------------ */
+
+/* Some people get motion sickness or migraines from movement on screen, and the
+   OS has a switch for it. Honour it: kill transitions, animations and smooth
+   scrolling. Content still appears — .fade-in reaches opacity:1 instantly rather
+   than over 0.6s — so nothing is hidden by turning motion off. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
 /* Scroll animations are OPT-IN: the .js-anim class is added to <html> only when
    scripting is working. If JS is disabled, blocked, or main.js fails to load,
    .js-anim is never applied (or is removed by the failsafe) and every .fade-in
