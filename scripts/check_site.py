@@ -405,6 +405,13 @@ def check_news_workflow():
     if not re.search(r"^\s*-\s*cron:", text, re.M):
         fail("workflow", "monthly-news.yml", "the monthly schedule was removed")
 
+    # GitHub will not start Site Checks on a PR the bot opens with its own token,
+    # so the run inspecting its own output is the only check the draft gets.
+    if not re.search(r"^\s*if python scripts/check_site\.py\b", text, re.M):
+        fail("workflow", "monthly-news.yml",
+             "the newsletter draft is no longer inspected before it opens — Site "
+             "Checks never run on a PR the bot opens, so this is its only check")
+
 
 # ─────────────────────────────────────────────────────────────────────────────
 # 9. Analytics beacon is all-or-nothing, on one token

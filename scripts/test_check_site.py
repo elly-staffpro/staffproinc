@@ -108,6 +108,11 @@ CASES = [
                     lambda t: re.sub(r"^(\s*)pull-requests:\s*write\s*$", r"\1pull-requests: read",
                                      t, count=1, flags=re.M))),
 
+    ("news draft no longer inspected before it opens", "workflow",
+     lambda s: edit(s / ".github" / "workflows" / "monthly-news.yml",
+                    lambda t: t.replace("if python scripts/check_site.py",
+                                        "if true # check removed", 1))),
+
     ("monthly schedule removed", "workflow",
      lambda s: edit(s / ".github" / "workflows" / "monthly-news.yml",
                     lambda t: re.sub(r"^\s*-\s*cron:.*$", "", t, flags=re.M))),

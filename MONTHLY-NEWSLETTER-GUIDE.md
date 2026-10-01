@@ -12,14 +12,28 @@ experience needed. You will not touch any code.
 
 ## What happens automatically
 
-On the 1st of every month, around 5:30am Eastern, the system:
+On the 1st of every month, in the morning Eastern time, the system:
 
 1. Collects recent HR and compliance news articles
-2. Has Claude write five short stories from them
-3. Saves the result as a **draft** and opens a review page on GitHub
-4. **Stops there and waits for you**
+2. Has Claude write up to five stories from them
+3. **Inspects the finished pages for problems** (broken links, unreadable text, and so on)
+4. Saves the result as a **draft** and opens a review page on GitHub
+5. **Stops there and waits for you**
 
-You should get an email from GitHub titled **"Monthly HR news — [Month] [Year]"**.
+GitHub sometimes runs it a few hours late. In October 2026 the draft appeared at
+about 12:30pm rather than first thing. That's normal.
+
+### One-time setup: make sure GitHub emails you
+
+GitHub only emails you about new drafts if you are **watching** the repository.
+In October 2026 no email came for exactly this reason. To turn it on:
+
+1. Go to https://github.com/elly-staffpro/staffproinc
+2. Click **Watch** (top right)
+3. Choose **All Activity**
+
+After that you'll get an email titled **"Monthly HR news — [Month] [Year]"** each month.
+If one ever doesn't arrive, check your spam folder, or just go straight to Step 1.
 
 ---
 
@@ -34,18 +48,26 @@ Either click the link in the GitHub email, **or** go to:
 You'll see one item named **"Monthly HR news — October 2026"** (with that month's name).
 Click it.
 
-### Step 2 — Look at how it will actually appear
+### Step 2 — Check the inspection result, then preview it
 
-In the draft page, find the section titled
-**"Candidate articles the bulletin was drawn from"** and click the small triangle to
-expand it. That is the list of real news articles the stories came from, with links.
+The very top of the draft page tells you whether the automatic inspection passed:
 
-To see the newsletter itself the way a visitor would, open:
+- **"Site Checks: passed"** — carry on.
+- **"⚠️ Site Checks FAILED on this draft — do not merge"** — stop. The title will also
+  start with **CHECKS FAILED**. The problems are listed right there. Don't merge; ask for
+  a fix, or close the draft and skip the month.
 
-> https://news-2026-10.staffproinc.pages.dev
+Right under that is a **Preview** link. Click it to see the newsletter exactly as a
+visitor would. (GitHub's own "Files changed" tab only shows raw code, not the page.)
 
-Replace `2026-10` with the year and month you're publishing. (October 2026 = `2026-10`,
-November 2026 = `2026-11`, and so on.)
+The link always follows the same pattern, if you ever need to type it:
+
+> https://news-2026-11.staffproinc.pages.dev/news
+
+with that month's year and number in place of `2026-11`.
+
+Further down the draft page, find **"Candidate sources"** and click the small triangle
+to expand it. That's the list of real articles the stories came from, with links.
 
 ### Step 3 — Read every story and check it
 
