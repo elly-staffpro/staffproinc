@@ -87,6 +87,8 @@ FR_DAYS_BACK = 75          # a monthly bulletin needs a little overlap
 FR_PER_PAGE = 20
 FR_MAX_FULLTEXT = 8        # full-text fetches per run, to bound time and bandwidth
 FR_BODY_WORDS = 600        # words of rule text handed to the writer
+FR_FULLTEXT_PAUSE = 1.5    # seconds between full-text fetches; see _get_fr_fulltext
+FR_FULLTEXT_RETRIES = 3
 
 # NOTE: do NOT add conditions[term] to this query. It looks like a helpful topic
 # filter but it collapses the result set — agency-scoped returns 54 documents
@@ -201,6 +203,26 @@ def _extract_fr_body(raw, words=FR_BODY_WORDS):
     return " ".join(text[start:].split()[:words])
 
 
+def _get_fr_fulltext(url):
+    """
+    Fetch one Federal Register document's text, politely.
+
+    In November 2026 every full-text request came back 429 Too Many Requests —
+    they were fired back to back — so the writer got one-line abstracts for all
+    20 rules and could only stand up 3 stories. Pace the requests and back off
+    on 429 (honouring Retry-After) instead.
+    """
+    for attempt in range(FR_FULLTEXT_RETRIES):
+        time.sleep(FR_FULLTEXT_PAUSE)
+        resp = requests.get(url, timeout=25, headers={"User-Agent": UA})
+        if resp.status_code != 429:
+            resp.raise_for_status()
+            return resp.text
+        wait = resp.headers.get("Retry-After", "")
+        time.sleep(min(int(wait), 30) if wait.isdigit() else 5 * (attempt + 1))
+    resp.raise_for_status()
+
+
 def fetch_federal_register():
     """Tier 1 — actual rulemaking. Public domain, with real effective dates."""
     since = (datetime.now() - timedelta(days=FR_DAYS_BACK)).date().isoformat()
@@ -230,10 +252,7 @@ def fetch_federal_register():
         body = (r.get("abstract") or "").strip()
         if fulltext_budget > 0 and r.get("raw_text_url"):
             try:
-                ft = requests.get(r["raw_text_url"], timeout=25,
-                                  headers={"User-Agent": UA})
-                ft.raise_for_status()
-                deeper = _extract_fr_body(ft.text)
+                deeper = _extract_fr_body(_get_fr_fulltext(r["raw_text_url"]))
                 if len(deeper.split()) > len(body.split()):
                     body = deeper
                 fulltext_budget -= 1
@@ -638,7 +657,9 @@ Return ONLY valid JSON — no markdown, no code fences — in this exact structu
   "closing": "1-2 sentences inviting readers to get in touch."
 }}
 
-Pick UP TO 5 items. There is no quota — see RELEVANCE.
+Aim for 4 or 5 items; 5 when the month supports it. Relevance still comes
+first — see RELEVANCE. Go below 4 only when there genuinely are not 4 relevant
+candidates, never to save effort.
 
 RELEVANCE. Most candidates will not be relevant. Federal rulemaking sweeps in
 corporate and international tax, agency housekeeping, and rules for narrow
@@ -652,8 +673,10 @@ first. If that takeaway would say the item is "not a general employer issue", th
 that most readers are not in — then DO NOT INCLUDE THE STORY AT ALL. Cut it and
 move on. Do not soften it into something that sounds relevant.
 
-Returning 3 strong stories is a better bulletin than 5 with two that do not apply.
-Do not pad to reach a number.
+Do not pad to reach a number: 3 strong stories beat 5 with two that do not
+apply. But look properly before settling for fewer than 4 — DOL releases on
+enforcement, guidance or new rules, benefit-plan rules, payroll-tax changes and
+workplace-safety actions usually supply enough.
 
 ROUTINE RELEASES ARE NOT STORIES. Recurring statistical publications — the weekly
 unemployment claims report, monthly jobs numbers, quarterly indices — are not
@@ -696,7 +719,7 @@ on Tier 1 and 2 for anything substantial."""
     for attempt in range(1, 4):  # up to 3 tries
         try:
             message = client.messages.create(
-                model="claude-sonnet-4-5",
+                model="claude-sonnet-5-5",
                 max_tokens=8192,
                 messages=[{"role": "user", "content": prompt}],
             )
