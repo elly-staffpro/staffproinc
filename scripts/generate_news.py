@@ -720,12 +720,16 @@ on Tier 1 and 2 for anything substantial."""
         try:
             message = client.messages.create(
                 model="claude-sonnet-5-5",
-                max_tokens=8192,
+                max_tokens=16000,
                 messages=[{"role": "user", "content": prompt}],
             )
-            if not message.content or not message.content[0].text:
+            # Newer models can return a thinking block ahead of the answer, so
+            # read the text blocks rather than assuming the first block is text.
+            text = "".join(b.text for b in message.content
+                           if getattr(b, "type", "") == "text")
+            if not text.strip():
                 raise ValueError("Empty response from Claude")
-            data = extract_json(message.content[0].text)
+            data = extract_json(text)
             if not data.get("stories"):
                 raise ValueError("Response contained no stories")
             # Inside the retry loop on purpose: a response whose stories cannot be
