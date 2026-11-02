@@ -15,7 +15,7 @@ experience needed. You will not touch any code.
 On the 1st of every month, in the morning Eastern time, the system:
 
 1. Collects recent HR and compliance news articles
-2. Has Claude write up to five stories from them
+2. Has Claude write 4 or 5 stories from them (occasionally 3 in a slow news month)
 3. **Inspects the finished pages for problems** (broken links, unreadable text, and so on)
 4. Saves the result as a **draft** and opens a review page on GitHub
 5. **Stops there and waits for you**
@@ -74,7 +74,7 @@ to expand it. That's the list of real articles the stories came from, with links
 This is the part that matters. Claude wrote these stories from news headlines. It is
 usually right, but it is not a person and it does not know your clients.
 
-**For each of the five stories, ask:**
+**For each story, ask:**
 
 - [ ] Is every **date, dollar amount, percentage, deadline, and agency name** correct?
       Click the **"Source:"** link at the bottom of the story and check it against the
@@ -131,6 +131,11 @@ An approved list of HR, employment-law, benefits and workers' comp publications,
 major business wires. If a given month is quiet and the approved list comes up short, the
 search widens — and the draft page shows a clear warning naming which articles came from
 outside the approved list. Those deserve extra scrutiny.
+
+**Why are there only 3 stories this month?**
+The system aims for 4 or 5, but it will not pad the issue with stories that don't
+affect ordinary employers. In a slow news month it publishes 3, the minimum. Fewer
+than 3 and no draft opens at all.
 
 **Who can do this?** Anyone with access to the GitHub repository. It does not have to be
 the same person every month.
