@@ -99,11 +99,12 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
 .btn.ghost{background:#fff;border:1px solid #B9C1D3;color:var(--ink)}
 .btn:disabled{opacity:.6;cursor:progress}
 .btn:focus-visible,.steps button:focus-visible,.link:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
-.saved{margin-left:auto;align-self:center;font-size:13px;color:var(--steel)}
+.saved{align-self:center;font-size:13px;color:var(--steel)}
+.nav-go{margin-left:auto;display:flex;gap:12px}
 .btn.restart{align-self:center;font-size:15px;font-weight:700;color:var(--navy);background:#fff;border:1.5px solid var(--navy);padding:10px 16px;min-height:44px;text-decoration:none}
 .btn.restart:hover{background:var(--rail)}
 .btn.restart.confirm{color:#fff;background:var(--err);border-color:var(--err)}
-@media (max-width:480px){.saved{display:none}.btn.restart{margin-left:auto}}
+@media (max-width:480px){.saved{display:none}.nav-go{gap:8px}.btn{padding:12px 16px}}
 .err-banner{color:var(--err);font-size:14px;margin:0 48px 8px;max-width:624px}
 
 .done-screen{max-width:560px;padding-top:40px}
@@ -292,8 +293,16 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
           <div class="grid">
             <div class="f c6"><span class="lab">Pay cycle</span><div class="chips" role="radiogroup">
               <label><input type="radio" name="pay_cycle" value="Weekly" required><span>Weekly</span></label><label><input type="radio" name="pay_cycle" value="Bi-Weekly"><span>Every two weeks</span></label><label><input type="radio" name="pay_cycle" value="Semi-Monthly"><span>Twice a month</span></label><label><input type="radio" name="pay_cycle" value="Monthly"><span>Monthly</span></label></div><div class="msg">Choose a pay cycle.</div></div>
-            <div class="f c6"><span class="lab">Payday</span><div class="chips" role="radiogroup" data-days="pay_day"></div><div class="msg">Choose a payday.</div></div>
-            <div class="f c6"><span class="lab">Day you send us payroll hours</span><div class="chips" role="radiogroup" data-days="report_day"></div><div class="msg">Choose a day.</div></div>
+            <div class="f c6" data-show="pay_cycle=|Weekly|Bi-Weekly"><span class="lab">Payday</span><div class="chips" role="radiogroup" data-days="pay_day"></div><div class="msg">Choose a payday.</div></div>
+            <div class="f c6 hidden" data-show="pay_cycle=Semi-Monthly"><span class="lab">Paydays</span><div class="chips" role="radiogroup">
+              <label><input type="radio" name="pay_day_sm" value="1st and 15th of the month" required><span>1st and 15th</span></label><label><input type="radio" name="pay_day_sm" value="15th and last day of the month"><span>15th and last day of the month</span></label><label><input type="radio" name="pay_day_sm" value="Other"><span>Other dates</span></label></div><div class="hint">If a payday falls on a weekend or holiday, checks are dated the business day before.</div><div class="msg">Choose your paydays.</div></div>
+            <div class="f c6 hidden" data-show="pay_day_sm=Other"><label for="pay_day_sm_other">Which two dates?</label><input id="pay_day_sm_other" name="pay_day_sm_other" required placeholder="e.g. 5th and 20th"><div class="msg">Enter your two paydays.</div></div>
+            <div class="f c6 hidden" data-show="pay_cycle=Monthly"><span class="lab">Payday</span><div class="chips" role="radiogroup">
+              <label><input type="radio" name="pay_day_m" value="1st of the month" required><span>1st of the month</span></label><label><input type="radio" name="pay_day_m" value="15th of the month"><span>15th</span></label><label><input type="radio" name="pay_day_m" value="Last day of the month"><span>Last day of the month</span></label><label><input type="radio" name="pay_day_m" value="Other"><span>Other date</span></label></div><div class="hint">If payday falls on a weekend or holiday, checks are dated the business day before.</div><div class="msg">Choose your payday.</div></div>
+            <div class="f c6 hidden" data-show="pay_day_m=Other"><label for="pay_day_m_other">Which date?</label><input id="pay_day_m_other" name="pay_day_m_other" required placeholder="e.g. 25th"><div class="msg">Enter your payday.</div></div>
+            <div class="f c6" data-show="pay_cycle=|Weekly|Bi-Weekly"><span class="lab">Day you send us payroll hours</span><div class="chips" role="radiogroup" data-days="report_day"></div><div class="msg">Choose a day.</div></div>
+            <div class="f c6 hidden" data-show="pay_cycle=Semi-Monthly|Monthly"><span class="lab">How many business days before payday will you send us payroll hours?</span><div class="chips" role="radiogroup">
+              <label><input type="radio" name="report_lead" value="2" required><span>2</span></label><label><input type="radio" name="report_lead" value="3"><span>3</span></label><label><input type="radio" name="report_lead" value="4"><span>4</span></label><label><input type="radio" name="report_lead" value="5"><span>5</span></label></div><div class="msg">Choose one.</div></div>
             <div class="f c3 full-sm"><label for="period">Pay period</label><input id="period" name="period" required placeholder="e.g. Sunday to Saturday"><div class="hint">The first and last day each paycheck covers.</div><div class="msg">Describe the pay period.</div></div>
             <div class="f c3 full-sm"><label for="first_check">First check date <span class="opt">(if known)</span></label><input id="first_check" name="first_check" type="date"><div class="hint">Leave blank if you are not sure yet.</div></div>
           </div>
@@ -302,7 +311,7 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
           <legend>Getting payroll done</legend>
           <div class="grid">
             <div class="f c6"><span class="lab">How you will send us hours</span><div class="chips" role="radiogroup">
-              <label><input type="radio" name="report_method" value="Email spreadsheet" required><span>Email a spreadsheet</span></label><label><input type="radio" name="report_method" value="Online submission"><span>Enter online</span></label><label><input type="radio" name="report_method" value="File upload"><span>Upload a file</span></label><label><input type="radio" name="report_method" value="Fax timesheet"><span>Fax timesheets</span></label></div><div class="msg">Choose a method.</div></div>
+              <label><input type="radio" name="report_method" value="Email spreadsheet" required><span>Email a spreadsheet</span></label><label><input type="radio" name="report_method" value="Online submission"><span>Enter online</span></label><label><input type="radio" name="report_method" value="File submission"><span>Submit a file</span></label><label><input type="radio" name="report_method" value="Fax timesheet"><span>Fax timesheets</span></label></div><div class="msg">Choose a method.</div></div>
             <div class="f c6"><span class="lab">Will employees use direct deposit?</span><div class="chips" role="radiogroup">
               <label><input type="radio" name="direct_deposit" value="Yes" required><span>Yes</span></label><label><input type="radio" name="direct_deposit" value="No"><span>No</span></label><label><input type="radio" name="direct_deposit" value="Some"><span>Some employees</span></label></div><div class="msg">Choose one.</div></div>
             <div class="f c6"><span class="lab">How you want checks and reports delivered</span><div class="chips" role="radiogroup">
@@ -318,9 +327,11 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
         <fieldset>
           <legend>Health insurance</legend>
           <div class="grid">
-            <div class="f c6"><span class="lab">Do you contribute to employee health insurance?</span><div class="chips" role="radiogroup">
-              <label><input type="radio" name="health" value="Yes"><span>Yes</span></label><label><input type="radio" name="health" value="No"><span>No</span></label><label><input type="radio" name="health" value="No plan today"><span>No plan today</span></label></div><div class="msg">Choose one.</div></div>
-            <div class="f c6 hidden" data-show="health=Yes"><label for="health_formula">How much do you contribute?</label><input id="health_formula" name="health_formula" placeholder="e.g. 50% of employee-only premium"><div class="msg">Describe your contribution.</div></div>
+            <div class="f c6"><span class="lab">Does your company offer a health insurance plan?</span><div class="chips" role="radiogroup">
+              <label><input type="radio" name="health_plan" value="Yes"><span>Yes</span></label><label><input type="radio" name="health_plan" value="No"><span>No</span></label></div><div class="msg">Choose yes or no.</div></div>
+            <div class="f c6 hidden" data-show="health_plan=Yes"><span class="lab">Does the company contribute to the employees' premiums?</span><div class="chips" role="radiogroup">
+              <label><input type="radio" name="health" value="Yes"><span>Yes</span></label><label><input type="radio" name="health" value="No"><span>No</span></label></div><div class="msg">Choose yes or no.</div></div>
+            <div class="f c6 hidden" data-show="health=Yes"><label for="health_formula">How much does the company contribute?</label><input id="health_formula" name="health_formula" placeholder="e.g. 50% of employee-only premium"><div class="msg">Describe your contribution.</div></div>
           </div>
         </fieldset>
         <fieldset>
@@ -359,6 +370,7 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
         <h1>Thank you. We have your information.</h1>
         <p class="lede">Here is what happens next:</p>
         <ol>
+          <li>We email you a copy of your answers.</li>
           <li>We review your answers and call if anything needs clarifying.</li>
           <li>We send your service agreement for signature.</li>
           <li>We send the Direct Debit Authorization Form for your bank details.</li>
@@ -369,10 +381,12 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
 
     <p class="err-banner hidden" id="errBanner" role="alert"></p>
     <div class="nav" id="nav">
-      <button type="button" class="btn ghost" id="back">Back</button>
-      <button type="button" class="btn primary" id="next">Continue</button>
-      <span class="saved" id="saved" aria-live="polite"></span>
       <button type="button" class="btn restart" id="restart">Start over</button>
+      <span class="saved" id="saved" aria-live="polite"></span>
+      <div class="nav-go">
+        <button type="button" class="btn ghost" id="back">Back</button>
+        <button type="button" class="btn primary" id="next">Continue</button>
+      </div>
     </div>
   </main>
 </div>
@@ -436,9 +450,13 @@ function val(name) {
 function applyShows() {
   $$("[data-show]").forEach(el => {
     const m = el.dataset.show.match(/^(\w+)(!?=)(.*)$/);
-    const v = val(m[1]);
-    el.classList.toggle("hidden", m[2] === "=" ? v !== m[3] : v === m[3]);
+    const v = val(m[1]), opts = m[3].split("|");   // "a|b" matches either; an empty option matches a blank answer
+    el.classList.toggle("hidden", m[2] === "=" ? !opts.includes(v) : opts.includes(v));
   });
+  // a follow-up box stays hidden while the question it hangs off is hidden
+  $$('[data-show="pay_day_sm=Other"]').forEach(el => { if (val("pay_cycle") !== "Semi-Monthly") el.classList.add("hidden"); });
+  $$('[data-show="pay_day_m=Other"]').forEach(el => { if (val("pay_cycle") !== "Monthly") el.classList.add("hidden"); });
+  $$('[data-show="health=Yes"]').forEach(el => { if (val("health_plan") !== "Yes") el.classList.add("hidden"); });
   if (!form.loc_main.checked && !$$(".loc").length) addLoc();
   numberLocs();
 }
@@ -496,6 +514,16 @@ function collect() {
   d.locations = $$(".loc").map(el => Object.fromEntries($$("[data-k]", el).map(x => [x.dataset.k, x.value.trim()])));
   return d;
 }
+// Payday and hours day depend on the pay cycle
+function payDay(d) {
+  if (d.pay_cycle === "Semi-Monthly") return d.pay_day_sm === "Other" ? d.pay_day_sm_other : d.pay_day_sm;
+  if (d.pay_cycle === "Monthly") return d.pay_day_m === "Other" ? d.pay_day_m_other : d.pay_day_m;
+  return d.pay_day;
+}
+function reportDay(d) {
+  if (d.pay_cycle === "Semi-Monthly" || d.pay_cycle === "Monthly") return d.report_lead ? `${d.report_lead} business days before payday` : "";
+  return d.report_day;
+}
 function oneLine(a) { return `${a.street}, ${a.city}, ${a.state} ${a.zip}`; }
 function payload() {
   const d = collect();
@@ -522,10 +550,12 @@ function payload() {
     locations: locs.map(oneLine),
     tax: { fein: d.fein, sui_number: d.sui, sui_rate: d.sui_rate, note: d.tax_note, prior_payroll: d.prior_payroll },
     insurance: { workers_comp: d.wc_carrier, disability_pfl: d.dis_carrier, general_liability: d.gl_carrier, epli: d.epli_carrier },
-    payroll: { pay_cycle: d.pay_cycle, pay_day: d.pay_day, report_day: d.report_day, pay_period: d.period,
+    payroll: { pay_cycle: d.pay_cycle, pay_day: payDay(d), report_day: reportDay(d), pay_period: d.period,
       start_date: d.first_check, start_date_long: fmtDate(d.first_check), first_check_date: d.first_check,
       report_method: d.report_method, direct_deposit: d.direct_deposit, delivery: d.delivery },
-    benefits: { health_contribution: d.health, health_formula: d.health === "Yes" ? d.health_formula : "",
+    benefits: { health_plan: d.health_plan,
+      health_contribution: d.health_plan === "No" ? "No plan today" : d.health_plan === "Yes" ? d.health : "",
+      health_formula: d.health_plan === "Yes" && d.health === "Yes" ? d.health_formula : "",
       paid_holidays: d.holidays, vacation_days: d.vac_days, vacation_accrual: d.vac_accrual, sick_days: d.sick_days, sick_hours: d.sick_days, sick_accrual: d.sick_accrual,
       retirement: d.retirement, retirement_provider: d.retirement === "Yes" ? d.retirement_provider : "" },
     website_url: form.website_url.value
@@ -541,8 +571,8 @@ function renderReview() {
     [1, "People and signing", [["Main contact", `${p.contact.name}, ${p.contact.title}`], ["Contact email", p.contact.email], ["Contact phone", p.contact.phone], ["Payroll contact", `${p.payroll_contact.name}, ${p.payroll_contact.email}`], ["Signs the agreement", `${p.signer.name}, ${p.signer.title}`], ["Legal notices to", `${p.notice.name}, ${p.notice.title}`], ["", `${p.notice.street}, ${p.notice.city_state_zip}`]]],
     [2, "Work locations", p.locations.map((l, i) => [`Location ${i + 1}`, l])],
     [3, "Tax and insurance", [["Federal EIN", p.tax.fein], ["State unemployment no.", p.tax.sui_number], ["State unemployment rate", p.tax.sui_rate && p.tax.sui_rate + "%"], ["Workers' comp", p.insurance.workers_comp], ["Disability / PFL", p.insurance.disability_pfl], ["General liability", p.insurance.general_liability], ["EPLI", p.insurance.epli], ["Payroll company", p.tax.prior_payroll], ["Note", p.tax.note]]],
-    [4, "Payroll setup", [["Pay cycle", p.payroll.pay_cycle], ["Payday", p.payroll.pay_day], ["Hours sent on", p.payroll.report_day], ["Pay period", p.payroll.pay_period], ["First check date", fmtDate(p.payroll.first_check_date)], ["Hours sent by", p.payroll.report_method], ["Direct deposit", p.payroll.direct_deposit], ["Delivery", p.payroll.delivery]]],
-    [5, "Benefits and time off", [["Health contribution", p.benefits.health_contribution === "Yes" ? p.benefits.health_formula : p.benefits.health_contribution], ["Paid holidays", p.benefits.paid_holidays], ["Vacation days", [p.benefits.vacation_days, p.benefits.vacation_accrual].filter(Boolean).join(", accrued ")], ["Sick time (hours)", [p.benefits.sick_hours, p.benefits.sick_accrual].filter(Boolean).join(", accrued ")], ["Retirement plan", p.benefits.retirement === "Yes" ? p.benefits.retirement_provider : p.benefits.retirement]]]
+    [4, "Payroll setup", [["Pay cycle", p.payroll.pay_cycle], [p.payroll.pay_cycle === "Semi-Monthly" ? "Paydays" : "Payday", p.payroll.pay_day], ["Hours sent", p.payroll.report_day], ["Pay period", p.payroll.pay_period], ["First check date", fmtDate(p.payroll.first_check_date)], ["Hours sent by", p.payroll.report_method], ["Direct deposit", p.payroll.direct_deposit], ["Delivery", p.payroll.delivery]]],
+    [5, "Benefits and time off", [["Health insurance plan", p.benefits.health_plan], ["Company contribution", p.benefits.health_plan === "Yes" ? (p.benefits.health_contribution === "Yes" ? (p.benefits.health_formula || "Yes") : p.benefits.health_contribution) : ""], ["Paid holidays", p.benefits.paid_holidays], ["Vacation days", [p.benefits.vacation_days, p.benefits.vacation_accrual].filter(Boolean).join(", accrued ")], ["Sick time (hours)", [p.benefits.sick_hours, p.benefits.sick_accrual].filter(Boolean).join(", accrued ")], ["Retirement plan", p.benefits.retirement === "Yes" ? p.benefits.retirement_provider : p.benefits.retirement]]]
   ];
   $("#review").innerHTML = blocks.map(([i, t, rows]) => `<section><h3>${t}<button type="button" class="link" data-go="${i}">Edit</button></h3><dl>${rows.filter(r => r[1]).map(r => `<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join("")}</dl></section>`).join("");
   $$("[data-go]", $("#review")).forEach(b => b.onclick = () => go(+b.dataset.go));
