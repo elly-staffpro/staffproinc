@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="assets/images/favicon.png">
+<title>StaffPro New Client Setup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#111D6B; --navy-2:#162490; --steel:#5E6470; --brand-gray:#878787;
+  --paper:#FFFFFF; --rail:#EEF1FF; --line:#D5DAE5; --ink:#141A2E;
+  --ok:#1F7A4D; --err:#B42318; --focus:#3B6CF6;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:"Inter",system-ui,sans-serif;color:var(--ink);background:var(--paper);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+.app{display:grid;grid-template-columns:300px 1fr;height:100vh;min-height:560px;overflow:hidden}
+
+/* Rail: the client's file, filling in as they go */
+.rail{background:var(--rail);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:28px 24px;overflow:auto}
+.rail img{width:150px;height:auto;display:block}
+.file{margin:28px 0 24px;padding:16px 16px 14px;background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--navy);border-radius:2px 10px 4px 4px}
+.file small{display:block;color:var(--steel);font-size:13px}
+.file strong{display:block;font-size:19px;line-height:1.25;color:var(--navy);margin-top:2px;word-break:break-word}
+.file strong.empty{color:var(--brand-gray);font-weight:500}
+.file dl{margin:12px 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px}
+.file dt{color:var(--steel)} .file dd{margin:0;text-align:right;font-weight:600}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{counter-increment:s}
+.steps button{display:flex;align-items:center;gap:12px;width:100%;padding:9px 8px;border:0;background:none;text-align:left;border-radius:6px;cursor:pointer;color:var(--steel);font-weight:500;font-size:15px}
+.steps button::before{content:counter(s);flex:0 0 26px;height:26px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:600;background:var(--paper)}
+.steps button[aria-current="step"]{color:var(--navy);font-weight:700;background:rgba(17,29,107,.06)}
+.steps button[aria-current="step"]::before{border-color:var(--navy);background:var(--navy);color:#fff}
+.steps button.done::before{content:"✓";border-color:var(--ok);color:var(--ok)}
+.steps button:disabled{cursor:default;opacity:.55}
+.rail .help{margin-top:auto;padding-top:24px;font-size:13px;color:var(--steel)}
+.rail .help a{color:var(--navy);font-weight:600;text-decoration:none}
+
+/* Main */
+.main{overflow:auto;display:flex;flex-direction:column}
+.mbar{display:none}
+.wrap{width:100%;max-width:720px;padding:44px 48px 32px;flex:1}
+.step{display:none}
+.step.on{display:block}
+h1:focus{outline:none}
+h1{font-size:30px;line-height:1.15;font-weight:700;letter-spacing:-.01em;margin:0 0 10px;color:var(--navy)}
+.lede{color:var(--steel);margin:0 0 30px;max-width:58ch}
+fieldset{border:0;padding:0;margin:0 0 30px}
+legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
+.lnote{color:var(--steel);font-size:14px;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px 16px;margin-top:12px}
+.c6{grid-column:span 6}.c4{grid-column:span 4}.c3{grid-column:span 3}.c2{grid-column:span 2}
+.f label,.f .lab{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
+.f label .opt{font-weight:400;color:var(--steel)}
+.f input,.f select,.f textarea{width:100%;padding:10px 12px;border:1px solid #B9C1D3;border-radius:6px;background:#fff;min-height:44px}
+.f textarea{min-height:88px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--focus);box-shadow:0 0 0 3px rgba(59,108,246,.18)}
+.f .hint{font-size:13px;color:var(--steel);margin-top:5px}
+.f .msg{font-size:13px;color:var(--err);margin-top:5px;display:none}
+.f.bad input,.f.bad select,.f.bad textarea{border-color:var(--err)}
+.f.bad .msg{display:block}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{margin:0;font-weight:500;position:relative}
+.chips input{position:absolute;opacity:0;width:1px;height:1px}
+.chips span{display:inline-block;padding:9px 14px;border:1px solid #B9C1D3;border-radius:999px;cursor:pointer;background:#fff;font-size:15px;min-height:40px}
+.chips input:checked+span{background:var(--navy);border-color:var(--navy);color:#fff}
+.chips input:focus-visible+span{box-shadow:0 0 0 3px rgba(59,108,246,.35)}
+.f.bad .chips span{border-color:var(--err)}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:15px;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:2px;accent-color:var(--navy);flex:none}
+.hidden{display:none!important}
+
+.loc{border-left:3px solid var(--line);padding:4px 0 4px 16px;margin-bottom:18px}
+.loc-head{display:flex;justify-content:space-between;align-items:center}
+.loc-head b{font-size:15px}
+.link{background:none;border:0;padding:6px 0;color:var(--navy);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.link.rm{color:var(--err)}
+
+.callout{border:1px solid var(--line);border-left:4px solid var(--navy);padding:14px 16px;border-radius:4px;background:#F8FAFD;font-size:15px;margin:0 0 28px}
+
+.review section{border-top:1px solid var(--line);padding:16px 0}
+.review h3{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 8px;font-size:16px}
+.review dl{display:grid;grid-template-columns:minmax(150px,38%) 1fr;gap:4px 16px;margin:0;font-size:15px}
+.review dt{color:var(--steel)} .review dd{margin:0;word-break:break-word}
+
+.nav{position:sticky;bottom:0;background:linear-gradient(to top,#fff 75%,rgba(255,255,255,0));padding:20px 48px 24px;display:flex;gap:12px;max-width:720px}
+.btn{border:0;border-radius:6px;padding:12px 22px;font-weight:600;cursor:pointer;min-height:46px}
+.btn.primary{background:var(--navy);color:#fff}
+.btn.primary:hover{background:var(--navy-2)}
+.btn.ghost{background:#fff;border:1px solid #B9C1D3;color:var(--ink)}
+.btn:disabled{opacity:.6;cursor:progress}
+.btn:focus-visible,.steps button:focus-visible,.link:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.saved{margin-left:auto;align-self:center;font-size:13px;color:var(--steel)}
+.err-banner{color:var(--err);font-size:14px;margin:0 48px 8px;max-width:624px}
+
+.done-screen{max-width:560px;padding-top:40px}
+.done-screen .seal{width:56px;height:56px;border-radius:50%;background:var(--ok);display:grid;place-items:center;color:#fff;font-size:28px;margin-bottom:22px}
+.done-screen ol{padding-left:20px;color:var(--ink)} .done-screen li{margin-bottom:8px}
+
+@media (max-width:860px){
+  .app{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr);height:100vh;min-height:0;overflow:hidden}
+  .main{min-height:0;overflow:auto}
+  .rail{display:none}
+  .mbar{display:block;position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:12px 16px;z-index:2}
+  .mbar img{height:28px;width:auto;display:block;margin-bottom:8px}
+  .mbar .row{display:flex;justify-content:space-between;font-size:13px;color:var(--steel)}
+  .mbar .bar{height:4px;background:var(--rail);border-radius:2px;margin-top:6px;overflow:hidden}
+  .mbar .bar i{display:block;height:100%;background:var(--navy);width:0;transition:width .25s}
+  .wrap{padding:24px 16px 16px}
+  .nav{padding:16px}
+  .err-banner{margin:0 16px 8px}
+  h1{font-size:25px}
+  .grid{grid-template-columns:1fr 1fr}
+  .c6,.c4{grid-column:span 2}.c3,.c2{grid-column:span 1}
+  .grid .c3.full-sm,.grid .c2.full-sm{grid-column:span 2}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c0b373a9584b47a58428c3ec5453366a"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+<div class="app">
+  <aside class="rail" aria-label="Progress">
+    <img src="assets/images/logo.png" alt="StaffPro">
+    <div class="file" aria-live="polite">
+      <small>New client file</small>
+      <strong id="fileName" class="empty">Your company</strong>
+      <dl id="fileFacts"></dl>
+    </div>
+    <ol class="steps" id="stepList"></ol>
+    <p class="help">Questions while you fill this out? Call us at <a href="tel:7184711122">718-471-1122</a>.</p>
+  </aside>
+
+  <main class="main">
+    <div class="mbar">
+      <img src="assets/images/logo.png" alt="StaffPro">
+      <div class="row"><span id="mStep"></span><span id="mCount"></span></div>
+      <div class="bar"><i id="mBar"></i></div>
+    </div>
+
+    <form id="form" class="wrap" action="https://script.google.com/macros/s/AKfycbzd1cesEubIbsXBgD8Um1fDzRlZZe_A94WMTV_MNlBZs8y-wIVSV0LvDCUsQo2ivRFt/exec" method="post" autocomplete="on">
+      <!-- honeypot: real people never see or fill this -->
+      <input type="text" name="website_url" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none;clip-path:inset(50%)">
+
+      <!-- 1 -->
+      <section class="step" data-title="Your company">
+        <h1>Welcome to StaffPro</h1>
+        <p class="lede">This sets up your account and prepares your service agreement. It takes about 15 minutes. Your answers are saved on this device as you go, so you can stop and come back.</p>
+        <fieldset>
+          <legend>Business details</legend>
+          <div class="grid">
+            <div class="f c6"><label for="legal_name">Official business name</label><input id="legal_name" name="legal_name" required autocomplete="organization"><div class="hint">Exactly as it appears on your tax filings. This name goes on the agreement.</div><div class="msg">Enter your official business name.</div></div>
+            <div class="f c3"><label for="dba">DBA <span class="opt">(if any)</span></label><input id="dba" name="dba"></div>
+            <div class="f c3"><label for="entity_type">Entity type</label><select id="entity_type" name="entity_type" required><option value="">Select one</option><option>LLC</option><option>Corporation (C-Corp)</option><option>S-Corporation</option><option>Partnership</option><option>Sole proprietorship</option><option>Nonprofit</option><option>Other</option></select><div class="msg">Choose an entity type.</div></div>
+            <div class="f c6"><label for="owners">Owner(s)</label><input id="owners" name="owners" required><div class="hint">Separate names with commas.</div><div class="msg">List at least one owner.</div></div>
+            <div class="f c4"><label for="nature">Nature of business</label><input id="nature" name="nature" required placeholder="e.g. Supermarket, property management"><div class="msg">Describe what your business does.</div></div>
+            <div class="f c2"><label for="website">Website <span class="opt">(if any)</span></label><input id="website" name="website" inputmode="url"></div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Main business address</legend>
+          <div class="grid">
+            <div class="f c6"><label for="street">Street address</label><input id="street" name="street" required autocomplete="address-line1"><div class="msg">Enter the street address.</div></div>
+            <div class="f c3 full-sm"><label for="city">City</label><input id="city" name="city" required autocomplete="address-level2"><div class="msg">Enter the city.</div></div>
+            <div class="f c2"><label for="state">State</label><select id="state" name="state" required data-states></select><div class="msg">Choose a state.</div></div>
+            <div class="f c2" style="grid-column:span 1"><label for="zip">ZIP</label><input id="zip" name="zip" required inputmode="numeric" maxlength="10" data-check="zip" autocomplete="postal-code"><div class="msg">Enter a 5-digit ZIP.</div></div>
+            <div class="f c2"><label for="phone">Phone</label><input id="phone" name="phone" required type="tel" data-check="phone" autocomplete="tel"><div class="msg">Enter a 10-digit phone number.</div></div>
+            <div class="f c2"><label for="fax">Fax <span class="opt">(if any)</span></label><input id="fax" name="fax" type="tel"></div>
+            <div class="f c2 full-sm"><label for="email">Business email</label><input id="email" name="email" required type="email" data-check="email" autocomplete="email"><div class="msg">Enter a valid email.</div></div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Employees</legend>
+          <div class="grid">
+            <div class="f c2"><label for="ft">Full-time</label><input id="ft" name="ft" required inputmode="numeric" data-check="num"><div class="msg">Enter a number (0 is fine).</div></div>
+            <div class="f c2"><label for="pt">Part-time</label><input id="pt" name="pt" required inputmode="numeric" data-check="num"><div class="msg">Enter a number (0 is fine).</div></div>
+            <div class="f c6"><span class="lab">Are any of your employees in a union?</span>
+              <div class="chips" role="radiogroup"><label><input type="radio" name="union" value="No" required><span>No</span></label><label><input type="radio" name="union" value="Yes"><span>Yes</span></label></div><div class="msg">Choose yes or no.</div></div>
+            <div class="f c6 hidden" data-show="union=Yes"><label for="union_detail">Union name and local number</label><input id="union_detail" name="union_detail" required><div class="hint">We will ask for the collective bargaining agreement separately.</div><div class="msg">Enter the union name and local.</div></div>
+          </div>
+        </fieldset>
+      </section>
+
+      <!-- 2 -->
+      <section class="step" data-title="People and signing">
+        <h1>Who we will work with</h1>
+        <p class="lede">These are the people we contact day to day, and the person who will sign the agreement.</p>
+        <fieldset>
+          <legend>Main contact</legend>
+          <div class="grid">
+            <div class="f c3 full-sm"><label for="contact_name">Full name</label><input id="contact_name" name="contact_name" required autocomplete="name"><div class="msg">Enter the contact's name.</div></div>
+            <div class="f c3 full-sm"><label for="contact_title">Title</label><input id="contact_title" name="contact_title" required><div class="msg">Enter a title.</div></div>
+            <div class="f c3 full-sm"><label for="contact_email">Email</label><input id="contact_email" name="contact_email" required type="email" data-check="email"><div class="msg">Enter a valid email.</div></div>
+            <div class="f c3 full-sm"><label for="contact_phone">Phone</label><input id="contact_phone" name="contact_phone" required type="tel" data-check="phone"><div class="msg">Enter a 10-digit phone number.</div></div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Payroll contact</legend>
+          <label class="check"><input type="checkbox" name="payroll_same" value="yes" checked><span>Same as the main contact</span></label>
+          <div class="grid hidden" data-show="payroll_same!=yes">
+            <div class="f c3 full-sm"><label for="payroll_name">Full name</label><input id="payroll_name" name="payroll_name" required><div class="msg">Enter a name.</div></div>
+            <div class="f c3 full-sm"><label for="payroll_email">Email</label><input id="payroll_email" name="payroll_email" required type="email" data-check="email"><div class="msg">Enter a valid email.</div></div>
+            <div class="f c3 full-sm"><label for="payroll_phone">Phone</label><input id="payroll_phone" name="payroll_phone" required type="tel" data-check="phone"><div class="msg">Enter a 10-digit phone number.</div></div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Who signs the agreement</legend>
+          <p class="lnote">An owner or officer who can sign on behalf of the business.</p>
+          <div class="grid">
+            <div class="f c3 full-sm"><label for="signer_name">Full name</label><input id="signer_name" name="signer_name" required><div class="msg">Enter the signer's name.</div></div>
+            <div class="f c3 full-sm"><label for="signer_title">Title</label><input id="signer_title" name="signer_title" required placeholder="e.g. President"><div class="msg">Enter the signer's title.</div></div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Where we send legal notices</legend>
+          <p class="lnote">Formal notices under the agreement go to this person and address.</p>
+          <label class="check"><input type="checkbox" name="notice_same" value="yes" checked><span>Send to the signer at the main business address</span></label>
+          <div class="grid hidden" data-show="notice_same!=yes">
+            <div class="f c3 full-sm"><label for="notice_name">Full name</label><input id="notice_name" name="notice_name" required><div class="msg">Enter a name.</div></div>
+            <div class="f c3 full-sm"><label for="notice_title">Title</label><input id="notice_title" name="notice_title" required><div class="msg">Enter a title.</div></div>
+            <div class="f c6"><label for="notice_street">Street address</label><input id="notice_street" name="notice_street" required><div class="msg">Enter the street address.</div></div>
+            <div class="f c6"><label for="notice_csz">City, state and ZIP</label><input id="notice_csz" name="notice_csz" required placeholder="Brooklyn, NY 11201"><div class="msg">Enter city, state and ZIP.</div></div>
+            <div class="f c3 full-sm"><label for="notice_phone">Phone</label><input id="notice_phone" name="notice_phone" required type="tel" data-check="phone"><div class="msg">Enter a 10-digit phone number.</div></div>
+            <div class="f c3 full-sm"><label for="notice_email">Email</label><input id="notice_email" name="notice_email" required type="email" data-check="email"><div class="msg">Enter a valid email.</div></div>
+          </div>
+          <div class="grid" data-show="notice_same=yes">
+            <div class="f c3 full-sm"><label for="signer_email">Signer's email</label><input id="signer_email" name="signer_email" required type="email" data-check="email"><div class="msg">Enter a valid email.</div></div>
+            <div class="f c3 full-sm"><label for="signer_phone">Signer's phone</label><input id="signer_phone" name="signer_phone" required type="tel" data-check="phone"><div class="msg">Enter a 10-digit phone number.</div></div>
+          </div>
+        </fieldset>
+      </section>
+
+      <!-- 3 -->
+      <section class="step" data-title="Work locations">
+        <h1>Where your employees work</h1>
+        <p class="lede">List every address where employees report to work. These are listed in your agreement.</p>
+        <label class="check" style="margin-bottom:20px"><input type="checkbox" name="loc_main" value="yes" checked><span>Employees work at the main business address</span></label>
+        <div id="locs"></div>
+        <button type="button" class="link" id="addLoc">Add another location</button>
+      </section>
+
+      <!-- 4 -->
+      <section class="step" data-title="Tax and insurance">
+        <h1>Tax and insurance details</h1>
+        <p class="lede">We use these to register and report payroll taxes for you. If you do not have a number handy, leave a note and we will follow up.</p>
+        <fieldset>
+          <legend>Tax accounts</legend>
+          <div class="grid">
+            <div class="f c2 full-sm"><label for="fein">Federal EIN</label><input id="fein" name="fein" required inputmode="numeric" placeholder="12-3456789" data-check="ein" maxlength="10"><div class="msg">Enter a 9-digit EIN, like 12-3456789.</div></div>
+            <div class="f c2 full-sm"><label for="sui">State unemployment number</label><input id="sui" name="sui"></div>
+            <div class="f c2 full-sm"><label for="sui_rate">State unemployment rate <span class="opt">(%)</span></label><input id="sui_rate" name="sui_rate" inputmode="decimal"></div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Current insurance carriers</legend>
+          <p class="lnote">Leave a field blank if you do not have that coverage today.</p>
+          <div class="grid">
+            <div class="f c3 full-sm"><label for="wc_carrier">Workers' compensation</label><input id="wc_carrier" name="wc_carrier"></div>
+            <div class="f c3 full-sm"><label for="dis_carrier">Disability / Paid Family Leave</label><input id="dis_carrier" name="dis_carrier"></div>
+            <div class="f c3 full-sm"><label for="gl_carrier">General liability</label><input id="gl_carrier" name="gl_carrier"></div>
+            <div class="f c3 full-sm"><label for="epli_carrier">Employment practices liability (EPLI)</label><input id="epli_carrier" name="epli_carrier"></div>
+          </div>
+        </fieldset>
+        <div class="f"><label for="tax_note">Anything we should know? <span class="opt">(optional)</span></label><textarea id="tax_note" name="tax_note"></textarea></div>
+      </section>
+
+      <!-- 5 -->
+      <section class="step" data-title="Payroll setup">
+        <h1>How you run payroll</h1>
+        <p class="lede">This sets your pay schedule and how payroll gets to you and your employees.</p>
+        <fieldset>
+          <legend>Schedule</legend>
+          <div class="grid">
+            <div class="f c6"><span class="lab">Pay cycle</span><div class="chips" role="radiogroup">
+              <label><input type="radio" name="pay_cycle" value="Weekly" required><span>Weekly</span></label><label><input type="radio" name="pay_cycle" value="Bi-Weekly"><span>Every two weeks</span></label><label><input type="radio" name="pay_cycle" value="Semi-Monthly"><span>Twice a month</span></label><label><input type="radio" name="pay_cycle" value="Monthly"><span>Monthly</span></label></div><div class="msg">Choose a pay cycle.</div></div>
+            <div class="f c6"><span class="lab">Payday</span><div class="chips" role="radiogroup" data-days="pay_day"></div><div class="msg">Choose a payday.</div></div>
+            <div class="f c6"><span class="lab">Day you send us payroll hours</span><div class="chips" role="radiogroup" data-days="report_day"></div><div class="msg">Choose a day.</div></div>
+            <div class="f c3 full-sm"><label for="period">Pay period</label><input id="period" name="period" required placeholder="e.g. Sunday to Saturday"><div class="hint">The first and last day each paycheck covers.</div><div class="msg">Describe the pay period.</div></div>
+            <div class="f c3 full-sm"><label for="start_date">Requested start date</label><input id="start_date" name="start_date" type="date" required><div class="hint">The first day StaffPro handles your payroll.</div><div class="msg">Choose a start date.</div></div>
+            <div class="f c3 full-sm"><label for="first_check">First check date <span class="opt">(if known)</span></label><input id="first_check" name="first_check" type="date"></div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Getting payroll done</legend>
+          <div class="grid">
+            <div class="f c6"><span class="lab">How you will send us hours</span><div class="chips" role="radiogroup">
+              <label><input type="radio" name="report_method" value="Email spreadsheet" required><span>Email a spreadsheet</span></label><label><input type="radio" name="report_method" value="Online submission"><span>Enter online</span></label><label><input type="radio" name="report_method" value="File upload"><span>Upload a file</span></label><label><input type="radio" name="report_method" value="Fax timesheet"><span>Fax timesheets</span></label></div><div class="msg">Choose a method.</div></div>
+            <div class="f c6"><span class="lab">Will employees use direct deposit?</span><div class="chips" role="radiogroup">
+              <label><input type="radio" name="direct_deposit" value="Yes" required><span>Yes</span></label><label><input type="radio" name="direct_deposit" value="No"><span>No</span></label><label><input type="radio" name="direct_deposit" value="Some"><span>Some employees</span></label></div><div class="msg">Choose one.</div></div>
+            <div class="f c6"><span class="lab">How you want checks and reports delivered</span><div class="chips" role="radiogroup">
+              <label><input type="radio" name="delivery" value="Remote printing" required><span>Print at our office</span></label><label><input type="radio" name="delivery" value="FedEx"><span>FedEx</span></label><label><input type="radio" name="delivery" value="Mail"><span>Mail</span></label><label><input type="radio" name="delivery" value="Pickup"><span>Pickup</span></label></div><div class="msg">Choose a delivery method.</div></div>
+          </div>
+        </fieldset>
+      </section>
+
+      <!-- 6 -->
+      <section class="step" data-title="Benefits and time off">
+        <h1>Benefits and time off</h1>
+        <p class="lede">Tell us what you offer today. We set this up in payroll so accruals and deductions run correctly.</p>
+        <fieldset>
+          <legend>Health insurance</legend>
+          <div class="grid">
+            <div class="f c6"><span class="lab">Do you contribute to employee health insurance?</span><div class="chips" role="radiogroup">
+              <label><input type="radio" name="health" value="Yes" required><span>Yes</span></label><label><input type="radio" name="health" value="No"><span>No</span></label><label><input type="radio" name="health" value="No plan today"><span>No plan today</span></label></div><div class="msg">Choose one.</div></div>
+            <div class="f c6 hidden" data-show="health=Yes"><label for="health_formula">How much do you contribute?</label><input id="health_formula" name="health_formula" required placeholder="e.g. 50% of employee-only premium"><div class="msg">Describe your contribution.</div></div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Paid time off</legend>
+          <p class="lnote">Enter 0 for anything you do not offer.</p>
+          <div class="grid">
+            <div class="f c2 full-sm"><label for="holidays">Paid holidays per year</label><input id="holidays" name="holidays" required inputmode="numeric" data-check="num"><div class="msg">Enter a number.</div></div>
+            <div class="f c2"><label for="vac_days">Vacation days per year</label><input id="vac_days" name="vac_days" required inputmode="decimal" data-check="num"><div class="msg">Enter a number.</div></div>
+            <div class="f c2"><label for="vac_accrual">Vacation accrual <span class="opt">(if any)</span></label><input id="vac_accrual" name="vac_accrual" placeholder="e.g. 1 hr per 30 worked"></div>
+            <div class="f c2 full-sm" style="grid-column-start:1"><label for="sick_days">Sick days per year</label><input id="sick_days" name="sick_days" required inputmode="decimal" data-check="num"><div class="msg">Enter a number.</div></div>
+            <div class="f c2"><label for="sick_accrual">Sick accrual <span class="opt">(if any)</span></label><input id="sick_accrual" name="sick_accrual" placeholder="e.g. 1 hr per 30 worked"></div>
+          </div>
+        </fieldset>
+      </section>
+
+      <!-- 7 -->
+      <section class="step" data-title="Review and send">
+        <h1>Review and send</h1>
+        <p class="lede">Check your answers. Use Edit to fix anything before you send.</p>
+        <div class="callout">Your bank account details are not collected here. We will send our Direct Debit Authorization Form separately.</div>
+        <div class="review" id="review"></div>
+        <label class="check f" style="margin-top:16px" id="confirmWrap"><input type="checkbox" name="confirm" value="yes" required><span>The information above is accurate to the best of my knowledge.</span></label>
+        <div class="f" id="confirmMsg"><div class="msg">Check the box to confirm.</div></div>
+      </section>
+
+      <section class="step done-screen" data-title="Sent" data-final>
+        <div class="seal" aria-hidden="true">✓</div>
+        <h1>Thank you. We have your information.</h1>
+        <p class="lede">Here is what happens next:</p>
+        <ol>
+          <li>We review your answers and call if anything needs clarifying.</li>
+          <li>We send your service agreement for signature.</li>
+          <li>We send the Direct Debit Authorization Form for your bank details.</li>
+        </ol>
+        <p class="lede" style="margin-top:20px">Questions? Call us at 718-471-1122.</p>
+      </section>
+    </form>
+
+    <p class="err-banner hidden" id="errBanner" role="alert"></p>
+    <div class="nav" id="nav">
+      <button type="button" class="btn ghost" id="back">Back</button>
+      <button type="button" class="btn primary" id="next">Continue</button>
+      <span class="saved" id="saved" aria-live="polite"></span>
+    </div>
+  </main>
+</div>
+
+<script>
+// Paste the Google Apps Script web app URL here. Left blank, the page runs as a preview and sends nothing.
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbzd1cesEubIbsXBgD8Um1fDzRlZZe_A94WMTV_MNlBZs8y-wIVSV0LvDCUsQo2ivRFt/exec";
+const FORM_KEY = "staffpro-intake-v1";
+
+const STATES = ["AL","AK","AZ","AR","CA","CO","CT","DE","DC","FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"];
+const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const form = $("#form");
+const steps = $$(".step").filter(s => !s.hasAttribute("data-final"));
+const finalStep = $(".step[data-final]");
+let cur = 0, maxSeen = 0;
+
+function fillStateSelect(sel, value) {
+  sel.innerHTML = '<option value="">--</option>' + STATES.map(s => `<option${s === value ? " selected" : ""}>${s}</option>`).join("");
+}
+$$("select[data-states]").forEach(s => fillStateSelect(s, "NY"));
+$$("[data-days]").forEach(box => {
+  const name = box.dataset.days;
+  box.innerHTML = DAYS.map((d, i) => `<label><input type="radio" name="${name}" value="${d}"${i ? "" : " required"}><span>${d.slice(0, 3)}</span></label>`).join("");
+});
+
+// Locations (extra addresses beyond the main one)
+let locCount = 0;
+function addLoc(v = {}) {
+  locCount++;
+  const id = "loc" + Date.now().toString(36) + locCount;
+  const el = document.createElement("div");
+  el.className = "loc"; el.dataset.loc = id;
+  el.innerHTML = `<div class="loc-head"><b></b><button type="button" class="link rm">Remove</button></div>
+  <div class="grid">
+    <div class="f c6"><label for="${id}s">Street address</label><input id="${id}s" data-k="street" required><div class="msg">Enter the street address.</div></div>
+    <div class="f c3 full-sm"><label for="${id}c">City</label><input id="${id}c" data-k="city" required><div class="msg">Enter the city.</div></div>
+    <div class="f c2"><label for="${id}t">State</label><select id="${id}t" data-k="state" required></select><div class="msg">Choose a state.</div></div>
+    <div class="f c2" style="grid-column:span 1"><label for="${id}z">ZIP</label><input id="${id}z" data-k="zip" required inputmode="numeric" data-check="zip" maxlength="10"><div class="msg">Enter a 5-digit ZIP.</div></div>
+  </div>`;
+  fillStateSelect($("select", el), v.state || $("#state").value || "NY");
+  ["street", "city", "zip"].forEach(k => { if (v[k]) $(`[data-k="${k}"]`, el).value = v[k]; });
+  $(".rm", el).onclick = () => { el.remove(); numberLocs(); save(); };
+  $("#locs").appendChild(el); numberLocs();
+  return el;
+}
+function numberLocs() {
+  const main = form.loc_main.checked;
+  $$(".loc").forEach((el, i) => $("b", el).textContent = "Location " + (i + 1 + (main ? 1 : 0)));
+}
+$("#addLoc").onclick = () => { const el = addLoc(); $("input", el).focus(); save(); };
+
+// Show/hide conditional blocks
+function val(name) {
+  const els = form.elements[name];
+  if (!els) return "";
+  if (els instanceof RadioNodeList) return els.value;
+  if (els.type === "checkbox") return els.checked ? els.value : "";
+  return els.value.trim();
+}
+function applyShows() {
+  $$("[data-show]").forEach(el => {
+    const m = el.dataset.show.match(/^(\w+)(!?=)(.*)$/);
+    const v = val(m[1]);
+    el.classList.toggle("hidden", m[2] === "=" ? v !== m[3] : v === m[3]);
+  });
+  if (!form.loc_main.checked && !$$(".loc").length) addLoc();
+  numberLocs();
+}
+
+// Validation
+const checks = {
+  email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
+  phone: v => v.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, "").length === 10,
+  zip: v => /^\d{5}(-\d{4})?$/.test(v),
+  ein: v => /^\d{2}-?\d{7}$/.test(v),
+  num: v => /^\d+(\.\d+)?$/.test(v)
+};
+function visible(el) { return !el.closest(".hidden"); }
+function validateStep(i) {
+  let firstBad = null;
+  $$(".f", steps[i]).forEach(f => {
+    const inputs = $$("input,select,textarea", f).filter(x => x.type !== "hidden");
+    if (!inputs.length || !visible(f)) { f.classList.remove("bad"); return; }
+    let ok = true;
+    const radios = inputs.filter(x => x.type === "radio");
+    if (radios.length) ok = !radios[0].required || radios.some(r => r.checked);
+    else inputs.forEach(x => {
+      const v = x.type === "checkbox" ? (x.checked ? "y" : "") : x.value.trim();
+      if (x.required && !v) ok = false;
+      else if (v && x.dataset.check && !checks[x.dataset.check](v)) ok = false;
+    });
+    f.classList.toggle("bad", !ok);
+    if (!ok && !firstBad) firstBad = f;
+  });
+  if (i === steps.length - 1) {
+    const ok = form.confirm.checked;
+    $("#confirmMsg").classList.toggle("bad", !ok);
+    if (!ok && !firstBad) firstBad = $("#confirmWrap");
+  }
+  if (firstBad) {
+    const el = $("input,select,textarea", firstBad);
+    firstBad.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    el && el.focus({ preventScroll: true });
+  }
+  return !firstBad;
+}
+form.addEventListener("input", e => { const f = e.target.closest(".f.bad"); if (f) f.classList.remove("bad"); });
+
+// Collect answers
+function fmtPhone(v) { const d = v.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, ""); return d.length === 10 ? `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}` : v; }
+function fmtDate(v) { if (!v) return ""; const [y, m, d] = v.split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }); }
+function collect() {
+  const d = {};
+  [...form.elements].forEach(x => {
+    if (!x.name || x.name === "website_url") return;
+    if (x.type === "radio") { if (x.checked) d[x.name] = x.value; else if (!(x.name in d)) d[x.name] = ""; }
+    else if (x.type === "checkbox") d[x.name] = x.checked ? "yes" : "no";
+    else d[x.name] = x.value.trim();
+  });
+  d.locations = $$(".loc").map(el => Object.fromEntries($$("[data-k]", el).map(x => [x.dataset.k, x.value.trim()])));
+  return d;
+}
+function oneLine(a) { return `${a.street}, ${a.city}, ${a.state} ${a.zip}`; }
+function payload() {
+  const d = collect();
+  const main = { street: d.street, city: d.city, state: d.state, zip: d.zip };
+  const locs = (d.loc_main === "yes" ? [main] : []).concat(d.locations);
+  const notice = d.notice_same === "yes"
+    ? { name: d.signer_name, title: d.signer_title, street: d.street, city_state_zip: `${d.city}, ${d.state} ${d.zip}`, phone: fmtPhone(d.signer_phone), email: d.signer_email }
+    : { name: d.notice_name, title: d.notice_title, street: d.notice_street, city_state_zip: d.notice_csz, phone: fmtPhone(d.notice_phone), email: d.notice_email };
+  const payroll = d.payroll_same === "yes"
+    ? { name: d.contact_name, email: d.contact_email, phone: fmtPhone(d.contact_phone) }
+    : { name: d.payroll_name, email: d.payroll_email, phone: fmtPhone(d.payroll_phone) };
+  return {
+    submitted_at: new Date().toISOString(),
+    company: { legal_name: d.legal_name, dba: d.dba, entity_type: d.entity_type, owners: d.owners, nature: d.nature, website: d.website,
+      address: main, address_one_line: oneLine(main), phone: fmtPhone(d.phone), fax: d.fax, email: d.email,
+      full_time: d.ft, part_time: d.pt, union: d.union, union_detail: d.union === "Yes" ? d.union_detail : "" },
+    contact: { name: d.contact_name, title: d.contact_title, email: d.contact_email, phone: fmtPhone(d.contact_phone) },
+    payroll_contact: payroll,
+    signer: { name: d.signer_name, title: d.signer_title, email: d.signer_email, phone: fmtPhone(d.signer_phone) },
+    notice,
+    locations: locs.map(oneLine),
+    tax: { fein: d.fein, sui_number: d.sui, sui_rate: d.sui_rate, note: d.tax_note },
+    insurance: { workers_comp: d.wc_carrier, disability_pfl: d.dis_carrier, general_liability: d.gl_carrier, epli: d.epli_carrier },
+    payroll: { pay_cycle: d.pay_cycle, pay_day: d.pay_day, report_day: d.report_day, pay_period: d.period,
+      start_date: d.start_date, start_date_long: fmtDate(d.start_date), first_check_date: d.first_check,
+      report_method: d.report_method, direct_deposit: d.direct_deposit, delivery: d.delivery },
+    benefits: { health_contribution: d.health, health_formula: d.health === "Yes" ? d.health_formula : "",
+      paid_holidays: d.holidays, vacation_days: d.vac_days, vacation_accrual: d.vac_accrual, sick_days: d.sick_days, sick_accrual: d.sick_accrual },
+    website_url: form.website_url.value
+  };
+}
+
+// Review screen
+function esc(s) { return String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+function renderReview() {
+  const p = payload(), c = p.company;
+  const blocks = [
+    [0, "Your company", [["Business name", c.legal_name], ["DBA", c.dba], ["Entity type", c.entity_type], ["Owner(s)", c.owners], ["Nature of business", c.nature], ["Website", c.website], ["Address", c.address_one_line], ["Phone", c.phone], ["Fax", c.fax], ["Email", c.email], ["Employees", `${c.full_time} full-time, ${c.part_time} part-time`], ["Union", c.union === "Yes" ? c.union_detail : "No"]]],
+    [1, "People and signing", [["Main contact", `${p.contact.name}, ${p.contact.title}`], ["Contact email", p.contact.email], ["Contact phone", p.contact.phone], ["Payroll contact", `${p.payroll_contact.name}, ${p.payroll_contact.email}`], ["Signs the agreement", `${p.signer.name}, ${p.signer.title}`], ["Legal notices to", `${p.notice.name}, ${p.notice.title}`], ["", `${p.notice.street}, ${p.notice.city_state_zip}`]]],
+    [2, "Work locations", p.locations.map((l, i) => [`Location ${i + 1}`, l])],
+    [3, "Tax and insurance", [["Federal EIN", p.tax.fein], ["State unemployment no.", p.tax.sui_number], ["State unemployment rate", p.tax.sui_rate && p.tax.sui_rate + "%"], ["Workers' comp", p.insurance.workers_comp], ["Disability / PFL", p.insurance.disability_pfl], ["General liability", p.insurance.general_liability], ["EPLI", p.insurance.epli], ["Note", p.tax.note]]],
+    [4, "Payroll setup", [["Pay cycle", p.payroll.pay_cycle], ["Payday", p.payroll.pay_day], ["Hours sent on", p.payroll.report_day], ["Pay period", p.payroll.pay_period], ["Start date", p.payroll.start_date_long], ["First check date", fmtDate(p.payroll.first_check_date)], ["Hours sent by", p.payroll.report_method], ["Direct deposit", p.payroll.direct_deposit], ["Delivery", p.payroll.delivery]]],
+    [5, "Benefits and time off", [["Health contribution", p.benefits.health_contribution === "Yes" ? p.benefits.health_formula : p.benefits.health_contribution], ["Paid holidays", p.benefits.paid_holidays], ["Vacation days", [p.benefits.vacation_days, p.benefits.vacation_accrual].filter(Boolean).join(", accrued ")], ["Sick days", [p.benefits.sick_days, p.benefits.sick_accrual].filter(Boolean).join(", accrued ")]]]
+  ];
+  $("#review").innerHTML = blocks.map(([i, t, rows]) => `<section><h3>${t}<button type="button" class="link" data-go="${i}">Edit</button></h3><dl>${rows.filter(r => r[1]).map(r => `<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join("")}</dl></section>`).join("");
+  $$("[data-go]", $("#review")).forEach(b => b.onclick = () => go(+b.dataset.go));
+}
+
+// Rail summary
+function renderFile() {
+  const d = collect();
+  const n = $("#fileName");
+  n.textContent = d.legal_name || "Your company"; n.classList.toggle("empty", !d.legal_name);
+  const locs = (d.loc_main === "yes" ? 1 : 0) + d.locations.length;
+  const emp = (+d.ft || 0) + (+d.pt || 0);
+  const facts = [["Employees", emp ? emp : ""], ["Locations", maxSeen >= 2 && locs ? locs : ""], ["Pay cycle", d.pay_cycle], ["Start", d.start_date ? fmtDate(d.start_date).replace(/, \d{4}$/, "") : ""]].filter(f => f[1]);
+  $("#fileFacts").innerHTML = facts.map(f => `<dt>${f[0]}</dt><dd>${esc(f[1])}</dd>`).join("");
+}
+
+// Navigation
+function renderNav() {
+  $("#stepList").innerHTML = steps.map((s, i) => `<li><button type="button" data-i="${i}" ${i === cur ? 'aria-current="step"' : ""} class="${i < maxSeen && i !== cur ? "done" : ""}" ${i > maxSeen ? "disabled" : ""}>${s.dataset.title}</button></li>`).join("");
+  $$("#stepList button").forEach(b => b.onclick = () => go(+b.dataset.i));
+  $("#mStep").textContent = steps[cur].dataset.title;
+  $("#mCount").textContent = `Step ${cur + 1} of ${steps.length}`;
+  $("#mBar").style.width = ((cur + 1) / steps.length * 100) + "%";
+  $("#back").style.display = cur ? "" : "none";
+  $("#next").textContent = cur === steps.length - 1 ? "Send to StaffPro" : "Continue";
+}
+function go(i) {
+  if (i > cur) { for (let k = cur; k < i; k++) if (!validateStep(k)) { if (k !== cur) show(k); return; } }
+  show(i);
+}
+function show(i, quiet) {
+  cur = i; maxSeen = Math.max(maxSeen, i);
+  steps.forEach((s, k) => s.classList.toggle("on", k === i));
+  if (i === steps.length - 1) renderReview();
+  renderNav(); renderFile(); save();
+  $(".main").scrollTop = 0; window.scrollTo(0, 0);
+  if (!quiet) { $("h1", steps[i]).setAttribute("tabindex", "-1"); $("h1", steps[i]).focus({ preventScroll: true }); }
+}
+$("#back").onclick = () => show(Math.max(0, cur - 1));
+// Enter in a field moves forward instead of submitting the whole form
+form.addEventListener("submit", e => e.preventDefault());
+form.addEventListener("keydown", e => {
+  if (e.key === "Enter" && e.target.tagName === "INPUT" && e.target.type !== "checkbox" && e.target.type !== "radio") {
+    e.preventDefault(); $("#next").click();
+  }
+});
+$("#next").onclick = () => { if (cur < steps.length - 1) go(cur + 1); else submit(); };
+
+// Draft saving on this device
+let saveT;
+function save() {
+  clearTimeout(saveT);
+  saveT = setTimeout(() => {
+    try {
+      const d = collect(); delete d.confirm;
+      localStorage.setItem(FORM_KEY, JSON.stringify({ d, cur, maxSeen }));
+      $("#saved").textContent = "Saved on this device";
+    } catch (e) { /* storage unavailable: the form still works */ }
+  }, 400);
+}
+function restore() {
+  let s; try { s = JSON.parse(localStorage.getItem(FORM_KEY) || "null"); } catch (e) { s = null; }
+  if (!s || !s.d) return 0;
+  const d = s.d;
+  [...form.elements].forEach(x => {
+    if (!x.name || !(x.name in d) || x.name === "confirm") return;
+    if (x.type === "radio") x.checked = x.value === d[x.name];
+    else if (x.type === "checkbox") x.checked = d[x.name] === "yes";
+    else x.value = d[x.name];
+  });
+  (d.locations || []).forEach(l => addLoc(l));
+  maxSeen = s.maxSeen || 0;
+  return Math.min(s.cur || 0, steps.length - 1);
+}
+form.addEventListener("input", () => { applyShows(); renderFile(); save(); });
+form.addEventListener("change", () => { applyShows(); renderFile(); save(); });
+
+// Send
+async function submit() {
+  if (!validateStep(cur)) return;
+  const btn = $("#next"), banner = $("#errBanner");
+  banner.classList.add("hidden");
+  btn.disabled = true; btn.textContent = "Sending...";
+  const body = JSON.stringify(payload());
+  try {
+    if (ENDPOINT && !ENDPOINT.startsWith("{{")) {
+      const r = await fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || j.ok === false) throw new Error(j.error || "status " + r.status);
+    } else {
+      console.log("Preview mode: nothing sent.");
+      await new Promise(res => setTimeout(res, 600));
+    }
+    try { localStorage.removeItem(FORM_KEY); } catch (e) {}
+    steps.forEach(s => s.classList.remove("on"));
+    finalStep.classList.add("on");
+    $("#nav").classList.add("hidden");
+    $$("#stepList button").forEach(b => { b.disabled = true; b.classList.add("done"); b.removeAttribute("aria-current"); });
+    $(".main").scrollTop = 0; window.scrollTo(0, 0);
+    $("h1", finalStep).setAttribute("tabindex", "-1"); $("h1", finalStep).focus();
+  } catch (e) {
+    banner.textContent = "Your answers did not go through. Check your internet connection and select Send again. Your answers are still saved here. If it keeps happening, call us at 718-471-1122.";
+    banner.classList.remove("hidden");
+    btn.disabled = false; btn.textContent = "Send to StaffPro";
+  }
+}
+
+// Start
+const startAt = restore();
+applyShows();
+show(startAt, true);
+</script>
+</body>
+</html>
