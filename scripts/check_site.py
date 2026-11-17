@@ -28,6 +28,9 @@ ROOT = Path(__file__).parent.parent
 STATIC_PAGES = sorted(p.name for p in ROOT.glob("*.html"))
 NEWS_PAGES = sorted(str(p.relative_to(ROOT)).replace("\\", "/") for p in ROOT.glob("news/*.html"))
 ALL_PAGES = STATIC_PAGES + NEWS_PAGES
+# Full-screen tools that deliberately have no site nav or footer (the new-client intake).
+# Every other check still runs on them.
+STANDALONE_PAGES = {"new-client.html"}
 CSS_PATH = ROOT / "css" / "style.css"
 
 failures = []
@@ -258,6 +261,8 @@ def _links_in(html, cls, page):
 def check_nav_footer_consistency():
     navs, foots = {}, {}
     for page in STATIC_PAGES:
+        if page in STANDALONE_PAGES:
+            continue
         html = read(page)
         navs[page] = _links_in(html, "nav-link", page)
         foots[page] = _links_in(html, "footer-link", page)
