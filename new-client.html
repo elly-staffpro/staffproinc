@@ -184,6 +184,9 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
             <div class="f c6"><span class="lab">Are any of your employees in a union?</span>
               <div class="chips" role="radiogroup"><label><input type="radio" name="union" value="No" required><span>No</span></label><label><input type="radio" name="union" value="Yes"><span>Yes</span></label></div><div class="msg">Choose yes or no.</div></div>
             <div class="f c6 hidden" data-show="union=Yes"><label for="union_detail">Union name and local number</label><input id="union_detail" name="union_detail" required><div class="hint">We will ask for the collective bargaining agreement separately.</div><div class="msg">Enter the union name and local.</div></div>
+            <div class="f c6"><span class="lab">Do the owners own any other businesses?</span>
+              <div class="chips" role="radiogroup"><label><input type="radio" name="related" value="No" required><span>No</span></label><label><input type="radio" name="related" value="Yes"><span>Yes</span></label></div><div class="hint">Related companies can count together for some employer rules, such as the ACA.</div><div class="msg">Choose yes or no.</div></div>
+            <div class="f c6 hidden" data-show="related=Yes"><label for="related_detail">List those businesses</label><input id="related_detail" name="related_detail" required><div class="msg">List the other businesses.</div></div>
           </div>
         </fieldset>
       </section>
@@ -268,6 +271,14 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
             <div class="f c3 full-sm"><label for="epli_carrier">Employment practices liability (EPLI)</label><input id="epli_carrier" name="epli_carrier"></div>
           </div>
         </fieldset>
+        <fieldset>
+          <legend>Payroll history</legend>
+          <div class="grid">
+            <div class="f c6"><label for="prior_payroll">Current or previous payroll company</label><input id="prior_payroll" name="prior_payroll" required placeholder="e.g. ADP, Paychex, in-house, or none (new business)"><div class="msg">Enter your payroll company, or "none".</div></div>
+            <div class="f c6"><span class="lab">Have you paid any wages this calendar year?</span><div class="chips" role="radiogroup">
+              <label><input type="radio" name="ytd_wages" value="Yes" required><span>Yes</span></label><label><input type="radio" name="ytd_wages" value="No"><span>No</span></label></div><div class="hint">If yes, we will ask for your year-to-date payroll reports so W-2s come out right.</div><div class="msg">Choose yes or no.</div></div>
+          </div>
+        </fieldset>
         <div class="f"><label for="tax_note">Anything we should know? <span class="opt">(optional)</span></label><textarea id="tax_note" name="tax_note"></textarea></div>
       </section>
 
@@ -295,7 +306,7 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
             <div class="f c6"><span class="lab">Will employees use direct deposit?</span><div class="chips" role="radiogroup">
               <label><input type="radio" name="direct_deposit" value="Yes" required><span>Yes</span></label><label><input type="radio" name="direct_deposit" value="No"><span>No</span></label><label><input type="radio" name="direct_deposit" value="Some"><span>Some employees</span></label></div><div class="msg">Choose one.</div></div>
             <div class="f c6"><span class="lab">How you want checks and reports delivered</span><div class="chips" role="radiogroup">
-              <label><input type="radio" name="delivery" value="Remote printing" required><span>Remote printing (we print at your office)</span></label><label><input type="radio" name="delivery" value="FedEx"><span>FedEx</span></label><label><input type="radio" name="delivery" value="Mail"><span>Mail</span></label><label><input type="radio" name="delivery" value="Pickup"><span>Pickup</span></label></div><div class="msg">Choose a delivery method.</div></div>
+              <label><input type="radio" name="delivery" value="Remote printing" required><span>Remote printing (checks print at your office)</span></label><label><input type="radio" name="delivery" value="FedEx"><span>FedEx</span></label><label><input type="radio" name="delivery" value="Mail"><span>Mail</span></label><label><input type="radio" name="delivery" value="Pickup"><span>Pickup</span></label></div><div class="msg">Choose a delivery method.</div></div>
           </div>
         </fieldset>
       </section>
@@ -313,13 +324,21 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
           </div>
         </fieldset>
         <fieldset>
+          <legend>Retirement plan</legend>
+          <div class="grid">
+            <div class="f c6"><span class="lab">Do you offer a retirement plan, such as a 401(k) or SIMPLE IRA?</span><div class="chips" role="radiogroup">
+              <label><input type="radio" name="retirement" value="Yes" required><span>Yes</span></label><label><input type="radio" name="retirement" value="No"><span>No</span></label></div><div class="msg">Choose yes or no.</div></div>
+            <div class="f c6 hidden" data-show="retirement=Yes"><label for="retirement_provider">Plan type and provider</label><input id="retirement_provider" name="retirement_provider" required placeholder="e.g. 401(k) with Empower"><div class="msg">Enter the plan type and provider.</div></div>
+          </div>
+        </fieldset>
+        <fieldset>
           <legend>Paid time off</legend>
-          <p class="lnote">Enter 0 for anything you do not offer.</p>
+          <p class="lnote">Enter 0 for anything you do not offer. Sick time is counted in hours, the way New York measures it.</p>
           <div class="grid">
             <div class="f c2 full-sm"><label for="holidays">Paid holidays per year</label><input id="holidays" name="holidays" required inputmode="numeric" data-check="num"><div class="msg">Enter a number.</div></div>
             <div class="f c2"><label for="vac_days">Vacation days per year</label><input id="vac_days" name="vac_days" required inputmode="decimal" data-check="num"><div class="msg">Enter a number.</div></div>
             <div class="f c2"><label for="vac_accrual">Vacation accrual <span class="opt">(if any)</span></label><input id="vac_accrual" name="vac_accrual" placeholder="e.g. 1 hr per 30 worked"></div>
-            <div class="f c2 full-sm" style="grid-column-start:1"><label for="sick_days">Sick days per year</label><input id="sick_days" name="sick_days" required inputmode="decimal" data-check="num"><div class="msg">Enter a number.</div></div>
+            <div class="f c2 full-sm" style="grid-column-start:1"><label for="sick_days">Sick time per year (hours)</label><input id="sick_days" name="sick_days" required inputmode="decimal" data-check="num"><div class="msg">Enter a number.</div></div>
             <div class="f c2"><label for="sick_accrual">Sick accrual <span class="opt">(if any)</span></label><input id="sick_accrual" name="sick_accrual" placeholder="e.g. 1 hr per 30 worked"></div>
           </div>
         </fieldset>
@@ -491,19 +510,21 @@ function payload() {
     submitted_at: new Date().toISOString(),
     company: { legal_name: d.legal_name, dba: d.dba, entity_type: d.entity_type, owners: d.owners, nature: d.nature, website: d.website,
       address: main, address_one_line: oneLine(main), phone: fmtPhone(d.phone), fax: d.fax, email: d.email,
-      full_time: d.ft, part_time: d.pt, union: d.union, union_detail: d.union === "Yes" ? d.union_detail : "" },
+      full_time: d.ft, part_time: d.pt, union: d.union, union_detail: d.union === "Yes" ? d.union_detail : "",
+      related: d.related, related_detail: d.related === "Yes" ? d.related_detail : "" },
     contact: { name: d.contact_name, title: d.contact_title, email: d.contact_email, phone: fmtPhone(d.contact_phone) },
     payroll_contact: payroll,
     signer: { name: d.signer_name, title: d.signer_title, email: d.signer_email, phone: fmtPhone(d.signer_phone) },
     notice,
     locations: locs.map(oneLine),
-    tax: { fein: d.fein, sui_number: d.sui, sui_rate: d.sui_rate, note: d.tax_note },
+    tax: { fein: d.fein, sui_number: d.sui, sui_rate: d.sui_rate, note: d.tax_note, prior_payroll: d.prior_payroll, ytd_wages: d.ytd_wages },
     insurance: { workers_comp: d.wc_carrier, disability_pfl: d.dis_carrier, general_liability: d.gl_carrier, epli: d.epli_carrier },
     payroll: { pay_cycle: d.pay_cycle, pay_day: d.pay_day, report_day: d.report_day, pay_period: d.period,
       start_date: d.start_date, start_date_long: fmtDate(d.start_date), first_check_date: d.first_check,
       report_method: d.report_method, direct_deposit: d.direct_deposit, delivery: d.delivery },
     benefits: { health_contribution: d.health, health_formula: d.health === "Yes" ? d.health_formula : "",
-      paid_holidays: d.holidays, vacation_days: d.vac_days, vacation_accrual: d.vac_accrual, sick_days: d.sick_days, sick_accrual: d.sick_accrual },
+      paid_holidays: d.holidays, vacation_days: d.vac_days, vacation_accrual: d.vac_accrual, sick_days: d.sick_days, sick_hours: d.sick_days, sick_accrual: d.sick_accrual,
+      retirement: d.retirement, retirement_provider: d.retirement === "Yes" ? d.retirement_provider : "" },
     website_url: form.website_url.value
   };
 }
@@ -513,12 +534,12 @@ function esc(s) { return String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;"
 function renderReview() {
   const p = payload(), c = p.company;
   const blocks = [
-    [0, "Your company", [["Business name", c.legal_name], ["DBA", c.dba], ["Entity type", c.entity_type], ["Owner(s)", c.owners], ["Nature of business", c.nature], ["Website", c.website], ["Address", c.address_one_line], ["Phone", c.phone], ["Fax", c.fax], ["Email", c.email], ["Employees", `${c.full_time} full-time, ${c.part_time} part-time`], ["Union", c.union === "Yes" ? c.union_detail : "No"]]],
+    [0, "Your company", [["Business name", c.legal_name], ["DBA", c.dba], ["Entity type", c.entity_type], ["Owner(s)", c.owners], ["Nature of business", c.nature], ["Website", c.website], ["Address", c.address_one_line], ["Phone", c.phone], ["Fax", c.fax], ["Email", c.email], ["Employees", `${c.full_time} full-time, ${c.part_time} part-time`], ["Union", c.union === "Yes" ? c.union_detail : "No"], ["Other businesses owned", c.related === "Yes" ? c.related_detail : "No"]]],
     [1, "People and signing", [["Main contact", `${p.contact.name}, ${p.contact.title}`], ["Contact email", p.contact.email], ["Contact phone", p.contact.phone], ["Payroll contact", `${p.payroll_contact.name}, ${p.payroll_contact.email}`], ["Signs the agreement", `${p.signer.name}, ${p.signer.title}`], ["Legal notices to", `${p.notice.name}, ${p.notice.title}`], ["", `${p.notice.street}, ${p.notice.city_state_zip}`]]],
     [2, "Work locations", p.locations.map((l, i) => [`Location ${i + 1}`, l])],
-    [3, "Tax and insurance", [["Federal EIN", p.tax.fein], ["State unemployment no.", p.tax.sui_number], ["State unemployment rate", p.tax.sui_rate && p.tax.sui_rate + "%"], ["Workers' comp", p.insurance.workers_comp], ["Disability / PFL", p.insurance.disability_pfl], ["General liability", p.insurance.general_liability], ["EPLI", p.insurance.epli], ["Note", p.tax.note]]],
+    [3, "Tax and insurance", [["Federal EIN", p.tax.fein], ["State unemployment no.", p.tax.sui_number], ["State unemployment rate", p.tax.sui_rate && p.tax.sui_rate + "%"], ["Workers' comp", p.insurance.workers_comp], ["Disability / PFL", p.insurance.disability_pfl], ["General liability", p.insurance.general_liability], ["EPLI", p.insurance.epli], ["Payroll company", p.tax.prior_payroll], ["Wages paid this year", p.tax.ytd_wages], ["Note", p.tax.note]]],
     [4, "Payroll setup", [["Pay cycle", p.payroll.pay_cycle], ["Payday", p.payroll.pay_day], ["Hours sent on", p.payroll.report_day], ["Pay period", p.payroll.pay_period], ["Start date", p.payroll.start_date_long], ["First check date", fmtDate(p.payroll.first_check_date)], ["Hours sent by", p.payroll.report_method], ["Direct deposit", p.payroll.direct_deposit], ["Delivery", p.payroll.delivery]]],
-    [5, "Benefits and time off", [["Health contribution", p.benefits.health_contribution === "Yes" ? p.benefits.health_formula : p.benefits.health_contribution], ["Paid holidays", p.benefits.paid_holidays], ["Vacation days", [p.benefits.vacation_days, p.benefits.vacation_accrual].filter(Boolean).join(", accrued ")], ["Sick days", [p.benefits.sick_days, p.benefits.sick_accrual].filter(Boolean).join(", accrued ")]]]
+    [5, "Benefits and time off", [["Health contribution", p.benefits.health_contribution === "Yes" ? p.benefits.health_formula : p.benefits.health_contribution], ["Paid holidays", p.benefits.paid_holidays], ["Vacation days", [p.benefits.vacation_days, p.benefits.vacation_accrual].filter(Boolean).join(", accrued ")], ["Sick time (hours)", [p.benefits.sick_hours, p.benefits.sick_accrual].filter(Boolean).join(", accrued ")], ["Retirement plan", p.benefits.retirement === "Yes" ? p.benefits.retirement_provider : p.benefits.retirement]]]
   ];
   $("#review").innerHTML = blocks.map(([i, t, rows]) => `<section><h3>${t}<button type="button" class="link" data-go="${i}">Edit</button></h3><dl>${rows.filter(r => r[1]).map(r => `<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join("")}</dl></section>`).join("");
   $$("[data-go]", $("#review")).forEach(b => b.onclick = () => go(+b.dataset.go));
