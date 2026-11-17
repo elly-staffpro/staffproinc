@@ -96,6 +96,8 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
 .btn:disabled{opacity:.6;cursor:progress}
 .btn:focus-visible,.steps button:focus-visible,.link:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .saved{margin-left:auto;align-self:center;font-size:13px;color:var(--steel)}
+.restart{align-self:center;font-size:13px;color:var(--steel);font-weight:500}
+.restart.confirm{color:var(--err);font-weight:600}
 .err-banner{color:var(--err);font-size:14px;margin:0 48px 8px;max-width:624px}
 
 .done-screen{max-width:560px;padding-top:40px}
@@ -369,6 +371,7 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
       <button type="button" class="btn ghost" id="back">Back</button>
       <button type="button" class="btn primary" id="next">Continue</button>
       <span class="saved" id="saved" aria-live="polite"></span>
+      <button type="button" class="link restart" id="restart">Start over</button>
     </div>
   </main>
 </div>
@@ -612,6 +615,21 @@ function restore() {
   return Math.min(s.cur || 0, steps.length - 1);
 }
 form.addEventListener("input", () => { applyShows(); renderFile(); save(); });
+
+// Start over: first click asks, second click clears everything saved on this device
+const restartBtn = $("#restart");
+let restartTimer;
+restartBtn.onclick = () => {
+  if (!restartBtn.classList.contains("confirm")) {
+    restartBtn.classList.add("confirm");
+    restartBtn.textContent = "Clear all answers? Click again";
+    restartTimer = setTimeout(() => { restartBtn.classList.remove("confirm"); restartBtn.textContent = "Start over"; }, 5000);
+    return;
+  }
+  clearTimeout(restartTimer); clearTimeout(saveT);
+  try { localStorage.removeItem(FORM_KEY); } catch (e) {}
+  location.reload();
+};
 form.addEventListener("change", () => { applyShows(); renderFile(); save(); });
 
 // Send
