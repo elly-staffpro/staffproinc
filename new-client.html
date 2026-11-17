@@ -73,6 +73,10 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
 .f.bad .chips span{border-color:var(--err)}
 .check{display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:15px;cursor:pointer}
 .check input{width:20px;height:20px;margin-top:2px;accent-color:var(--navy);flex:none}
+.roles{display:grid;gap:14px}
+.grid.sub{margin:-2px 0 6px 30px;padding:12px 0 4px 16px;border-left:3px solid var(--line)}
+.grid.sub .lnote{margin:0}
+@media (max-width:860px){.grid.sub{margin-left:8px;padding-left:12px}}
 .hidden{display:none!important}
 
 .loc{border-left:3px solid var(--line);padding:4px 0 4px 16px;margin-bottom:18px}
@@ -198,48 +202,43 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
       <!-- 2 -->
       <section class="step" data-title="People and signing">
         <h1>Who we will work with</h1>
-        <p class="lede">These are the people we contact day to day, and the person who will sign the agreement.</p>
+        <p class="lede">Tell us about yourself once. If someone else handles payroll, signs the agreement, or should get legal notices, untick that box and add them.</p>
         <fieldset>
-          <legend>Main contact</legend>
+          <legend>Your details</legend>
           <div class="grid">
-            <div class="f c3 full-sm"><label for="contact_name">Full name</label><input id="contact_name" name="contact_name" required autocomplete="name"><div class="msg">Enter the contact's name.</div></div>
-            <div class="f c3 full-sm"><label for="contact_title">Title</label><input id="contact_title" name="contact_title" required><div class="msg">Enter a title.</div></div>
-            <div class="f c3 full-sm"><label for="contact_email">Email</label><input id="contact_email" name="contact_email" required type="email" data-check="email"><div class="msg">Enter a valid email.</div></div>
-            <div class="f c3 full-sm"><label for="contact_phone">Phone</label><input id="contact_phone" name="contact_phone" required type="tel" data-check="phone"><div class="msg">Enter a 10-digit phone number.</div></div>
+            <div class="f c3 full-sm"><label for="contact_name">Full name</label><input id="contact_name" name="contact_name" required autocomplete="name"><div class="msg">Enter your name.</div></div>
+            <div class="f c3 full-sm"><label for="contact_title">Title</label><input id="contact_title" name="contact_title" required placeholder="e.g. Owner, President"><div class="msg">Enter your title.</div></div>
+            <div class="f c3 full-sm"><label for="contact_email">Email</label><input id="contact_email" name="contact_email" required type="email" data-check="email" autocomplete="email"><div class="msg">Enter a valid email.</div></div>
+            <div class="f c3 full-sm"><label for="contact_phone">Phone</label><input id="contact_phone" name="contact_phone" required type="tel" data-check="phone" autocomplete="tel"><div class="msg">Enter a 10-digit phone number.</div></div>
           </div>
         </fieldset>
         <fieldset>
-          <legend>Payroll contact</legend>
-          <label class="check"><input type="checkbox" name="payroll_same" value="yes" checked><span>Same as the main contact</span></label>
-          <div class="grid hidden" data-show="payroll_same!=yes">
-            <div class="f c3 full-sm"><label for="payroll_name">Full name</label><input id="payroll_name" name="payroll_name" required><div class="msg">Enter a name.</div></div>
-            <div class="f c3 full-sm"><label for="payroll_email">Email</label><input id="payroll_email" name="payroll_email" required type="email" data-check="email"><div class="msg">Enter a valid email.</div></div>
-            <div class="f c3 full-sm"><label for="payroll_phone">Phone</label><input id="payroll_phone" name="payroll_phone" required type="tel" data-check="phone"><div class="msg">Enter a 10-digit phone number.</div></div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>Who signs the agreement</legend>
-          <p class="lnote">An owner or officer who can sign on behalf of the business.</p>
-          <div class="grid">
-            <div class="f c3 full-sm"><label for="signer_name">Full name</label><input id="signer_name" name="signer_name" required><div class="msg">Enter the signer's name.</div></div>
-            <div class="f c3 full-sm"><label for="signer_title">Title</label><input id="signer_title" name="signer_title" required placeholder="e.g. President"><div class="msg">Enter the signer's title.</div></div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>Where we send legal notices</legend>
-          <p class="lnote">Formal notices under the agreement go to this person and address.</p>
-          <label class="check"><input type="checkbox" name="notice_same" value="yes" checked><span>Send to the signer at the main business address</span></label>
-          <div class="grid hidden" data-show="notice_same!=yes">
-            <div class="f c3 full-sm"><label for="notice_name">Full name</label><input id="notice_name" name="notice_name" required><div class="msg">Enter a name.</div></div>
-            <div class="f c3 full-sm"><label for="notice_title">Title</label><input id="notice_title" name="notice_title" required><div class="msg">Enter a title.</div></div>
-            <div class="f c6"><label for="notice_street">Street address</label><input id="notice_street" name="notice_street" required><div class="msg">Enter the street address.</div></div>
-            <div class="f c6"><label for="notice_csz">City, state and ZIP</label><input id="notice_csz" name="notice_csz" required placeholder="Brooklyn, NY 11201"><div class="msg">Enter city, state and ZIP.</div></div>
-            <div class="f c3 full-sm"><label for="notice_phone">Phone</label><input id="notice_phone" name="notice_phone" required type="tel" data-check="phone"><div class="msg">Enter a 10-digit phone number.</div></div>
-            <div class="f c3 full-sm"><label for="notice_email">Email</label><input id="notice_email" name="notice_email" required type="email" data-check="email"><div class="msg">Enter a valid email.</div></div>
-          </div>
-          <div class="grid" data-show="notice_same=yes">
-            <div class="f c3 full-sm"><label for="signer_email">Signer's email</label><input id="signer_email" name="signer_email" required type="email" data-check="email"><div class="msg">Enter a valid email.</div></div>
-            <div class="f c3 full-sm"><label for="signer_phone">Signer's phone</label><input id="signer_phone" name="signer_phone" required type="tel" data-check="phone"><div class="msg">Enter a 10-digit phone number.</div></div>
+          <legend>What you handle</legend>
+          <div class="roles">
+            <label class="check"><input type="checkbox" name="payroll_same" value="yes" checked><span>I handle payroll questions</span></label>
+            <div class="grid sub hidden" data-show="payroll_same!=yes">
+              <p class="lnote c6">Who handles payroll?</p>
+              <div class="f c3 full-sm"><label for="payroll_name">Full name</label><input id="payroll_name" name="payroll_name" required><div class="msg">Enter a name.</div></div>
+              <div class="f c3 full-sm"><label for="payroll_email">Email</label><input id="payroll_email" name="payroll_email" required type="email" data-check="email"><div class="msg">Enter a valid email.</div></div>
+              <div class="f c3 full-sm"><label for="payroll_phone">Phone</label><input id="payroll_phone" name="payroll_phone" required type="tel" data-check="phone"><div class="msg">Enter a 10-digit phone number.</div></div>
+            </div>
+            <label class="check"><input type="checkbox" name="signer_same" value="yes" checked><span>I will sign the agreement</span></label>
+            <div class="grid sub hidden" data-show="signer_same!=yes">
+              <p class="lnote c6">Who signs? It must be an owner or officer who can sign for the business.</p>
+              <div class="f c3 full-sm"><label for="signer_name">Full name</label><input id="signer_name" name="signer_name" required><div class="msg">Enter the signer's name.</div></div>
+              <div class="f c3 full-sm"><label for="signer_title">Title</label><input id="signer_title" name="signer_title" required placeholder="e.g. President"><div class="msg">Enter the signer's title.</div></div>
+              <div class="f c3 full-sm"><label for="signer_email">Email</label><input id="signer_email" name="signer_email" required type="email" data-check="email"><div class="msg">Enter a valid email.</div></div>
+            </div>
+            <label class="check"><input type="checkbox" name="notice_same" value="yes" checked><span>Send legal notices about the agreement to me at the business address</span></label>
+            <div class="grid sub hidden" data-show="notice_same!=yes">
+              <p class="lnote c6">Who should get legal notices, and where?</p>
+              <div class="f c3 full-sm"><label for="notice_name">Full name</label><input id="notice_name" name="notice_name" required><div class="msg">Enter a name.</div></div>
+              <div class="f c3 full-sm"><label for="notice_title">Title</label><input id="notice_title" name="notice_title" required><div class="msg">Enter a title.</div></div>
+              <div class="f c6"><label for="notice_street">Street address</label><input id="notice_street" name="notice_street" required><div class="msg">Enter the street address.</div></div>
+              <div class="f c6"><label for="notice_csz">City, state and ZIP</label><input id="notice_csz" name="notice_csz" required placeholder="Brooklyn, NY 11201"><div class="msg">Enter city, state and ZIP.</div></div>
+              <div class="f c3 full-sm"><label for="notice_phone">Phone</label><input id="notice_phone" name="notice_phone" required type="tel" data-check="phone"><div class="msg">Enter a 10-digit phone number.</div></div>
+              <div class="f c3 full-sm"><label for="notice_email">Email</label><input id="notice_email" name="notice_email" required type="email" data-check="email"><div class="msg">Enter a valid email.</div></div>
+            </div>
           </div>
         </fieldset>
       </section>
@@ -502,8 +501,10 @@ function payload() {
   const d = collect();
   const main = { street: d.street, city: d.city, state: d.state, zip: d.zip };
   const locs = (d.loc_main === "yes" ? [main] : []).concat(d.locations);
+  const me = { name: d.contact_name, title: d.contact_title, email: d.contact_email, phone: fmtPhone(d.contact_phone) };
+  const signer = d.signer_same === "no" ? { name: d.signer_name, title: d.signer_title, email: d.signer_email, phone: "" } : me;
   const notice = d.notice_same === "yes"
-    ? { name: d.signer_name, title: d.signer_title, street: d.street, city_state_zip: `${d.city}, ${d.state} ${d.zip}`, phone: fmtPhone(d.signer_phone), email: d.signer_email }
+    ? { name: me.name, title: me.title, street: d.street, city_state_zip: `${d.city}, ${d.state} ${d.zip}`, phone: me.phone, email: me.email }
     : { name: d.notice_name, title: d.notice_title, street: d.notice_street, city_state_zip: d.notice_csz, phone: fmtPhone(d.notice_phone), email: d.notice_email };
   const payroll = d.payroll_same === "yes"
     ? { name: d.contact_name, email: d.contact_email, phone: fmtPhone(d.contact_phone) }
@@ -516,7 +517,7 @@ function payload() {
       related: d.related, related_detail: d.related === "Yes" ? d.related_detail : "" },
     contact: { name: d.contact_name, title: d.contact_title, email: d.contact_email, phone: fmtPhone(d.contact_phone) },
     payroll_contact: payroll,
-    signer: { name: d.signer_name, title: d.signer_title, email: d.signer_email, phone: fmtPhone(d.signer_phone) },
+    signer,
     notice,
     locations: locs.map(oneLine),
     tax: { fein: d.fein, sui_number: d.sui, sui_rate: d.sui_rate, note: d.tax_note, prior_payroll: d.prior_payroll },
@@ -572,7 +573,13 @@ function go(i) {
   if (i > cur) { for (let k = cur; k < i; k++) if (!validateStep(k)) { if (k !== cur) show(k); return; } }
   show(i);
 }
+function prefillPeople() {
+  if (!form.contact_phone.value && form.phone.value) form.contact_phone.value = fmtPhone(form.phone.value);
+  const owners = form.owners.value.trim();
+  if (!form.contact_name.value && owners && !/[,&]| and /i.test(owners)) form.contact_name.value = owners;
+}
 function show(i, quiet) {
+  if (i === 1) prefillPeople();
   cur = i; maxSeen = Math.max(maxSeen, i);
   steps.forEach((s, k) => s.classList.toggle("on", k === i));
   if (i === steps.length - 1) renderReview();
