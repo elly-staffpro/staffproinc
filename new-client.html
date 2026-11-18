@@ -270,9 +270,12 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
           </div>
         </fieldset>
         <fieldset>
-          <legend>Current insurance carriers</legend>
-          <p class="lnote">Leave a field blank if you do not have that coverage today.</p>
+          <legend>Insurance</legend>
           <div class="grid">
+            <div class="f c6"><span class="lab">Do you need StaffPro to get workers' compensation coverage for you?</span>
+              <div class="chips" role="radiogroup"><label><input type="radio" name="wc_need" value="No" required><span>No</span></label><label><input type="radio" name="wc_need" value="Yes"><span>Yes</span></label></div>
+              <div class="hint">If you choose Yes, the next step asks for what the insurance company needs for your workers' compensation application.</div><div class="msg">Choose yes or no.</div></div>
+            <p class="lnote c6" style="margin:8px 0 0"><b style="color:var(--ink)">Current insurance carriers.</b> Leave a field blank if you do not have that coverage today.</p>
             <div class="f c3 full-sm"><label for="wc_carrier">Workers' compensation</label><input id="wc_carrier" name="wc_carrier"></div>
             <div class="f c3 full-sm"><label for="dis_carrier">Disability / Paid Family Leave</label><input id="dis_carrier" name="dis_carrier"></div>
             <div class="f c3 full-sm"><label for="gl_carrier">General liability</label><input id="gl_carrier" name="gl_carrier"></div>
@@ -283,14 +286,6 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
           <legend>Current payroll company</legend>
           <div class="grid">
             <div class="f c6"><label for="prior_payroll">Current or previous payroll company <span class="opt">(optional)</span></label><input id="prior_payroll" name="prior_payroll" placeholder="e.g. ADP, Paychex, in-house"></div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>Workers' compensation</legend>
-          <div class="grid">
-            <div class="f c6"><span class="lab">Do you need StaffPro to get workers' compensation coverage for you?</span>
-              <div class="chips" role="radiogroup"><label><input type="radio" name="wc_need" value="No" required><span>No</span></label><label><input type="radio" name="wc_need" value="Yes"><span>Yes</span></label></div>
-              <div class="hint">If you choose Yes, the next step asks for what the insurance company needs for your workers' compensation application.</div><div class="msg">Choose yes or no.</div></div>
           </div>
         </fieldset>
         <div class="f"><label for="tax_note">Anything we should know? <span class="opt">(optional)</span></label><textarea id="tax_note" name="tax_note"></textarea></div>
