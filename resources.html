@@ -28,80 +28,138 @@
     })();
   </script>
   <style>
-    /* ---- Client Tutorial Videos ---- */
-    .video-full {
-      background: var(--gray-900);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-bottom: var(--sp-8);
-    }
-    .video-full-label {
-      padding: var(--sp-3) var(--sp-5);
-      background: var(--gray-900);
-      color: rgba(255,255,255,0.7);
+    /* ---- Resources hub ---- */
+    .page-hero-note {
+      margin-top: var(--sp-4);
       font-size: var(--text-sm);
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
     }
-    .video-segments-label {
-      font-size: var(--text-xs);
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-      margin-bottom: var(--sp-4);
+    .page-hero-note a { color: var(--white); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+    .res-section { margin-top: var(--sp-16); scroll-margin-top: calc(var(--nav-height) + var(--sp-6)); }
+    .res-intro {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: 1.75;
+      margin-bottom: var(--sp-6);
+      max-width: 720px;
     }
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--sp-5);
-    }
-    /* Part 7 is the odd one out on a two-column grid: span the row but stay
-       the width of a single cell so it does not tower over the others. */
-    .video-card-solo {
-      grid-column: 1 / -1;
-      max-width: 50%;
-      width: 100%;
-      margin-inline: auto;
-    }
-    .video-card {
+    .res-intro strong { color: var(--color-text); }
+
+    .res-choices { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); }
+    .res-choice {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+      padding: var(--sp-6);
       background: var(--white);
       border: 1.5px solid var(--color-border);
       border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: border-color var(--trans), box-shadow var(--trans);
+      color: inherit;
+      transition: border-color var(--trans), box-shadow var(--trans), transform var(--trans);
     }
-    @media (hover: hover) and (pointer: fine) { .video-card:hover {
+    @media (hover: hover) and (pointer: fine) { .res-choice:hover {
       border-color: var(--blue-200);
-      box-shadow: 0 4px 24px rgba(37,64,200,.08);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
     } }
-    .embed-wrap {
-      aspect-ratio: 16/9;
-      width: 100%;
-      background: #000;
+    .res-choice-icon {
+      width: 40px; height: 40px;
+      display: grid; place-items: center;
+      border-radius: var(--radius);
+      background: var(--blue-50);
+      color: var(--color-primary);
+      margin-bottom: var(--sp-2);
     }
-    .embed-wrap iframe {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border: 0;
+    .res-choice-icon svg { width: 20px; height: 20px; }
+    .res-choice-title { font-size: var(--text-lg); font-weight: 700; color: var(--color-text); }
+    .res-choice-text  { font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.65; flex: 1; }
+    .res-choice-link  { font-size: var(--text-sm); font-weight: 600; color: var(--color-primary); margin-top: var(--sp-2); }
+
+    /* ---- Tutorial: one player, chapter list beside it ---- */
+    .tutorial {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: var(--sp-5);
+      align-items: start;
     }
-    .video-card-info {
-      padding: var(--sp-3) var(--sp-4);
-      border-top: 1.5px solid var(--color-border);
+    .tutorial-player {
+      background: var(--gray-900);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
     }
-    .video-card-title {
+    .embed-wrap { aspect-ratio: 16/9; width: 100%; background: #000; }
+    .embed-wrap iframe { display: block; width: 100%; height: 100%; border: 0; }
+    .tutorial-now {
+      padding: var(--sp-3) var(--sp-5);
+      color: rgba(255,255,255,0.85);
       font-size: var(--text-sm);
-      font-weight: 700;
-      color: var(--color-text);
+      font-weight: 600;
     }
+    .tutorial-list {
+      list-style: none;
+      margin: 0; padding: var(--sp-2);
+      background: var(--white);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+    .tutorial-item {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: var(--sp-3);
+      border-radius: var(--radius);
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      transition: background-color var(--trans), color var(--trans);
+    }
+    @media (hover: hover) and (pointer: fine) { .tutorial-item:hover { background: var(--gray-50); } }
+    .tutorial-item[aria-current="true"] { background: var(--blue-50); color: var(--color-primary); font-weight: 600; }
+    .ti-num {
+      flex-shrink: 0;
+      width: 24px; height: 24px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: var(--gray-100);
+      color: var(--color-text-secondary);
+      font-size: var(--text-xs);
+      font-weight: 700;
+    }
+    .ti-num svg { width: 10px; height: 10px; margin-left: 1px; }
+    .tutorial-item[aria-current="true"] .ti-num { background: var(--color-primary); color: var(--white); }
+    .ti-title { flex: 1; }
+    .ti-time { font-size: var(--text-xs); color: var(--color-text-secondary); font-variant-numeric: tabular-nums; }
+
+    /* ---- Posters: price card, form opens on request ---- */
+    .poster-offer {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-8);
+      padding: var(--sp-6) var(--sp-8);
+      background: var(--white);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+    .poster-offer-main { flex: 1; }
+    .poster-offer-title { font-size: var(--text-lg); font-weight: 700; color: var(--color-text); margin-bottom: var(--sp-2); }
+    .poster-offer-text { font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.7; margin-bottom: var(--sp-4); }
+    .poster-prices { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-6); margin: 0; padding: 0; list-style: none; }
+    .poster-prices li { display: flex; gap: var(--sp-2); align-items: baseline; font-size: var(--text-sm); color: var(--color-text-secondary); }
+    .poster-prices strong { color: var(--color-text); }
+    .poster-toggle { display: none; flex-shrink: 0; }
+    .js-anim .poster-toggle { display: inline-flex; }
+    .js-anim .poster-toggle[hidden] { display: none; }
+    .js-anim .poster-panel:not(.open) { display: none; }
+    .poster-panel { margin-top: var(--sp-6); }
+    .poster-panel.open { animation: poster-in 200ms var(--ease-out); }
+    @keyframes poster-in { from { opacity: 0; transform: translateY(-6px); } }
+    .poster-panel-note { font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--sp-4); }
+    .poster-panel-note strong { color: var(--color-text); }
 
     @media (max-width: 768px) {
-      /* Once the grid is a single column, a half-width video is a 156px
-         postage stamp on a phone. Let the odd-one-out fill the row. */
-      .video-card-solo { max-width: 100%; }
-      .video-grid { grid-template-columns: 1fr; }
+      .res-choices { grid-template-columns: 1fr; }
+      .tutorial { grid-template-columns: 1fr; }
+      .poster-offer { flex-direction: column; align-items: stretch; gap: var(--sp-5); padding: var(--sp-6); }
+      .poster-toggle { justify-content: center; }
     }
   </style>
   <!-- Cloudflare Web Analytics -->
@@ -159,6 +217,9 @@
     <p class="page-hero-text">
       Onboarding tutorials and labor law poster ordering for StaffPro client companies.
     </p>
+    <p class="page-hero-note">
+      Looking for a W-2, a 1095 or the employee portal? See <a href="employee-resources.html">Employee Resources</a>.
+    </p>
   </div>
 </section>
 
@@ -170,26 +231,33 @@
   <div class="container" style="max-width: 940px;">
 
 
-    <!-- Audience switcher -->
-    <div class="audience-switch fade-in">
-      <svg class="audience-switch-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-      </svg>
-      <span class="audience-switch-text">
-        <strong style="color:var(--color-text);">Are you an employee?</strong>
-        W-2 and 1095 retrieval, plus the employee portal, are on the Employee Resources page.
-      </span>
-      <a href="employee-resources.html" class="audience-switch-link">
-        Employee Resources
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    <!-- What is on this page: two choices, each jumping to its section -->
+    <div class="res-choices fade-in">
+      <a href="#onboarding" class="res-choice">
+        <span class="res-choice-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        </span>
+        <span class="res-choice-title">Onboarding Tutorials</span>
+        <span class="res-choice-text">Hiring and onboarding in the PayPlus360 portal &mdash; a 4-minute walkthrough, or one step at a time.</span>
+        <span class="res-choice-link">Watch the videos &rarr;</span>
+      </a>
+      <a href="#posters" class="res-choice">
+        <span class="res-choice-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </span>
+        <span class="res-choice-title">Order Labor Law Posters</span>
+        <span class="res-choice-text">2026 New York, New Jersey and other state posters, billed to your account.</span>
+        <span class="res-choice-link">Order posters &rarr;</span>
       </a>
     </div>
 
 
     <!-- ===================================================
          CLIENT ONBOARDING TUTORIALS
+         One player; the chapter list swaps what it plays. Without JS each
+         chapter is a plain link to the video on YouTube.
          =================================================== -->
-    <div id="onboarding" class="fade-in fade-in-delay-1">
+    <div id="onboarding" class="res-section fade-in">
       <div class="resource-section-title">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polygon points="23 7 16 12 23 17 23 7"/>
@@ -198,96 +266,51 @@
         Client Onboarding Tutorials
       </div>
 
-      <p style="font-size:var(--text-base);color:var(--color-text-secondary);line-height:1.75;margin-bottom:var(--sp-8);max-width:720px;">
-        Step-by-step video tutorials for <strong style="color:var(--color-text);">clients and employers</strong> on using the StaffPro PayPlus360 portal — from hiring and onboarding to wage notifications and I-9 verification.
+      <p class="res-intro">
+        Step-by-step videos for <strong>clients and employers</strong> on the StaffPro PayPlus360 portal &mdash; from hiring and onboarding to wage notifications and I-9 verification.
       </p>
 
-      <!-- Full walkthrough video -->
-      <div class="video-full">
-        <div class="embed-wrap">
-          <iframe src="https://www.youtube.com/embed/2dAYB308Uto?rel=0" title="Full Tutorial — Streamlining Your Hiring and Onboarding Processes" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-        <div class="video-full-label">Full Tutorial — Streamlining Your Hiring &amp; Onboarding Processes</div>
-      </div>
-
-      <!-- 7 segment videos -->
-      <div class="video-segments-label">Individual Segments</div>
-      <div class="video-grid">
-
-        <div class="video-card">
+      <div class="tutorial">
+        <div class="tutorial-player">
           <div class="embed-wrap">
-            <iframe src="https://www.youtube.com/embed/pu1sKlnYYz4?rel=0" title="Part 1 — Intro & Getting Started" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe id="tutorialFrame" src="https://www.youtube.com/embed/2dAYB308Uto?rel=0" title="Full Tutorial — Streamlining Your Hiring and Onboarding Processes" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
-          <div class="video-card-info">
-            <div class="video-card-title">Part 1 — Intro &amp; Getting Started</div>
-          </div>
+          <div class="tutorial-now" id="tutorialNow">Full Tutorial &mdash; Streamlining Your Hiring &amp; Onboarding Processes</div>
         </div>
-
-        <div class="video-card">
-          <div class="embed-wrap">
-            <iframe src="https://www.youtube.com/embed/ILJe9QEeZ60?rel=0" title="Part 2 — Hiring a Candidate" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </div>
-          <div class="video-card-info">
-            <div class="video-card-title">Part 2 — Hiring a Candidate</div>
-          </div>
-        </div>
-
-        <div class="video-card">
-          <div class="embed-wrap">
-            <iframe src="https://www.youtube.com/embed/lOUxJXwmYqk?rel=0" title="Part 3 — Wage Notification" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </div>
-          <div class="video-card-info">
-            <div class="video-card-title">Part 3 — Wage Notification</div>
-          </div>
-        </div>
-
-        <div class="video-card">
-          <div class="embed-wrap">
-            <iframe src="https://www.youtube.com/embed/h68naD5qmFA?rel=0" title="Part 4 — Tracking a Candidate" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </div>
-          <div class="video-card-info">
-            <div class="video-card-title">Part 4 — Tracking a Candidate</div>
-          </div>
-        </div>
-
-        <div class="video-card">
-          <div class="embed-wrap">
-            <iframe src="https://www.youtube.com/embed/Thf8swURlAA?rel=0" title="Part 5 — I-9 Verification" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </div>
-          <div class="video-card-info">
-            <div class="video-card-title">Part 5 — I-9 Verification</div>
-          </div>
-        </div>
-
-        <div class="video-card">
-          <div class="embed-wrap">
-            <iframe src="https://www.youtube.com/embed/MXTXKaJCk8s?rel=0" title="Part 6 — Sending Onboarding Documents" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </div>
-          <div class="video-card-info">
-            <div class="video-card-title">Part 6 — Sending Onboarding Documents</div>
-          </div>
-        </div>
-
-        <div class="video-card video-card-solo">
-          <div class="embed-wrap">
-            <iframe src="https://www.youtube.com/embed/Rq_9Kkykncc?rel=0" title="Part 7 — Additional Tips & Conclusion" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </div>
-          <div class="video-card-info">
-            <div class="video-card-title">Part 7 — Additional Tips &amp; Conclusion</div>
-          </div>
-        </div>
-
-      </div>
-      <!-- ===== END VIDEO GRID ===== -->
-
-      <!-- Help callout -->
-      <div style="margin-top:var(--sp-6);background:var(--blue-50);border:1.5px solid var(--blue-100);border-radius:var(--radius-lg);padding:var(--sp-5) var(--sp-6);display:flex;align-items:center;gap:var(--sp-5);">
-        <svg style="width:24px;height:24px;color:var(--color-primary);flex-shrink:0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-        </svg>
-        <p style="font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.75;margin:0;">
-          <strong style="color:var(--color-text);">Need help with onboarding?</strong> Call us at <a href="tel:7184711122" style="color:var(--color-primary);font-weight:600;">718-471-1122</a> or email <a href="mailto:info@staffproonline.com" style="color:var(--color-primary);font-weight:600;">info@staffproonline.com</a> and a StaffPro team member will walk you through it.
-        </p>
+        <ol class="tutorial-list" aria-label="Tutorial chapters">
+          <li><a class="tutorial-item" href="https://www.youtube.com/watch?v=2dAYB308Uto" target="_blank" rel="noopener noreferrer"
+                 data-video="2dAYB308Uto" data-title="Full Tutorial — Streamlining Your Hiring &amp; Onboarding Processes" aria-current="true">
+            <span class="ti-num"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="7 4 20 12 7 20 7 4"/></svg></span><span class="ti-title">Full tutorial</span><span class="ti-time">4:22</span>
+          </a></li>
+          <li><a class="tutorial-item" href="https://www.youtube.com/watch?v=pu1sKlnYYz4" target="_blank" rel="noopener noreferrer"
+                 data-video="pu1sKlnYYz4" data-title="Part 1 — Intro &amp; Getting Started">
+            <span class="ti-num">1</span><span class="ti-title">Intro &amp; getting started</span><span class="ti-time">0:17</span>
+          </a></li>
+          <li><a class="tutorial-item" href="https://www.youtube.com/watch?v=ILJe9QEeZ60" target="_blank" rel="noopener noreferrer"
+                 data-video="ILJe9QEeZ60" data-title="Part 2 — Hiring a Candidate">
+            <span class="ti-num">2</span><span class="ti-title">Hiring a candidate</span><span class="ti-time">1:04</span>
+          </a></li>
+          <li><a class="tutorial-item" href="https://www.youtube.com/watch?v=lOUxJXwmYqk" target="_blank" rel="noopener noreferrer"
+                 data-video="lOUxJXwmYqk" data-title="Part 3 — Wage Notification">
+            <span class="ti-num">3</span><span class="ti-title">Wage notification</span><span class="ti-time">0:36</span>
+          </a></li>
+          <li><a class="tutorial-item" href="https://www.youtube.com/watch?v=h68naD5qmFA" target="_blank" rel="noopener noreferrer"
+                 data-video="h68naD5qmFA" data-title="Part 4 — Tracking a Candidate">
+            <span class="ti-num">4</span><span class="ti-title">Tracking a candidate</span><span class="ti-time">0:18</span>
+          </a></li>
+          <li><a class="tutorial-item" href="https://www.youtube.com/watch?v=Thf8swURlAA" target="_blank" rel="noopener noreferrer"
+                 data-video="Thf8swURlAA" data-title="Part 5 — I-9 Verification">
+            <span class="ti-num">5</span><span class="ti-title">I-9 verification</span><span class="ti-time">0:46</span>
+          </a></li>
+          <li><a class="tutorial-item" href="https://www.youtube.com/watch?v=MXTXKaJCk8s" target="_blank" rel="noopener noreferrer"
+                 data-video="MXTXKaJCk8s" data-title="Part 6 — Sending Onboarding Documents">
+            <span class="ti-num">6</span><span class="ti-title">Sending onboarding documents</span><span class="ti-time">0:14</span>
+          </a></li>
+          <li><a class="tutorial-item" href="https://www.youtube.com/watch?v=Rq_9Kkykncc" target="_blank" rel="noopener noreferrer"
+                 data-video="Rq_9Kkykncc" data-title="Part 7 — Additional Tips &amp; Conclusion">
+            <span class="ti-num">7</span><span class="ti-title">Additional tips &amp; conclusion</span><span class="ti-time">0:44</span>
+          </a></li>
+        </ol>
       </div>
     </div>
 
@@ -295,7 +318,7 @@
     <!-- ===================================================
          POSTER ORDERS (JotForm)
          =================================================== -->
-    <div id="posters" style="margin-top: var(--sp-16);" class="fade-in fade-in-delay-2">
+    <div id="posters" class="res-section fade-in">
       <div class="resource-section-title">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -303,10 +326,25 @@
         Labor Law Poster Orders
       </div>
 
-      <p style="font-size:var(--text-base);color:var(--color-text-secondary);line-height:1.75;margin-bottom:var(--sp-6);max-width:700px;">
-        Employers are required to display current federal and state labor law compliance posters in the workplace. Use the form below to place your order &mdash; we&rsquo;ll confirm shipping and bill your account. <strong style="color:var(--color-text);">One shipping address per order</strong> &mdash; submit the form again for additional addresses. New York and New Jersey employers must order complete new posters for 2026.
-      </p>
+      <div class="poster-offer">
+        <div class="poster-offer-main">
+          <div class="poster-offer-title">2026 Labor Law Posters</div>
+          <p class="poster-offer-text">
+            Employers must display current federal and state labor law posters in the workplace. New York and New Jersey employers need complete new posters for 2026. We confirm shipping and bill your account &mdash; no payment is taken online.
+          </p>
+          <ul class="poster-prices">
+            <li><span>New York</span><strong>$41.95</strong></li>
+            <li><span>New Jersey</span><strong>$39.95</strong></li>
+            <li><span>All other states</span><strong>$34.95</strong></li>
+          </ul>
+        </div>
+        <button type="button" class="btn btn-primary poster-toggle" id="posterToggle" aria-expanded="false" aria-controls="posterPanel">Order Posters</button>
+      </div>
 
+      <!-- Closed until asked for. Hidden only while scripting works (.js-anim),
+           so without JavaScript the form is simply open. -->
+      <div id="posterPanel" class="poster-panel">
+      <p class="poster-panel-note"><strong>One shipping address per order</strong> &mdash; submit the form again for additional addresses.</p>
       <form id="posterOrderForm" class="order-card" action="https://api.web3forms.com/submit" method="POST">
 
         <!-- Web3Forms delivers the submission to info@staffproonline.com.
@@ -319,62 +357,6 @@
         <input type="hidden" name="order_summary" id="orderSummary" />
         <!-- Honeypot: bots fill this, humans never see it. -->
         <input type="checkbox" name="botcheck" class="sr-only" style="display:none" tabindex="-1" autocomplete="off" />
-
-        <fieldset class="order-fieldset">
-          <legend class="order-legend">Your details</legend>
-
-          <div class="form-group">
-            <label class="form-label" for="po-company">Company Name *</label>
-            <input class="form-input" type="text" id="po-company" name="Company Name" required />
-          </div>
-
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label class="form-label" for="po-first">First Name *</label>
-              <input class="form-input" type="text" id="po-first" name="First Name" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="po-last">Last Name *</label>
-              <input class="form-input" type="text" id="po-last" name="Last Name" required />
-            </div>
-          </div>
-
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label class="form-label" for="po-email">Email Address *</label>
-              <input class="form-input" type="email" id="po-email" name="Email" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="po-phone">Phone Number</label>
-              <input class="form-input" type="tel" id="po-phone" name="Phone" placeholder="(555) 000-0000" />
-            </div>
-          </div>
-        </fieldset>
-
-        <fieldset class="order-fieldset">
-          <legend class="order-legend">Shipping address</legend>
-
-          <div class="form-group">
-            <label class="form-label" for="po-street">Street Address *</label>
-            <input class="form-input" type="text" id="po-street" name="Street Address" required />
-          </div>
-
-          <div class="form-grid-2">
-            <div class="form-group">
-              <label class="form-label" for="po-city">City *</label>
-              <input class="form-input" type="text" id="po-city" name="City" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="po-zip">ZIP Code *</label>
-              <input class="form-input" type="text" id="po-zip" name="ZIP" required />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="po-state">State *</label>
-            <input class="form-input" type="text" id="po-state" name="State" required />
-          </div>
-        </fieldset>
 
         <fieldset class="order-fieldset">
           <legend class="order-legend">Select your posters</legend>
@@ -475,6 +457,63 @@
 
         </fieldset>
 
+        <fieldset class="order-fieldset">
+          <legend class="order-legend">Your details</legend>
+
+          <div class="form-group">
+            <label class="form-label" for="po-company">Company Name *</label>
+            <input class="form-input" type="text" id="po-company" name="Company Name" required />
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="po-first">First Name *</label>
+              <input class="form-input" type="text" id="po-first" name="First Name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="po-last">Last Name *</label>
+              <input class="form-input" type="text" id="po-last" name="Last Name" required />
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="po-email">Email Address *</label>
+              <input class="form-input" type="email" id="po-email" name="Email" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="po-phone">Phone Number</label>
+              <input class="form-input" type="tel" id="po-phone" name="Phone" placeholder="(555) 000-0000" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="order-fieldset">
+          <legend class="order-legend">Shipping address</legend>
+
+          <div class="form-group">
+            <label class="form-label" for="po-street">Street Address *</label>
+            <input class="form-input" type="text" id="po-street" name="Street Address" required />
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="po-city">City *</label>
+              <input class="form-input" type="text" id="po-city" name="City" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="po-zip">ZIP Code *</label>
+              <input class="form-input" type="text" id="po-zip" name="ZIP" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="po-state">State *</label>
+            <input class="form-input" type="text" id="po-state" name="State" required />
+          </div>
+        </fieldset>
+
+
         <div class="order-summary" id="orderTotals" aria-live="polite">
           <div class="order-empty" id="orderEmpty">Select a quantity above to see your order total.</div>
           <div id="orderLines" hidden></div>
@@ -507,6 +546,7 @@
           Order for another address
         </button>
       </div>
+      </div><!-- /posterPanel -->
 
     </div>
 

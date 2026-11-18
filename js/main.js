@@ -149,6 +149,47 @@
     });
   });
 
+  /* --- Tutorial player: one embed; the chapter list swaps the video --- */
+  const tutorialFrame = document.getElementById('tutorialFrame');
+  if (tutorialFrame) {
+    const tutorialItems = document.querySelectorAll('.tutorial-item');
+    const tutorialNow = document.getElementById('tutorialNow');
+    tutorialItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        tutorialFrame.src = 'https://www.youtube.com/embed/' + item.dataset.video + '?rel=0&autoplay=1';
+        tutorialFrame.title = item.dataset.title;
+        if (tutorialNow) tutorialNow.textContent = item.dataset.title;
+        tutorialItems.forEach(i => i.removeAttribute('aria-current'));
+        item.setAttribute('aria-current', 'true');
+        // On a phone the list sits below the player, so bring the player back into view.
+        if (window.matchMedia('(max-width: 768px)').matches) {
+          tutorialFrame.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    });
+  }
+
+  /* --- Poster order panel: closed until asked for; #posters opens it --- */
+  const posterToggle = document.getElementById('posterToggle');
+  const posterPanel  = document.getElementById('posterPanel');
+  if (posterToggle && posterPanel) {
+    const openPosters = () => {
+      posterPanel.classList.add('open');
+      posterToggle.setAttribute('aria-expanded', 'true');
+      posterToggle.hidden = true;
+    };
+    posterToggle.addEventListener('click', () => {
+      openPosters();
+      const first = posterPanel.querySelector('.qty-input');
+      if (first) first.focus({ preventScroll: true });
+      posterPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    // The footer link and the "Order posters" card both point at #posters.
+    if (location.hash === '#posters') openPosters();
+    window.addEventListener('hashchange', () => { if (location.hash === '#posters') openPosters(); });
+  }
+
   /* --- Labor law poster order form --- */
   const posterForm = document.getElementById('posterOrderForm');
   if (posterForm) {
