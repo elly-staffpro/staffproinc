@@ -85,6 +85,10 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
 .link{background:none;border:0;padding:6px 0;color:var(--navy);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .link.rm{color:var(--err)}
 
+.rep-row{border-left:3px solid var(--line);padding:4px 0 4px 16px;margin-bottom:18px}
+.howto{margin:8px 0 0;padding-left:20px} .howto li{margin-bottom:4px}
+.q{border-top:1px solid var(--line);padding:12px 0 2px}
+.q .lab{font-weight:500}
 .callout{border:1px solid var(--line);border-left:4px solid var(--navy);padding:14px 16px;border-radius:4px;background:#F8FAFD;font-size:15px;margin:0 0 28px}
 
 .review section{border-top:1px solid var(--line);padding:16px 0}
@@ -281,7 +285,70 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
             <div class="f c6"><label for="prior_payroll">Current or previous payroll company <span class="opt">(optional)</span></label><input id="prior_payroll" name="prior_payroll" placeholder="e.g. ADP, Paychex, in-house"></div>
           </div>
         </fieldset>
+        <fieldset>
+          <legend>Workers' compensation</legend>
+          <div class="grid">
+            <div class="f c6"><span class="lab">Do you need StaffPro to get workers' compensation coverage for you?</span>
+              <div class="chips" role="radiogroup"><label><input type="radio" name="wc_need" value="No" required><span>No</span></label><label><input type="radio" name="wc_need" value="Yes"><span>Yes</span></label></div>
+              <div class="hint">If you choose Yes, the next step asks for what the insurance company needs for your workers' compensation application.</div><div class="msg">Choose yes or no.</div></div>
+          </div>
+        </fieldset>
         <div class="f"><label for="tax_note">Anything we should know? <span class="opt">(optional)</span></label><textarea id="tax_note" name="tax_note"></textarea></div>
+      </section>
+
+      <!-- 4b: only when they need us to get workers' comp -->
+      <section class="step" data-title="Workers' comp" data-when="wc_need=Yes">
+        <h1>Workers' compensation application</h1>
+        <p class="lede">We use your answers to fill in the workers' compensation application (ACORD 130) that we send to the insurance company for you.</p>
+        <div class="callout">
+          <b>Before you start</b>
+          <ul class="howto">
+            <li>Nothing on this page is required. Fill in what you can and leave the rest blank. We will follow up on anything missing.</li>
+            <li>Your business name, address, EIN and work locations are already filled in from the earlier steps.</li>
+            <li>Estimates are fine. Use your best guess for the next 12 months.</li>
+            <li>You do not need rates or premiums. The insurance company works those out.</li>
+            <li>We will send you the finished application to review and sign.</li>
+          </ul>
+        </div>
+        <fieldset>
+          <legend>About the business</legend>
+          <div class="grid">
+            <div class="f c2 full-sm"><label for="wc_years">Years in business</label><input id="wc_years" name="wc_years" inputmode="numeric" data-check="num"><div class="msg">Enter a number.</div></div>
+            <div class="f c6"><label for="wc_ops">Describe your business and what your employees do</label><textarea id="wc_ops" name="wc_ops"></textarea>
+              <div class="hint">A few plain sentences. For example: a store (what you sell, who your customers are, whether you deliver); a contractor (the type of work, and what you hire subcontractors for); a manufacturer (materials, products, equipment); a service business (the service, and where the work is done).</div></div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Employees by type of work</legend>
+          <p class="lnote">Add one line for each type of work your employees do.</p>
+          <ul class="howto lnote">
+            <li class="wc-multi"><b>Location:</b> which work location the employees are at. The numbers match the Work locations step.</li>
+            <li><b>Class code:</b> the workers' compensation code for that work, if you know it. It is on your current policy. Leave it blank if you are not sure.</li>
+            <li><b>Duties:</b> a short, clear description of the work, such as "Office clerical", "Cashiers and stock clerks" or "Delivery drivers".</li>
+            <li><b>Employees:</b> about how many full-time and part-time employees do this work.</li>
+            <li><b>Annual wages:</b> the estimated total yearly wages for everyone on that line.</li>
+          </ul>
+          <div data-rep="rating"></div>
+          <button type="button" class="link" data-add="rating">Add another type of work</button>
+        </fieldset>
+        <fieldset>
+          <legend>Owners, partners and officers</legend>
+          <p class="lnote">List the owners, partners, officers and family members who work in the business. Tell us whether each person should be included in or excluded from the coverage. If you are not sure, leave it blank and we will go over it with you. If someone is included, their pay should also be counted in the wages above.</p>
+          <div data-rep="individuals"></div>
+          <button type="button" class="link" data-add="individuals">Add another person</button>
+        </fieldset>
+        <fieldset>
+          <legend>Past workers' compensation coverage</legend>
+          <p class="lnote">List your workers' compensation policies for up to the last 5 years, newest first. Your insurance company or agent can send you "loss runs", which show these numbers. If you have loss runs, you can email them to us instead.</p>
+          <div data-rep="prior"></div>
+          <button type="button" class="link" data-add="prior">Add another year</button>
+        </fieldset>
+        <fieldset>
+          <legend>General questions</legend>
+          <p class="lnote">Answer Yes or No. If the answer is Yes, add a short explanation.</p>
+          <div id="wcQs"></div>
+        </fieldset>
+        <div class="f"><label for="wc_remarks">Anything else the insurance company should know? <span class="opt">(optional)</span></label><textarea id="wc_remarks" name="wc_remarks"></textarea></div>
       </section>
 
       <!-- 5 -->
@@ -344,7 +411,7 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
         </fieldset>
         <fieldset>
           <legend>Paid time off</legend>
-          <p class="lnote">Optional. Leave blank anything you are not sure of. Sick time is counted in hours.</p>
+          <p class="lnote">Optional. Leave blank anything you are not sure of. Sick time is counted in hours, the way New York measures it.</p>
           <div class="grid">
             <div class="f c2 full-sm"><label for="holidays">Paid holidays per year</label><input id="holidays" name="holidays" inputmode="numeric" data-check="num"><div class="msg">Enter a number.</div></div>
             <div class="f c2"><label for="vac_days">Vacation days per year</label><input id="vac_days" name="vac_days" inputmode="decimal" data-check="num"><div class="msg">Enter a number.</div></div>
@@ -400,7 +467,8 @@ const STATES = ["AL","AK","AZ","AR","CA","CO","CT","DE","DC","FL","GA","HI","ID"
 const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const form = $("#form");
-const steps = $$(".step").filter(s => !s.hasAttribute("data-final"));
+const allSteps = $$(".step").filter(s => !s.hasAttribute("data-final"));
+let steps = allSteps.filter(s => !s.dataset.when);   // steps with data-when appear only when that answer is given
 const finalStep = $(".step[data-final]");
 let cur = 0, maxSeen = 0;
 
@@ -439,6 +507,120 @@ function numberLocs() {
 }
 $("#addLoc").onclick = () => { const el = addLoc(); $("input", el).focus(); save(); };
 
+// Workers' comp: repeating lines (type of work, people, past coverage)
+const REPS = {
+  rating: { title: "Type of work", fields: [
+    ["loc", "Location", "c2 wc-loc", "loc"], ["class_code", "Class code (if known)", "c2", "text", "e.g. 8810"],
+    ["duties", "Duties", "c6", "text", "e.g. Office clerical"],
+    ["full_time", "Full-time employees", "c2", "num"], ["part_time", "Part-time employees", "c2", "num"],
+    ["payroll", "Estimated annual wages", "c2 full-sm", "money", "e.g. 250,000"]] },
+  individuals: { title: "Person", fields: [
+    ["name", "Full name", "c3 full-sm", "text"], ["title", "Title or relationship", "c3 full-sm", "text", "e.g. President, owner's son"],
+    ["dob", "Date of birth", "c2 full-sm", "date"], ["ownership", "Ownership %", "c2", "num"], ["loc", "Location", "c2 wc-loc", "loc"],
+    ["duties", "Duties", "c6", "text", "e.g. Manages the store and does the buying"],
+    ["include", "Include or exclude from coverage", "c2 full-sm", "incl"], ["class_code", "Class code (if known)", "c2", "text"],
+    ["payroll", "Annual pay", "c2", "money"]] },
+  prior: { title: "Policy year", fields: [
+    ["year", "Year", "c2", "num", "e.g. 2025"], ["carrier", "Insurance company", "c4", "text"],
+    ["policy", "Policy number", "c3 full-sm", "text"], ["premium", "Annual premium", "c3 full-sm", "money"],
+    ["mod", "Experience mod (if any)", "c2", "text", "e.g. 0.95"], ["claims", "Number of claims", "c2", "num"],
+    ["paid", "Amount paid on claims", "c2 full-sm", "money"], ["reserve", "Open reserves", "c2", "money"]] }
+};
+function workLocations() {
+  const d = collect(), main = { street: d.street, city: d.city, state: d.state, zip: d.zip };
+  return (d.loc_main === "yes" ? [main] : []).concat(d.locations).filter(l => l.street).map(oneLine);
+}
+function locOptions(sel, value) {
+  const locs = workLocations();
+  const v = value != null ? value : sel.value;
+  sel.innerHTML = '<option value="">--</option>' + locs.map((l, i) => `<option value="${i + 1}"${String(i + 1) === String(v) ? " selected" : ""}>${i + 1}. ${esc(l)}</option>`).join("");
+}
+function refreshLocs() {
+  const many = workLocations().length > 1;
+  $$("select[data-k='loc']").forEach(s => locOptions(s));
+  $$(".wc-loc, .wc-multi").forEach(el => el.classList.toggle("hidden", !many));
+}
+let repCount = 0;
+function addRow(kind, v = {}) {
+  const box = $(`[data-rep="${kind}"]`), el = document.createElement("div");
+  el.className = "rep-row"; el.dataset.row = kind;
+  const id = "r" + Date.now().toString(36) + (++repCount);
+  el.innerHTML = `<div class="loc-head"><b></b><button type="button" class="link rm">Remove</button></div><div class="grid">` +
+    REPS[kind].fields.map(([k, label, cls, type, ph]) => {
+      const fid = id + k, p = ph ? ` placeholder="${ph}"` : "";
+      const input = type === "loc" ? `<select id="${fid}" data-k="${k}"></select>`
+        : type === "incl" ? `<select id="${fid}" data-k="${k}"><option value="">Not sure</option><option>Include</option><option>Exclude</option></select>`
+        : type === "date" ? `<input id="${fid}" data-k="${k}" type="date">`
+        : type === "num" ? `<input id="${fid}" data-k="${k}" inputmode="decimal" data-check="num"${p}>`
+        : type === "money" ? `<input id="${fid}" data-k="${k}" inputmode="decimal"${p || ' placeholder="$"'}>`
+        : `<input id="${fid}" data-k="${k}"${p}>`;
+      return `<div class="f ${cls}"><label for="${fid}">${label}</label>${input}${type === "num" ? '<div class="msg">Enter a number.</div>' : ""}</div>`;
+    }).join("") + `</div>`;
+  $$("[data-k]", el).forEach(x => { if (x.dataset.k !== "loc" && v[x.dataset.k] != null) x.value = v[x.dataset.k]; });
+  const ls = $("select[data-k='loc']", el); if (ls) locOptions(ls, v.loc || "");
+  $(".rm", el).onclick = () => { el.remove(); numberRows(); save(); };
+  box.appendChild(el); numberRows(); refreshLocs();
+  return el;
+}
+function numberRows() {
+  Object.keys(REPS).forEach(kind => $$(`[data-row="${kind}"]`).forEach((el, i) => $("b", el).textContent = `${REPS[kind].title} ${i + 1}`));
+}
+$$("[data-add]").forEach(b => b.onclick = () => { const el = addRow(b.dataset.add); $("input,select", el).focus(); save(); });
+function rows(kind) {
+  return $$(`[data-row="${kind}"]`).map(el => Object.fromEntries($$("[data-k]", el).map(x => [x.dataset.k, x.value.trim()])))
+    .filter(r => Object.entries(r).some(([k, v]) => v && !(kind !== "prior" && k === "loc")));
+}
+// General questions from the ACORD 130. Question 21 (leased employees) is always Yes for StaffPro clients, so it is not asked.
+const WC_QS = [
+  [1, "Does the business own, operate or lease aircraft or watercraft?"],
+  [2, "Do past, present or discontinued operations involve storing, treating, discharging, applying, disposing of or transporting hazardous material? (for example landfills, wastes, fuel tanks)"],
+  [3, "Is any work performed underground or above 15 feet?"],
+  [4, "Is any work performed on barges, vessels, docks or bridges over water?"],
+  [5, "Is the business engaged in any other type of business?"],
+  [6, "Are subcontractors used?", "About what percent of the work is subcontracted?"],
+  [7, "Is any work sublet without certificates of insurance?", "Explain. The wages for this work should be included in the types of work above."],
+  [8, "Is a written safety program in operation?"],
+  [9, "Is any group transportation provided?"],
+  [10, "Are any employees under 16 or over 60 years of age?"],
+  [11, "Are there any seasonal employees?"],
+  [12, "Is there any volunteer or donated labor?"],
+  [13, "Are there any employees with physical disabilities?"],
+  [14, "Do employees travel out of state?", "Which states, and how often?"],
+  [15, "Are athletic teams sponsored?"],
+  [16, "Are physicals required after offers of employment are made?"],
+  [17, "Do you have any other insurance with the same insurance company?"],
+  [18, "Has any workers' compensation coverage been declined, cancelled or non-renewed in the last 3 years?"],
+  [19, "Are employee health plans provided?"],
+  [20, "Do any employees perform work for other businesses or subsidiaries?"],
+  [22, "Do any employees mainly work from home?", "How many employees?"],
+  [23, "Any tax liens or bankruptcy in the last 5 years?"],
+  [24, "Is there any undisputed, unpaid workers' compensation premium due from you or any business with the same owners or managers?", "Explain, including the business name(s) and policy number(s)."]
+];
+$("#wcQs").innerHTML = WC_QS.map(([n, q, ask]) => `<div class="q"><div class="f"><span class="lab">${q}</span>
+  <div class="chips" role="radiogroup"><label><input type="radio" name="wc_q${n}" value="No"><span>No</span></label><label><input type="radio" name="wc_q${n}" value="Yes"><span>Yes</span></label></div></div>
+  <div class="f hidden" data-show="wc_q${n}=Yes" style="margin-top:10px"><label for="wc_q${n}_x">${ask || "Please explain"}</label><input id="wc_q${n}_x" name="wc_q${n}_x"${n === 22 ? ' inputmode="numeric"' : ""}></div></div>`).join("");
+function prepWC() {
+  const d = collect();
+  if (!$$('[data-row="rating"]').length) addRow("rating");
+  if (!$$('[data-row="individuals"]').length) {
+    const owners = (d.owners || "").split(/,|&|\band\b/i).map(x => x.trim()).filter(Boolean);
+    (owners.length ? owners : [""]).forEach(name => addRow("individuals", { name }));
+  }
+  if (!$$('[data-row="prior"]').length) addRow("prior", { carrier: d.wc_carrier || "" });
+  refreshLocs();
+}
+function whenOk(rule) { const m = rule.match(/^(\w+)=(.*)$/); return val(m[1]) === m[2]; }
+function syncSteps() {
+  const now = steps[cur];
+  const next = allSteps.filter(s => !s.dataset.when || whenOk(s.dataset.when));
+  if (next.length === steps.length && next.every((s, i) => s === steps[i])) return;
+  next.forEach((s, i) => { if (!steps.includes(s) && i <= maxSeen) maxSeen = i; });   // a newly added step must be visited
+  steps = next;
+  cur = Math.max(0, steps.indexOf(now));
+  maxSeen = Math.min(Math.max(maxSeen, cur), steps.length - 1);
+  renderNav();
+}
+
 // Show/hide conditional blocks
 function val(name) {
   const els = form.elements[name];
@@ -459,6 +641,7 @@ function applyShows() {
   $$('[data-show="health=Yes"]').forEach(el => { if (val("health_plan") !== "Yes") el.classList.add("hidden"); });
   if (!form.loc_main.checked && !$$(".loc").length) addLoc();
   numberLocs();
+  syncSteps();
 }
 
 // Validation
@@ -512,6 +695,7 @@ function collect() {
     else d[x.name] = x.value.trim();
   });
   d.locations = $$(".loc").map(el => Object.fromEntries($$("[data-k]", el).map(x => [x.dataset.k, x.value.trim()])));
+  Object.keys(REPS).forEach(k => d["wc_" + k] = $$(`[data-row="${k}"]`).map(el => Object.fromEntries($$("[data-k]", el).map(x => [x.dataset.k, x.value.trim()]))));
   return d;
 }
 // Payday and hours day depend on the pay cycle
@@ -558,6 +742,12 @@ function payload() {
       health_formula: d.health_plan === "Yes" && d.health === "Yes" ? d.health_formula : "",
       paid_holidays: d.holidays, vacation_days: d.vac_days, vacation_accrual: d.vac_accrual, sick_days: d.sick_days, sick_hours: d.sick_days, sick_accrual: d.sick_accrual,
       retirement: d.retirement, retirement_provider: d.retirement === "Yes" ? d.retirement_provider : "" },
+    workers_comp: d.wc_need === "Yes" ? {
+      needed: "Yes", years_in_business: d.wc_years, operations: d.wc_ops,
+      rating: rows("rating"), individuals: rows("individuals"), prior: rows("prior"),
+      questions: Object.fromEntries(WC_QS.map(([n]) => [n, { answer: d["wc_q" + n] || "", explain: d["wc_q" + n] === "Yes" ? (d[`wc_q${n}_x`] || "") : "" }]).filter(([, a]) => a.answer)),
+      remarks: d.wc_remarks
+    } : { needed: d.wc_need || "" },
     website_url: form.website_url.value
   };
 }
@@ -565,16 +755,26 @@ function payload() {
 // Review screen
 function esc(s) { return String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
 function renderReview() {
-  const p = payload(), c = p.company;
+  const p = payload(), c = p.company, wc = p.workers_comp;
+  const money = v => { const n = Number(String(v || "").replace(/[$,\s]/g, "")); return !v ? "" : (n ? "$" + n.toLocaleString("en-US") : v); };
+  const wcRows = wc.needed !== "Yes" ? [] : [["Years in business", wc.years_in_business], ["Description", wc.operations]]
+    .concat(wc.rating.map((r, i) => [`Type of work ${i + 1}`, [r.loc && workLocations().length > 1 && "Location " + r.loc, r.class_code && "class " + r.class_code, r.duties, (r.full_time || r.part_time) && `${r.full_time || 0} full-time, ${r.part_time || 0} part-time`, money(r.payroll)].filter(Boolean).join(", ")]))
+    .concat(wc.individuals.map(r => ["Owner / officer", [r.name, r.title, r.ownership && r.ownership + "% owner", r.include && r.include.toLowerCase() + "d", r.duties].filter(Boolean).join(", ")]))
+    .concat(wc.prior.map(r => [`Coverage ${r.year || ""}`.trim(), [r.carrier, r.policy && "policy " + r.policy, money(r.premium) && "premium " + money(r.premium), r.claims && r.claims + " claims"].filter(Boolean).join(", ")]))
+    .concat(WC_QS.filter(([n]) => wc.questions[n] && wc.questions[n].answer === "Yes").map(([n, q]) => [q, "Yes" + (wc.questions[n].explain ? ": " + wc.questions[n].explain : "")]))
+    .concat([["Answered", Object.keys(wc.questions).length + " of " + WC_QS.length + " general questions"], ["Other notes", wc.remarks]]);
   const blocks = [
     [0, "Your company", [["Business name", c.legal_name], ["DBA", c.dba], ["Entity type", c.entity_type], ["Owner(s)", c.owners], ["Nature of business", c.nature], ["Website", c.website], ["Address", c.address_one_line], ["Phone", c.phone], ["Fax", c.fax], ["Email", c.email], ["Employees", `${c.full_time} full-time, ${c.part_time} part-time`], ["Union", c.union === "Yes" ? c.union_detail : "No"], ["Other businesses owned", c.related === "Yes" ? c.related_detail : "No"]]],
     [1, "People and signing", [["Main contact", `${p.contact.name}, ${p.contact.title}`], ["Contact email", p.contact.email], ["Contact phone", p.contact.phone], ["Payroll contact", `${p.payroll_contact.name}, ${p.payroll_contact.email}`], ["Signs the agreement", `${p.signer.name}, ${p.signer.title}`], ["Legal notices to", `${p.notice.name}, ${p.notice.title}`], ["", `${p.notice.street}, ${p.notice.city_state_zip}`]]],
     [2, "Work locations", p.locations.map((l, i) => [`Location ${i + 1}`, l])],
-    [3, "Tax and insurance", [["Federal EIN", p.tax.fein], ["State unemployment no.", p.tax.sui_number], ["State unemployment rate", p.tax.sui_rate && p.tax.sui_rate + "%"], ["Workers' comp", p.insurance.workers_comp], ["Disability / PFL", p.insurance.disability_pfl], ["General liability", p.insurance.general_liability], ["EPLI", p.insurance.epli], ["Payroll company", p.tax.prior_payroll], ["Note", p.tax.note]]],
+    [3, "Tax and insurance", [["Federal EIN", p.tax.fein], ["Need StaffPro to get workers' comp", wc.needed], ["State unemployment no.", p.tax.sui_number], ["State unemployment rate", p.tax.sui_rate && p.tax.sui_rate + "%"], ["Workers' comp", p.insurance.workers_comp], ["Disability / PFL", p.insurance.disability_pfl], ["General liability", p.insurance.general_liability], ["EPLI", p.insurance.epli], ["Payroll company", p.tax.prior_payroll], ["Note", p.tax.note]]],
+    ["Workers' comp", "Workers' comp application", wcRows],
     [4, "Payroll setup", [["Pay cycle", p.payroll.pay_cycle], [p.payroll.pay_cycle === "Semi-Monthly" ? "Paydays" : "Payday", p.payroll.pay_day], ["Hours sent", p.payroll.report_day], ["Pay period", p.payroll.pay_period], ["First check date", fmtDate(p.payroll.first_check_date)], ["Hours sent by", p.payroll.report_method], ["Direct deposit", p.payroll.direct_deposit], ["Delivery", p.payroll.delivery]]],
     [5, "Benefits and time off", [["Health insurance plan", p.benefits.health_plan], ["Company contribution", p.benefits.health_plan === "Yes" ? (p.benefits.health_contribution === "Yes" ? (p.benefits.health_formula || "Yes") : p.benefits.health_contribution) : ""], ["Paid holidays", p.benefits.paid_holidays], ["Vacation days", [p.benefits.vacation_days, p.benefits.vacation_accrual].filter(Boolean).join(", accrued ")], ["Sick time (hours)", [p.benefits.sick_hours, p.benefits.sick_accrual].filter(Boolean).join(", accrued ")], ["Retirement plan", p.benefits.retirement === "Yes" ? p.benefits.retirement_provider : p.benefits.retirement]]]
   ];
-  $("#review").innerHTML = blocks.map(([i, t, rows]) => `<section><h3>${t}<button type="button" class="link" data-go="${i}">Edit</button></h3><dl>${rows.filter(r => r[1]).map(r => `<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join("")}</dl></section>`).join("");
+  // Edit buttons find their step by title, since the workers' comp step comes and goes
+  const titles = ["Your company", "People and signing", "Work locations", "Tax and insurance", "Payroll setup", "Benefits and time off"];
+  $("#review").innerHTML = blocks.filter(([, , rows]) => rows.length).map(([i, t, rows]) => `<section><h3>${t}<button type="button" class="link" data-go="${steps.findIndex(s => s.dataset.title === (typeof i === "number" ? titles[i] : i))}">Edit</button></h3><dl>${rows.filter(r => r[1]).map(r => `<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join("")}</dl></section>`).join("");
   $$("[data-go]", $("#review")).forEach(b => b.onclick = () => go(+b.dataset.go));
 }
 
@@ -610,6 +810,7 @@ function prefillPeople() {
 }
 function show(i, quiet) {
   if (i === 1) prefillPeople();
+  if (steps[i].dataset.when) prepWC();
   cur = i; maxSeen = Math.max(maxSeen, i);
   steps.forEach((s, k) => s.classList.toggle("on", k === i));
   if (i === steps.length - 1) renderReview();
@@ -634,7 +835,7 @@ function save() {
   saveT = setTimeout(() => {
     try {
       const d = collect(); delete d.confirm;
-      localStorage.setItem(FORM_KEY, JSON.stringify({ d, cur, maxSeen }));
+      localStorage.setItem(FORM_KEY, JSON.stringify({ d, cur, maxSeen, title: steps[cur].dataset.title }));
       $("#saved").textContent = "Saved on this device";
     } catch (e) { /* storage unavailable: the form still works */ }
   }, 400);
@@ -650,8 +851,11 @@ function restore() {
     else x.value = d[x.name];
   });
   (d.locations || []).forEach(l => addLoc(l));
-  maxSeen = s.maxSeen || 0;
-  return Math.min(s.cur || 0, steps.length - 1);
+  Object.keys(REPS).forEach(k => (d["wc_" + k] || []).forEach(r => addRow(k, r)));
+  steps = allSteps.filter(st => !st.dataset.when || whenOk(st.dataset.when));
+  maxSeen = Math.min(s.maxSeen || 0, steps.length - 1);
+  const at = steps.findIndex(st => st.dataset.title === s.title);
+  return at >= 0 ? at : Math.min(s.cur || 0, steps.length - 1);
 }
 form.addEventListener("input", () => { applyShows(); renderFile(); save(); });
 
