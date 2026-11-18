@@ -128,7 +128,7 @@ legend{font-size:18px;font-weight:700;padding:0;margin-bottom:4px}
   .mbar img{height:28px;width:auto;display:block;margin-bottom:8px}
   .mbar .row{display:flex;justify-content:space-between;font-size:13px;color:var(--steel)}
   .mbar .bar{height:4px;background:var(--rail);border-radius:2px;margin-top:6px;overflow:hidden}
-  .mbar .bar i{display:block;height:100%;background:var(--navy);width:0;transition:width .25s}
+  .mbar .bar i{display:block;height:100%;background:var(--navy);width:100%;transform:scaleX(0);transform-origin:left;transition:transform .25s cubic-bezier(.23,1,.32,1)}
   .wrap{padding:24px 16px 16px}
   .nav{padding:16px}
   .err-banner{margin:0 16px 8px}
@@ -795,7 +795,7 @@ function renderNav() {
   $$("#stepList button").forEach(b => b.onclick = () => go(+b.dataset.i));
   $("#mStep").textContent = steps[cur].dataset.title;
   $("#mCount").textContent = `Step ${cur + 1} of ${steps.length}`;
-  $("#mBar").style.width = ((cur + 1) / steps.length * 100) + "%";
+  $("#mBar").style.transform = "scaleX(" + ((cur + 1) / steps.length) + ")";
   $("#back").style.display = cur ? "" : "none";
   $("#next").textContent = cur === steps.length - 1 ? "Send to StaffPro" : "Continue";
 }
