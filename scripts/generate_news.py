@@ -826,10 +826,10 @@ SHARED_STYLES = """
       overflow: hidden;
       transition: box-shadow var(--trans), border-color var(--trans);
     }
-    .news-card:hover {
+    @media (hover: hover) and (pointer: fine) { .news-card:hover {
       border-color: var(--blue-200);
       box-shadow: 0 4px 24px rgba(37,64,200,.07);
-    }
+    } }
     .news-cat {
       display: inline-block;
       font-size: var(--text-xs);
@@ -922,7 +922,7 @@ SHARED_STYLES = """
       font-weight: 600;
       text-decoration: none;
     }
-    .news-source a:hover { text-decoration: underline; }
+    @media (hover: hover) and (pointer: fine) { .news-source a:hover { text-decoration: underline; } }
     .archive-section {
       max-width: 780px;
       margin-inline: auto;
@@ -951,7 +951,7 @@ SHARED_STYLES = """
       color: var(--color-primary);
       text-decoration: none;
     }
-    .archive-current:hover { text-decoration: underline; }
+    @media (hover: hover) and (pointer: fine) { .archive-current:hover { text-decoration: underline; } }
     .archive-card {
       display: flex;
       flex-direction: column;
@@ -963,10 +963,10 @@ SHARED_STYLES = """
       text-decoration: none;
       transition: border-color var(--trans), box-shadow var(--trans);
     }
-    .archive-card:hover {
+    @media (hover: hover) and (pointer: fine) { .archive-card:hover {
       border-color: var(--blue-200);
       box-shadow: 0 4px 16px rgba(37,64,200,.07);
-    }
+    } }
     .archive-month {
       font-size: var(--text-sm);
       font-weight: 700;
@@ -997,7 +997,7 @@ SHARED_STYLES = """
       text-align: center;
       user-select: none;
     }
-    .news-expand-toggle:hover { opacity: .75; }
+    @media (hover: hover) and (pointer: fine) { .news-expand-toggle:hover { opacity: .75; } }
     .expand-icon {
       flex-shrink: 0;
       transition: transform .2s ease;
@@ -1152,6 +1152,7 @@ def render_page(data, p="", archive=None):
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
   <title>HR &amp; Compliance News — {month_year} | StaffPro Inc.</title>
   <meta name="description" content="Monthly HR and compliance news bulletin from StaffPro Inc. — {month_year}" />
   <meta property="og:title"       content="HR &amp; Compliance News — {month_year} | StaffPro Inc." />

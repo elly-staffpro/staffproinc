@@ -118,6 +118,22 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent; /* no gray flash on tap; :active below gives feedback instead */
+}
+
+/* Phones: respond on press, not release, and don't select a button's label on long-press */
+a, button, [role="button"], summary, label { touch-action: manipulation; }
+.btn, button, [role="button"], .nav-link, .nav-mobile-link {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.btn:active { transform: scale(0.97); }
+a:not(.btn):active, button:not(.btn):active { opacity: 0.7; }
+
+/* iPhone zooms into any input under 16px and doesn't zoom back out */
+@media (pointer: coarse) {
+  .qty-input { font-size: 16px; }
 }
 
 body {
@@ -217,42 +233,42 @@ input, textarea, select { font-family: inherit; }
   color: var(--white);
   box-shadow: var(--shadow-blue);
 }
-.btn-primary:hover {
+@media (hover: hover) and (pointer: fine) { .btn-primary:hover {
   background: var(--blue-700);
   box-shadow: 0 6px 28px rgba(37, 64, 200, 0.45);
   transform: translateY(-1px);
-}
+} }
 
 .btn-secondary {
   background: transparent;
   color: var(--white);
   border-color: rgba(255, 255, 255, 0.4);
 }
-.btn-secondary:hover {
+@media (hover: hover) and (pointer: fine) { .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.75);
-}
+} }
 
 .btn-outline {
   background: transparent;
   color: var(--color-primary);
   border-color: var(--color-primary);
 }
-.btn-outline:hover {
+@media (hover: hover) and (pointer: fine) { .btn-outline:hover {
   background: var(--color-primary);
   color: var(--white);
-}
+} }
 
 .btn-white {
   background: var(--white);
   color: var(--blue-700);
   font-weight: 700;
 }
-.btn-white:hover {
+@media (hover: hover) and (pointer: fine) { .btn-white:hover {
   background: var(--blue-50);
   transform: translateY(-1px);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
-}
+} }
 
 .btn-sm  { padding: 0.625rem 1.25rem; font-size: var(--text-sm); }
 .btn-lg  { padding: 1.125rem 2.25rem; font-size: var(--text-lg); }
@@ -338,8 +354,8 @@ input, textarea, select { font-family: inherit; }
   transform: scaleX(0);
   transition: transform var(--trans);
 }
-.nav-link:hover         { color: var(--color-primary); }
-.nav-link:hover::after  { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) { .nav-link:hover         { color: var(--color-primary); } }
+@media (hover: hover) and (pointer: fine) { .nav-link:hover::after  { transform: scaleX(1); } }
 .nav-link.active        { color: var(--color-primary); }
 .nav-link.active::after { transform: scaleX(1); }
 
@@ -358,7 +374,7 @@ input, textarea, select { font-family: inherit; }
   transition: color var(--trans), border-color var(--trans), background var(--trans);
 }
 .nav-icon-btn svg { width: 16px; height: 16px; }
-.nav-icon-btn:hover { color: var(--color-primary); border-color: var(--blue-200); background: var(--blue-50); }
+@media (hover: hover) and (pointer: fine) { .nav-icon-btn:hover { color: var(--color-primary); border-color: var(--blue-200); background: var(--blue-50); } }
 @media (min-width: 1150px) {
   .nav-icon-btn { display: flex; }
 }
@@ -371,7 +387,7 @@ input, textarea, select { font-family: inherit; }
   white-space: nowrap;
   transition: color var(--trans);
 }
-.nav-login-link:hover { color: var(--color-primary); }
+@media (hover: hover) and (pointer: fine) { .nav-login-link:hover { color: var(--color-primary); } }
 
 /* ------------------------------------------------
    POSTER ORDER FORM (native, replaces embedded form)
@@ -484,11 +500,11 @@ input, textarea, select { font-family: inherit; }
   flex-shrink: 0;
   transition: color var(--trans), border-color var(--trans), background var(--trans);
 }
-.os-remove:hover {
+@media (hover: hover) and (pointer: fine) { .os-remove:hover {
   color: #DC2626;
   border-color: #FCA5A5;
   background: #FEF2F2;
-}
+} }
 .os-remove[hidden] { display: none; }
 .add-state-wrap {
   padding-top: var(--sp-4);
@@ -569,7 +585,7 @@ input, textarea, select { font-family: inherit; }
   color: var(--color-primary);
   white-space: nowrap;
 }
-.audience-switch-link:hover { text-decoration: underline; }
+@media (hover: hover) and (pointer: fine) { .audience-switch-link:hover { text-decoration: underline; } }
 .audience-switch-link svg { width: 15px; height: 15px; }
 /* Quieter variant, used on the employee page pointing back to client tools */
 .audience-switch.subtle {
@@ -614,11 +630,11 @@ input, textarea, select { font-family: inherit; }
   color: var(--color-text);
   transition: all var(--trans-slow);
 }
-.resource-card:hover {
+@media (hover: hover) and (pointer: fine) { .resource-card:hover {
   border-color: var(--blue-300);
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
-}
+} }
 .resource-card-icon {
   width: 48px; height: 48px;
   background: var(--blue-50);
@@ -644,7 +660,7 @@ input, textarea, select { font-family: inherit; }
   color: var(--gray-300);
   transition: color var(--trans), transform var(--trans);
 }
-.resource-card:hover .resource-card-arrow { color: var(--color-primary); transform: translateX(3px); }
+@media (hover: hover) and (pointer: fine) { .resource-card:hover .resource-card-arrow { color: var(--color-primary); transform: translateX(3px); } }
 
 @media (max-width: 640px) {
   .resource-cards { grid-template-columns: 1fr; }
@@ -693,7 +709,7 @@ input, textarea, select { font-family: inherit; }
   border-radius: var(--radius);
   transition: all var(--trans);
 }
-.nav-mobile-link:hover { background: var(--blue-50); color: var(--color-primary); }
+@media (hover: hover) and (pointer: fine) { .nav-mobile-link:hover { background: var(--blue-50); color: var(--color-primary); } }
 .nav-mobile-divider   { height: 1px; background: var(--color-border); margin: var(--sp-3) 0; }
 .nav-mobile-cta       { margin-top: var(--sp-2); text-align: center; justify-content: center; }
 
@@ -811,7 +827,7 @@ input, textarea, select { font-family: inherit; }
   transition: background var(--trans);
 }
 .hero-service-item:last-of-type { margin-bottom: 0; }
-.hero-service-item:hover        { background: rgba(255, 255, 255, 0.11); }
+@media (hover: hover) and (pointer: fine) { .hero-service-item:hover        { background: rgba(255, 255, 255, 0.11); } }
 
 .hero-service-icon {
   width: 34px; height: 34px;
@@ -840,7 +856,7 @@ input, textarea, select { font-family: inherit; }
   color: var(--blue-100);
   transition: all var(--trans);
 }
-.hero-card-cta:hover { background: var(--blue-500); color: white; }
+@media (hover: hover) and (pointer: fine) { .hero-card-cta:hover { background: var(--blue-500); color: white; } }
 .hero-card-cta svg   { width: 15px; height: 15px; }
 
 /* ------------------------------------------------
@@ -908,12 +924,12 @@ input, textarea, select { font-family: inherit; }
   transform-origin: left;
   transition: transform var(--trans-slow);
 }
-.service-card:hover {
+@media (hover: hover) and (pointer: fine) { .service-card:hover {
   border-color: var(--blue-200);
   box-shadow: var(--shadow-md);
   transform: translateY(-4px);
-}
-.service-card:hover::before { transform: scaleX(1); }
+} }
+@media (hover: hover) and (pointer: fine) { .service-card:hover::before { transform: scaleX(1); } }
 
 .service-icon {
   width: 54px; height: 54px;
@@ -972,7 +988,7 @@ input, textarea, select { font-family: inherit; }
   align-items: start;
   transition: box-shadow var(--trans-slow);
 }
-.service-card-lg:hover { box-shadow: var(--shadow-md); }
+@media (hover: hover) and (pointer: fine) { .service-card-lg:hover { box-shadow: var(--shadow-md); } }
 
 .service-icon-lg {
   width: 64px; height: 64px;
@@ -1063,7 +1079,7 @@ input, textarea, select { font-family: inherit; }
   border-radius: var(--radius-lg);
   transition: all var(--trans);
 }
-.feature-item:hover { box-shadow: var(--shadow); border-color: var(--blue-200); }
+@media (hover: hover) and (pointer: fine) { .feature-item:hover { box-shadow: var(--shadow); border-color: var(--blue-200); } }
 
 .feature-icon {
   width: 48px; height: 48px;
@@ -1223,7 +1239,7 @@ input, textarea, select { font-family: inherit; }
   border-radius: var(--radius-lg);
   transition: all var(--trans);
 }
-.value-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: var(--blue-200); }
+@media (hover: hover) and (pointer: fine) { .value-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: var(--blue-200); } }
 
 .value-icon {
   width: 56px; height: 56px;
@@ -1334,7 +1350,7 @@ input, textarea, select { font-family: inherit; }
   font-weight: 500;
   color: rgba(255,255,255,0.9);
 }
-.contact-detail-value a:hover { color: var(--blue-200); }
+@media (hover: hover) and (pointer: fine) { .contact-detail-value a:hover { color: var(--blue-200); } }
 
 .contact-divider { height: 1px; background: rgba(255,255,255,0.1); margin: var(--sp-6) 0; }
 
@@ -1352,7 +1368,7 @@ input, textarea, select { font-family: inherit; }
   transition: all var(--trans);
   margin-top: var(--sp-6);
 }
-.contact-portal-btn:hover { background: var(--blue-500); border-color: var(--blue-400); }
+@media (hover: hover) and (pointer: fine) { .contact-portal-btn:hover { background: var(--blue-500); border-color: var(--blue-400); } }
 .contact-portal-btn svg { width: 18px; height: 18px; color: var(--blue-200); }
 
 .contact-form-card {
@@ -1458,10 +1474,10 @@ input, textarea, select { font-family: inherit; }
   padding: var(--sp-7) var(--sp-7) var(--sp-6);
   transition: border-color var(--trans), box-shadow var(--trans);
 }
-.testimonial-card:hover {
+@media (hover: hover) and (pointer: fine) { .testimonial-card:hover {
   border-color: var(--blue-200);
   box-shadow: 0 4px 24px rgba(37,64,200,.07);
-}
+} }
 .testimonial-quote-mark {
   width: 30px; height: 30px;
   color: var(--blue-200);
@@ -1540,7 +1556,7 @@ input, textarea, select { font-family: inherit; }
   overflow: hidden;
   transition: border-color var(--trans), box-shadow var(--trans);
 }
-.faq-item:hover { border-color: var(--blue-200); }
+@media (hover: hover) and (pointer: fine) { .faq-item:hover { border-color: var(--blue-200); } }
 .faq-question {
   width: 100%;
   display: flex;
@@ -1612,7 +1628,7 @@ input, textarea, select { font-family: inherit; }
   color: rgba(255,255,255,0.55);
   transition: color var(--trans);
 }
-.footer-contact-item:hover { color: rgba(255,255,255,0.9); }
+@media (hover: hover) and (pointer: fine) { .footer-contact-item:hover { color: rgba(255,255,255,0.9); } }
 .footer-contact-icon { width: 16px; height: 16px; color: var(--blue-300); flex-shrink: 0; margin-top: 2px; }
 
 .footer-col-title {
@@ -1630,7 +1646,7 @@ input, textarea, select { font-family: inherit; }
   color: rgba(255,255,255,0.55);
   transition: color var(--trans);
 }
-.footer-link:hover { color: var(--white); }
+@media (hover: hover) and (pointer: fine) { .footer-link:hover { color: var(--white); } }
 
 .footer-bottom {
   display: flex;
