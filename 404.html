@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Page Not Found — StaffPro Inc.</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script>
+    /* Reveal-on-scroll is opt-in. Hide content only when scripting works, and
+       reveal it again if main.js never initializes (blocked, 404, offline). */
+    (function () {
+      var d = document.documentElement;
+      d.className += (d.className ? ' ' : '') + 'js-anim';
+      setTimeout(function () {
+        if (!window.__spAnimReady) {
+          d.className = d.className.replace(/\bjs-anim\b/, '').trim();
+        }
+      }, 2500);
+    })();
+  </script>
+  <style>
+    .thanks-mark {
+      width: 72px; height: 72px;
+      margin-inline: auto;
+      display: grid; place-items: center;
+      border-radius: var(--radius-full);
+      background: var(--blue-50);
+      color: var(--color-primary);
+    }
+    .thanks-mark svg { width: 34px; height: 34px; }
+    .thanks-next {
+      margin-top: var(--sp-12);
+      text-align: left;
+      background: var(--color-bg-light);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-8);
+    }
+    .thanks-next-title {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-bottom: var(--sp-5);
+    }
+    .thanks-steps { display: grid; gap: var(--sp-4); }
+    .thanks-steps li {
+      display: flex; gap: var(--sp-4); align-items: flex-start;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+    .thanks-steps span {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      border-radius: var(--radius-full);
+      background: var(--color-primary);
+      color: var(--white);
+      font-size: var(--text-sm);
+      font-weight: 700;
+    }
+    .thanks-urgent {
+      margin-top: var(--sp-8);
+      color: var(--color-text-secondary);
+    }
+    .thanks-urgent a { color: var(--color-primary); font-weight: 600; }
+    @media (hover: hover) and (pointer: fine) { .thanks-urgent a:hover { text-decoration: underline; } }
+    .thanks-links {
+      margin-top: var(--sp-10);
+      display: flex; gap: var(--sp-4);
+      justify-content: center; flex-wrap: wrap;
+    }
+  </style>
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "c0b373a9584b47a58428c3ec5453366a"}'></script>
+  <!-- End Cloudflare Web Analytics -->
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="/index.html" class="nav-logo">
+      <img src="/assets/images/logo.png" alt="StaffPro Inc." class="nav-logo-img"
+           onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <span class="nav-logo-fallback" aria-hidden="true"><span class="lf-staff">staff</span><span class="lf-pro">pro</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="/services.html"  class="nav-link">Services</a>
+      <a href="/about.html"     class="nav-link">About Us</a>
+      <a href="/resources.html" class="nav-link">Resources</a>
+      <a href="/news.html"      class="nav-link">News</a>
+      <a href="/contact.html"   class="nav-link active">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="tel:7184711122" class="nav-icon-btn" aria-label="Call StaffPro at 718-471-1122" title="Call 718-471-1122">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.57 3.46 2 2 0 0 1 3.54 1.29h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 5.55 5.55l1.88-1.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.93 14.72"/></svg>
+      </a>
+      <a href="https://staffpro.payplus360.com/login/" class="nav-login-link" target="_blank" rel="noopener noreferrer">Login</a>
+      <a href="/contact.html" class="btn btn-primary btn-sm">Get a Quote</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="/services.html"  class="nav-mobile-link">Services</a>
+  <a href="/about.html"     class="nav-mobile-link">About Us</a>
+  <a href="/resources.html" class="nav-mobile-link">Resources</a>
+  <a href="/news.html"      class="nav-mobile-link">News</a>
+  <a href="/contact.html"   class="nav-mobile-link">Contact</a>
+  <div class="nav-mobile-divider"></div>
+  <a href="tel:7184711122" class="nav-mobile-link">Call 718-471-1122</a>
+  <a href="https://staffpro.payplus360.com/login/" class="nav-mobile-link" target="_blank" rel="noopener noreferrer">Client / Employee Login ↗</a>
+  <a href="/contact.html" class="btn btn-primary nav-mobile-cta">Get a Quote</a>
+</div>
+
+
+<!-- PAGE HERO -->
+<section class="section" style="padding-top:calc(var(--nav-height) + var(--sp-16));">
+  <div class="container" style="max-width:640px;text-align:center;">
+    <span class="eyebrow">Page not found</span>
+    <h1 class="section-title" style="margin-top:var(--sp-3);">We couldn&rsquo;t find that page</h1>
+    <p style="font-size:var(--text-lg);color:var(--color-text-secondary);line-height:1.75;margin-top:var(--sp-4);">
+      The link may be out of date, or the address may have a typo. These are the pages people usually look for:
+    </p>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:var(--sp-3);margin-top:var(--sp-8);">
+      <a href="/index.html" class="btn btn-primary">Home</a>
+      <a href="/services.html" class="btn btn-outline">Services</a>
+      <a href="/resources.html" class="btn btn-outline">Client Resources</a>
+      <a href="/employee-resources.html" class="btn btn-outline">Employee Resources</a>
+      <a href="/contact.html" class="btn btn-outline">Contact Us</a>
+    </div>
+    <p style="font-size:var(--text-sm);color:var(--color-text-secondary);margin-top:var(--sp-8);">
+      Or call us at <a href="tel:7184711122" style="color:var(--color-primary);font-weight:600;">718-471-1122</a>.
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="/assets/images/logo-footer.png" alt="StaffPro Inc." class="footer-logo-img"
+               onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <span class="footer-logo-fallback" aria-hidden="true"><span class="lf-staff">staff</span><span class="lf-pro">pro</span></span>
+        </div>
+        <p class="footer-tagline">Build Your Business, Not Your HR Department</p>
+        <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.57 3.46 2 2 0 0 1 3.54 1.29h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 5.55 5.55l1.88-1.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.93 14.72"/></svg><a href="tel:7184711122">718-471-1122</a></div>
+        <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:info@staffproonline.com">info@staffproonline.com</a></div>
+        <div class="footer-contact-item"><svg class="footer-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>167 Lawrence Avenue, Inwood, NY 11096</span></div>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <div class="footer-links">
+          <a href="/services.html#payroll"     class="footer-link">Payroll Processing</a>
+          <a href="/services.html#hr"          class="footer-link">HR Administration</a>
+          <a href="/services.html#benefits"    class="footer-link">Employee Benefits</a>
+          <a href="/services.html#workerscomp" class="footer-link">Workers' Compensation</a>
+          <a href="/services.html#screening"   class="footer-link">Background Screening</a>
+          <a href="/services.html#compliance"  class="footer-link">Tax &amp; Compliance</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <div class="footer-links">
+          <a href="/employee-resources.html#w2"        class="footer-link">W-2 Retrieval</a>
+          <a href="/employee-resources.html#1095"       class="footer-link">1095 Retrieval</a>
+          <a href="/resources.html#onboarding" class="footer-link">Client Onboarding Tutorials</a>
+          <a href="/resources.html#posters"    class="footer-link">Labor Law Poster Orders</a>
+        </div>
+        <div style="margin-top:var(--sp-5);">
+          <div class="footer-col-title">Company</div>
+          <div class="footer-links">
+            <a href="/about.html"   class="footer-link">About StaffPro</a>
+            <a href="/news.html"    class="footer-link">HR News</a>
+            <a href="/contact.html" class="footer-link">Contact Us</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Client Access</div>
+        <div style="margin-top:var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-2);">
+          <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer" style="justify-content:center;">Portal Login</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span class="js-year">2026</span> StaffPro Inc. All rights reserved.</span>
+      <span>167 Lawrence Avenue &middot; Inwood, NY 11096</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

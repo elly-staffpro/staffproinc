@@ -769,7 +769,7 @@ def build_story_html(story):
     return f"""
       <article class="news-card fade-in">
         <div class="news-cat" style="color:{color};background:{bg};">{story['category']}</div>
-        <h3 class="news-headline">{story['headline']}</h3>
+        <h2 class="news-headline">{story['headline']}</h2>
         {summary_html}
         <div class="news-takeaway">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px;color:var(--color-primary);"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
@@ -1082,7 +1082,7 @@ def render_footer(p):
     <div class="footer-grid">
       <div>
         <div class="footer-logo">
-          <img src="{p}assets/images/logo.png" alt="StaffPro Inc." class="footer-logo-img"
+          <img src="{p}assets/images/logo-footer.png" alt="StaffPro Inc." class="footer-logo-img"
                onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex';" />
           <span class="footer-logo-fallback" aria-hidden="true"><span class="lf-staff">staff</span><span class="lf-pro">pro</span></span>
         </div>
@@ -1122,8 +1122,7 @@ def render_footer(p):
       <div>
         <div class="footer-col-title">Client Access</div>
         <div style="margin-top:var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-2);">
-          <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer" style="justify-content:center;">Client Login</a>
-          <a href="https://staffpro.payplus360.com/login/" class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer" style="justify-content:center;border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);">Employee Login</a>
+          <a href="https://staffpro.payplus360.com/login/" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer" style="justify-content:center;">Portal Login</a>
         </div>
       </div>
     </div>
@@ -1158,7 +1157,8 @@ def render_page(data, p="", archive=None):
   <meta property="og:title"       content="HR &amp; Compliance News — {month_year} | StaffPro Inc." />
   <meta property="og:description" content="Monthly HR and compliance news bulletin from StaffPro Inc. — {month_year}" />
   <meta property="og:type"        content="article" />
-  <meta property="og:image"       content="https://www.staffproinc.com/assets/images/logo.png" />
+  <meta property="og:image"       content="https://www.staffproinc.com/assets/images/og-image.png" />
+  <meta name="twitter:card"      content="summary_large_image" />
   <link rel="icon" type="image/png" href="{p}assets/images/favicon.png" />
   <link rel="stylesheet" href="{p}css/style.css" />
   <script>
@@ -1247,10 +1247,11 @@ def build_sitemap(archive):
     so it never goes stale as new monthly issues are added."""
     rows = []
     for path, freq, prio in SITEMAP_STATIC:
-        rows.append(f"  <url>\n    <loc>{BASE_URL}{path}</loc>\n"
+        # Clean addresses: the site serves /about, and /about.html only redirects there.
+        rows.append(f"  <url>\n    <loc>{BASE_URL}{path.removesuffix('.html')}</loc>\n"
                     f"    <changefreq>{freq}</changefreq>\n    <priority>{prio}</priority>\n  </url>")
     for e in archive:
-        rows.append(f"  <url>\n    <loc>{BASE_URL}news/{e['file']}</loc>\n"
+        rows.append(f"  <url>\n    <loc>{BASE_URL}news/{e['file'].removesuffix('.html')}</loc>\n"
                     f"    <changefreq>never</changefreq>\n    <priority>0.4</priority>\n  </url>")
     xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

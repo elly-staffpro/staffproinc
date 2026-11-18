@@ -220,7 +220,8 @@ def check_internal_links():
             target = href.split("#")[0].split("?")[0]
             if not target:
                 continue
-            resolved = (base / target).resolve()
+            # A root-absolute link ("/about.html") resolves from the site root.
+            resolved = (ROOT / target.lstrip("/") if target.startswith("/") else base / target).resolve()
             if resolved.exists():
                 continue
             # Cloudflare serves extensionless clean URLs too
@@ -244,6 +245,10 @@ def _normalize_href(page, href):
     href = href.strip()
     if href.startswith("./"):
         href = href[2:]
+    # 404.html links from the site root ("/about.html") because it is served at
+    # any missing address; from a top-level page that is the same destination.
+    if href.startswith("/"):
+        href = href[1:]
     if href.startswith("#"):
         return f"{page}{href}"
     return href

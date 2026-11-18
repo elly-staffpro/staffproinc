@@ -95,7 +95,7 @@
     // The CSS reduced-motion rule cannot reach this JavaScript count, so honour
     // the setting here: show the final number straight away.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      el.textContent = target + suffix;
+      el.textContent = target.toLocaleString('en-US') + suffix;
       return;
     }
     const duration = 1000;
@@ -106,7 +106,7 @@
       const progress = Math.min(elapsed / duration, 1);
       // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.floor(eased * target) + suffix;
+      el.textContent = Math.floor(eased * target).toLocaleString('en-US') + suffix;
       if (progress < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
