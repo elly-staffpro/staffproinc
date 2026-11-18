@@ -92,7 +92,13 @@
   function animateCount(el) {
     const target = parseInt(el.dataset.target, 10);
     const suffix = el.dataset.suffix || '';
-    const duration = 1800;
+    // The CSS reduced-motion rule cannot reach this JavaScript count, so honour
+    // the setting here: show the final number straight away.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = target + suffix;
+      return;
+    }
+    const duration = 1000;
     const start = performance.now();
 
     function step(now) {
